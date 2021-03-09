@@ -1,3 +1,7 @@
+p, a, h1, h2, h3, h4, h5, span {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .body-wrapper {
     width: 1024px;
     margin: auto;
@@ -22,6 +26,14 @@ header {
 
 .profile {
     width: 10%;
+}
+
+.activity-title {
+    display: inline-block;
+}
+
+.create-button {
+    text-align: right;
 }
 
 .point-of-interest {
@@ -50,10 +62,19 @@ header {
 }
 
 .like {
-    width: 3%;
+    width: 30px;
+}
+
+.pin {
+    width: 24px;
 }
 
 footer {
     background-color: lightgray;
     text-align: center;
 }
+
+#map {
+    height: 400px;
+    width: 100%;
+  }

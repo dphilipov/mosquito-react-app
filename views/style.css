@@ -1,0 +1,59 @@
+.body-wrapper {
+    width: 1024px;
+    margin: auto;
+}
+
+header {
+    background-color: lightgray;
+    padding: 10px;
+}
+
+.logo {
+    width: 10%;
+}
+
+.nav-bar {
+    float: right;
+}
+
+.nav-bar li {
+    display: inline;
+}
+
+.profile {
+    width: 10%;
+}
+
+.point-of-interest {
+    border: 1px solid black;
+    margin: 15px 0 15px 0;
+    padding: 10px;
+    display: flex;
+}
+
+.point-of-interest img.thumbnail {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+
+.point-of-interest p, span {
+    display: block;
+}
+
+.point-of-interest p {
+    margin-top: 0px;
+}
+
+.poi-preview {
+    margin-right: 10px;
+}
+
+.like {
+    width: 3%;
+}
+
+footer {
+    background-color: lightgray;
+    text-align: center;
+}

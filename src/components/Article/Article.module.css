@@ -1,0 +1,32 @@
+.pointOfInterest {
+    border: 1px solid black;
+    margin: 15px 0 15px 0;
+    padding: 10px;
+    display: flex;
+}
+
+.pointOfInterest img.thumbnail {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+
+.pointOfInterest p, span {
+    display: block;
+}
+
+.pointOfInterest p {
+    margin-top: 0px;
+}
+
+.poiPreview {
+    margin-right: 10px;
+}
+
+.like {
+    width: 30px;
+}
+
+.pin {
+    width: 24px;
+}

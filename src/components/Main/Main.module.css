@@ -1,7 +1,22 @@
 .activityTitle {
     display: inline-block;
+    color: #a2a46d;
 }
 
 .createButton {
-    text-align: right;
+    border: none;
+    background-color: #ea486a;
+    border-radius: 5px;
+    color: #f8e6d3;
+    width: 100px;
+    height: 25px;
+    font-weight: bold;
+    float: right;
+    margin-top: 20px;
+    cursor: pointer;
 }
+
+.main {
+    width: 1024px;
+    margin: auto;
+  }

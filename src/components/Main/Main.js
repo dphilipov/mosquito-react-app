@@ -6,7 +6,7 @@ const Main = () => {
         <div className={style.main}>
             <h3 className={style.activityTitle}>Activity Feed</h3>
 
-            <button className={style.createButton}>Create</button>
+            <button className={style.createButton}>CREATE</button>
 
             <Article />
         </div>

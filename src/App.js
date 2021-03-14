@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main'
 import Footer from './components/Footer/Footer'
@@ -7,14 +8,11 @@ import style from './App.module.css';
 function App() {
 
   return (
-    <div className={style.wrapper}>
+    <React.Fragment>
       <Header />
-
-      <Main />
-
+        <Main />
       <Footer />
-    </div>
-    
+    </React.Fragment>
   );
 }
 

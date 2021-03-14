@@ -1,6 +1,11 @@
 header {
-    background-color: lightgray;
+    background: #a2a46d;
     padding: 10px;
+}
+
+.wrapper {
+    width: 1024px;
+    margin: auto;
 }
 
 .logo {
@@ -11,8 +16,18 @@ header {
     float: right;
 }
 
+.navBar a {
+    text-decoration: none;
+}
+
+.navBar a:hover {
+    text-decoration: underline overline;
+}
+
 .navBar li {
     display: inline;
+    margin: 0 5px;
+    font-weight: bold;
 }
 
 .profile {

@@ -1,5 +1,12 @@
 footer {
-    background-color: lightgray;
+    background: #a2a46d;
     text-align: center;
     margin-top: 10px;
+    height: 50px;
+    color: #f8e6d3;
+}
+
+.wrapper {
+    width: 1024px;
+    margin: auto;
 }

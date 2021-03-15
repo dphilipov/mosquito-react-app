@@ -12,9 +12,13 @@
     background-color: white;
 }
 
-.pointOfInterest p, span {
+.pointOfInterest p, span, h2 {
     display: block;
     color: #314a36;
+}
+
+.pointOfInterest h2 {
+    margin: 0;
 }
 
 .pointOfInterest p {

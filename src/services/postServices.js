@@ -11,9 +11,9 @@ function getAll() {
         .then((data) => {
             data.forEach((doc) => {
                 let id = doc.id;
-                let description = doc.data().description;
+                let docData = doc.data();
 
-                collection.push({ id, description });
+                collection.push({ id, ...docData });
 
             })
 

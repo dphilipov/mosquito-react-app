@@ -9,8 +9,7 @@ const Article = (props) => {
             <img src="" className={style.thumbnail}/>
         </div>
         <div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, atque. Illo provident doloremque
-                quas quis officiis, pariatur accusantium at impedit.</p>
+            <p>{props.description}</p>
             <span><strong>Date Added:</strong> 4 Jan 2021</span>
             <a href="/like"><img src={like} alt="Like" className={style.like}
                     title="Like"/></a>

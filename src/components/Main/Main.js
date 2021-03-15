@@ -1,14 +1,18 @@
 import style from './Main.module.css'
 import Article from '../Article/Article'
 
-const Main = () => {
+const Main = ({articles}) => {
+
     return (
+        
         <div className={style.main}>
             <h3 className={style.activityTitle}>Activity Feed</h3>
 
             <button className={style.createButton}>CREATE</button>
 
-            <Article />
+            {articles.map(article => (
+                <Article key={article.id} description={article.description} />
+            ))}
         </div>
     )
 }

@@ -3,6 +3,7 @@ import firebase from '../../firebase.js'
 const DB = firebase.firestore();
 
 const Create = () =>  {
+
     return (
         <form action="/register" method="POST" class="register-form form">
             
@@ -22,14 +23,14 @@ const Create = () =>  {
 
 export default Create;
 
-//   DB.collection(`test`)
-//   .add({
-//     title: "test",
-//     isOK: true,
-//   })
-//   .then((res) => {
-//       console.log('Document created with ID:', res.id);
-//   })
-//   .catch((err) => {
-//       console.log(err);
-//   })
+// DB.collection(`test`)
+// .add({
+//   title: "test",
+//   isOK: true,
+// })
+// .then((res) => {
+//     console.log('Document created with ID:', res.id);
+// })
+// .catch((err) => {
+//     console.log(err);
+// })

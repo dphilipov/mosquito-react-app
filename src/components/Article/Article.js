@@ -7,7 +7,7 @@ const Article = ({props}) => {
     return (
         <article className={style.pointOfInterest}>
             <div className={style.poiPreview}>
-                <img src={props.imgUrl} className={style.thumbnail} />
+                <img src={props.imgUrl} alt="Thumbnail" className={style.thumbnail} />
             </div>
             <div>
                 <h2>{props.title}</h2>

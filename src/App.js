@@ -1,9 +1,11 @@
-import style from './App.module.css';
+import './App.module.css';
 
 import { Component } from 'react';
+import { Route, Link, NavLink, Redirect, Switch } from 'react-router-dom';
 import postServices from './services/postServices'
 import React from 'react';
 import Header from './components/Header/Header';
+import Create from './components/Create/Create';
 import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
 
@@ -29,7 +31,16 @@ class App extends Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<Main articles={this.state.articles} />
+
+				<Switch>
+					<Route path="/create" component={Create} />
+
+					<Route path="/">
+						<Main articles={this.state.articles} />
+					</Route>
+				</Switch>
+
+
 				<Footer />
 			</React.Fragment>
 		);
@@ -38,3 +49,4 @@ class App extends Component {
 }
 
 export default App;
+

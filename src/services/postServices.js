@@ -22,6 +22,8 @@ function getAll() {
         })
 }
 
-export default {
+const funcs = {
     getAll
 }
+
+export default funcs;

@@ -7,7 +7,7 @@ const Main = ({ articles }) => {
         <div className={style.main}>
             <h3 className={style.activityTitle}>Activity Feed</h3>
 
-            <button className={style.createButton}>CREATE</button>
+            <a href="/create"><button className={style.createButton}>CREATE</button></a>
 
             {articles.map(article => (
                 <Article

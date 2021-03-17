@@ -1,0 +1,16 @@
+.registerForm {
+    width: 200px;
+    margin: 30px auto;
+}
+
+.registerForm label{
+    color: #314a36;
+}
+
+.registerForm input{
+    margin-bottom: 10px;
+}
+
+.registerForm input[type="submit"]{
+    margin-top: 10px;
+}

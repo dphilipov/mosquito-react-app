@@ -1,11 +1,12 @@
-import firebase from '../../firebase.js'
+import firebase from '../../firebase.js';
+import style from './Create.module.css';
 
 const DB = firebase.firestore();
 
 const Create = () =>  {
 
     return (
-        <form action="/register" method="POST" class="register-form form">
+        <form action="/register" method="POST" class={style.registerForm}>
             
             <label for="username">Username:</label>
             <input type="text" name="username" placeholder="Username"/>

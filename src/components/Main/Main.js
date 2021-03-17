@@ -1,4 +1,6 @@
 import style from './Main.module.css'
+
+import { Link } from 'react-router-dom';
 import Article from '../Article/Article'
 
 const Main = ({ articles }) => {
@@ -7,7 +9,7 @@ const Main = ({ articles }) => {
         <div className={style.main}>
             <h3 className={style.activityTitle}>Activity Feed</h3>
 
-            <a href="/create"><button className={style.createButton}>CREATE</button></a>
+            <Link to="/create" ><button className={style.createButton}>CREATE</button></Link>
 
             {articles.map(article => (
                 <Article

@@ -33,11 +33,13 @@ class App extends Component {
 				<Header />
 
 				<Switch>
-					<Route path="/create" component={Create} />
-
-					<Route path="/">
+					<Route path="/" exact>
 						<Main articles={this.state.articles} />
 					</Route>
+
+					<Route path="/create" component={Create} />
+
+					<Route render={() => <h1>Error Page</h1>} />
 				</Switch>
 
 

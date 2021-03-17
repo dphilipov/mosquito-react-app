@@ -8,14 +8,14 @@ const Create = () =>  {
     return (
         <form action="/create" method="POST" class={style.createForm}>
             
-            <label for="username">Username:</label>
-            <input type="text" name="username" placeholder="Username"/>
+            <label for="title">Title:</label>
+            <input type="text" name="title" placeholder="Title"/>
 
-            <label for="password">Password:</label>
-            <input type="text" name="password" placeholder="Password"/>
+            <label for="imgUrl">Image Photo:</label>
+            <input type="text" name="imgUrl" placeholder="Enter URL here"/>
 
-            <label for="rePassword">Repeat Passoword:</label>
-            <input type="text" name="rePassword" placeholder="Repeat Password"/>
+            <label for="description">Description:</label>
+            <textarea type="text" name="description"></textarea>
             
             <input type="submit" name="Create" value="Create"/>
         </form>

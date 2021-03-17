@@ -14,3 +14,7 @@
 .createForm input[type="submit"]{
     margin-top: 10px;
 }
+
+.createForm textarea{
+    width: 208px;
+}

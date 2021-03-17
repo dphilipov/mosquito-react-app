@@ -6,6 +6,7 @@ import postServices from './services/postServices'
 import React from 'react';
 import Header from './components/Header/Header';
 import Register from './components/Register/Register';
+import Login from './components/Login/Login';
 import Create from './components/Create/Create';
 import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
@@ -39,6 +40,8 @@ class App extends Component {
 					</Route>
 
 					<Route path="/register" component={Register} />
+
+					<Route path="/login" component={Login} />
 
 					<Route path="/create" component={Create} />
 

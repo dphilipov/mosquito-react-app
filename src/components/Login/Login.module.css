@@ -1,0 +1,16 @@
+.loginForm {
+    width: 200px;
+    margin: 30px auto;
+}
+
+.loginForm label{
+    color: #314a36;
+}
+
+.loginForm input{
+    margin-bottom: 10px;
+}
+
+.loginForm input[type="submit"]{
+    margin-top: 10px;
+}

@@ -1,12 +1,12 @@
 import firebase from '../../firebase.js';
-import style from './Create.module.css';
+import style from './Register.module.css';
 
 const DB = firebase.firestore();
 
-const Create = () =>  {
+const Register = () =>  {
 
     return (
-        <form action="/create" method="POST" class={style.createForm}>
+        <form action="/register" method="POST" class={style.registerForm}>
             
             <label for="username">Username:</label>
             <input type="text" name="username" placeholder="Username"/>
@@ -17,12 +17,12 @@ const Create = () =>  {
             <label for="rePassword">Repeat Passoword:</label>
             <input type="text" name="rePassword" placeholder="Repeat Password"/>
             
-            <input type="submit" name="Create" value="Create"/>
+            <input type="submit" name="Register" value="Register"/>
         </form>
     )
 }
 
-export default Create;
+export default Register;
 
 // DB.collection(`test`)
 // .add({

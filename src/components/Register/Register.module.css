@@ -1,16 +1,16 @@
-.createForm {
+.registerForm {
     width: 200px;
     margin: 30px auto;
 }
 
-.createForm label{
+.registerForm label{
     color: #314a36;
 }
 
-.createForm input{
+.registerForm input{
     margin-bottom: 10px;
 }
 
-.createForm input[type="submit"]{
+.registerForm input[type="submit"]{
     margin-top: 10px;
 }

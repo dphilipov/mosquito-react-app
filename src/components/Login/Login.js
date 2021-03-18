@@ -6,13 +6,13 @@ const DB = firebase.firestore();
 const Login = () =>  {
 
     return (
-        <form action="/login" method="POST" class={style.loginForm}>
+        <form action="/login" method="POST" className={style.loginForm}>
             
             <label for="username">Username:</label>
             <input type="text" name="username" placeholder="Username"/>
 
             <label for="password">Password:</label>
-            <input type="text" name="password" placeholder="Password"/>
+            <input type="password" name="password" placeholder="Password"/>
             
             <input type="submit" name="Login" value="Login"/>
         </form>

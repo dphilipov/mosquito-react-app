@@ -6,16 +6,16 @@ const DB = firebase.firestore();
 const Register = () =>  {
 
     return (
-        <form action="/register" method="POST" class={style.registerForm}>
+        <form action="/register" method="POST" className={style.registerForm}>
             
             <label for="username">Username:</label>
             <input type="text" name="username" placeholder="Username"/>
 
             <label for="password">Password:</label>
-            <input type="text" name="password" placeholder="Password"/>
+            <input type="password" name="password" placeholder="Password"/>
 
             <label for="rePassword">Repeat Passoword:</label>
-            <input type="text" name="rePassword" placeholder="Repeat Password"/>
+            <input type="password" name="rePassword" placeholder="Repeat Password"/>
             
             <input type="submit" name="Register" value="Register"/>
         </form>

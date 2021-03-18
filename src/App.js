@@ -2,7 +2,6 @@ import './App.module.css';
 
 import { Component } from 'react';
 import { Route, Link, NavLink, Redirect, Switch } from 'react-router-dom';
-import postServices from './services/postServices'
 import React from 'react';
 import Header from './components/Header/Header';
 import Register from './components/Register/Register';
@@ -15,20 +14,9 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			articles: []
-		}
 	}
 
-	componentDidMount() {
-		postServices.getAll()
-			.then(collection => {
-				this.setState({ articles: collection });
-			})
-			.catch(err => console.log(err))
-
-	}
-
+	
 	render() {
 		return (
 			<React.Fragment>
@@ -36,7 +24,7 @@ class App extends Component {
 
 				<Switch>
 					<Route path="/" exact>
-						<Main articles={this.state.articles} />
+						<Main />
 					</Route>
 
 					<Route path="/register" component={Register} />

@@ -7,6 +7,7 @@ function getAll() {
     let collection = [];
 
     return DB.collection("test")
+        .orderBy("dateCreated", "desc")
         .get()
         .then((data) => {
             data.forEach((doc) => {

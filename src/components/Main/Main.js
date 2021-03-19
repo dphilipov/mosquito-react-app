@@ -34,11 +34,23 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        this.updateArticlesState();
+        postServices.getInitial(2, this.state.latestDoc)
+            .then(data => {
+                if (data !== undefined) {
+                    this.setState(prevState => ({
+                        articles: [...prevState.articles, ...data.collection],
+                        latestDoc: data.latestDoc
+                    }));
+                } else {
+                    this.setState({ isEnd: true });
+                }
+
+            })
+            .catch(err => console.log(err))
     }
 
     render() {
-        console.log(this.state.isEnd);
+        // console.log(this.state.latestDoc.id);
         return (
 
             <div className={style.main}>
@@ -53,7 +65,7 @@ class Main extends Component {
                 ))}
 
                 {this.state.isEnd ?
-                    <p className={style.end}>~END~</p> :
+                    <p className={style.end}>-NO MORE PLACES TO SHOW-</p> :
                     <button onClick={() => {
                         this.updateArticlesState();
                     }} className={style.showMore}>

@@ -1,6 +1,7 @@
-import firebase from '../../firebase.js';
+import firebase from '../../config/firebase.js';
 import style from './Create.module.css';
 import { Component } from 'react';
+import inputHandler from '../../services/formService';
 
 const DB = firebase.firestore();
 const dtFormat = new Intl.DateTimeFormat('bg-BG', {
@@ -40,7 +41,6 @@ class Create extends Component {
         DB.collection(`test`)
             .add(this.state)
             .then((res) => {
-                console.log('Document created with ID:', res.id);
                 this.props.history.push('/');
             })
             .catch((err) => {

@@ -1,7 +1,5 @@
-import firebase from '../../firebase.js';
+import firebase from '../../config/firebase.js';
 import style from './Login.module.css';
-
-const DB = firebase.firestore();
 
 const Login = () =>  {
 

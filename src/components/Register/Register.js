@@ -1,37 +1,84 @@
-import firebase from '../../firebase.js';
+import firebase from '../../config/firebase.js';
 import style from './Register.module.css';
+import { Component } from 'react';
 
-const DB = firebase.firestore();
+const auth = firebase.auth();
 
-const Register = () =>  {
+class Register extends Component {
+    constructor(props) {
+        super(props)
 
-    return (
-        <form action="/register" method="POST" className={style.registerForm}>
-            
-            <label for="username">Username:</label>
-            <input type="text" name="username" placeholder="Username"/>
+        this.state = {
+            username: '',
+            password: '',
+            rePassword: ''
+        }
+    }
 
-            <label for="password">Password:</label>
-            <input type="password" name="password" placeholder="Password"/>
+    inputHandler = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        })
+    }
 
-            <label for="rePassword">Repeat Passoword:</label>
-            <input type="password" name="rePassword" placeholder="Repeat Password"/>
-            
-            <input type="submit" name="Register" value="Register"/>
-        </form>
-    )
+    submitHandler = (event) => {
+        event.preventDefault();
+
+        let { username, password, rePassword } = this.state;
+
+        auth.createUserWithEmailAndPassword(username, password)
+            .then((userCredential) => {
+                this.props.history.push('/login');
+
+
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(`Error code: ${errorCode} > ${errorMessage}`);
+            });
+
+    }
+
+    render() {
+
+        let { username, password, rePassword } = this.state;
+
+        return (
+            <form action="/register" method="POST" className={style.registerForm}>
+
+                <label for="username">Username:</label>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={this.inputHandler}
+                />
+
+                <label for="password">Password:</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={this.inputHandler}
+                />
+
+                <label for="rePassword">Repeat Passoword:</label>
+                <input
+                    type="password"
+                    name="rePassword"
+                    placeholder="Repeat Password"
+                    value={rePassword}
+                    onChange={this.inputHandler}
+                />
+
+                <input onClick={this.submitHandler} type="submit" name="Register" value="Register" />
+            </form>
+        )
+    }
+
 }
 
 export default Register;
-
-// DB.collection(`test`)
-// .add({
-//   title: "test",
-//   isOK: true,
-// })
-// .then((res) => {
-//     console.log('Document created with ID:', res.id);
-// })
-// .catch((err) => {
-//     console.log(err);
-// })

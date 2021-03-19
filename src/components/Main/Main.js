@@ -11,34 +11,55 @@ class Main extends Component {
         super(props)
 
         this.state = {
-        	articles: []
+            articles: [],
+            latestDoc: 0,
+            isEnd: false
         }
     }
 
-    componentDidMount() {
-        postServices.getAll()
-            .then(collection => {
-                this.setState({ articles: collection });
+    updateArticlesState() {
+        postServices.getMore(2, this.state.latestDoc)
+            .then(data => {
+                if (data !== undefined) {
+                    this.setState(prevState => ({
+                        articles: [...prevState.articles, ...data.collection],
+                        latestDoc: data.latestDoc
+                    }));
+                } else {
+                    this.setState({ isEnd: true });
+                }
+
             })
             .catch(err => console.log(err))
+    }
 
+    componentDidMount() {
+        this.updateArticlesState();
     }
 
     render() {
-
+        console.log(this.state.isEnd);
         return (
 
             <div className={style.main}>
                 <h3 className={style.activityTitle}>Activity Feed</h3>
 
                 <Link to="/create" ><button className={style.createButton}>CREATE</button></Link>
-
                 {this.state.articles.map(article => (
                     <Article
                         key={article.id}
                         props={article}
                     />
                 ))}
+
+                {this.state.isEnd ?
+                    <p className={style.end}>~END~</p> :
+                    <button onClick={() => {
+                        this.updateArticlesState();
+                    }} className={style.showMore}>
+                        SHOW MORE
+                </button>}
+
             </div>
         )
     }

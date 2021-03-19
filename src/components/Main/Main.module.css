@@ -20,4 +20,14 @@
 .main {
     width: 1024px;
     margin: auto;
-  }
+}
+
+.showMore {
+    display: block;
+    margin: 0 auto;
+}
+
+p.end {
+    color: #a2a46d;
+    text-align: center;
+}

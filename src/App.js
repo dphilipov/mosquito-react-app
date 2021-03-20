@@ -8,6 +8,7 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Create from './components/Create/Create';
 import Main from './components/Main/Main';
+import Details from './components/Details/Details';
 import Footer from './components/Footer/Footer';
 
 class App extends Component {
@@ -32,6 +33,8 @@ class App extends Component {
 					<Route path="/login" component={Login} />
 
 					<Route path="/create" component={Create} />
+
+					<Route path="/article/:id" component={Details} />
 
 					<Route render={() => <h1>Error Page</h1>} />
 				</Switch>

@@ -1,0 +1,32 @@
+.pointOfInterestDetails {
+    background-color: #ffb70a;
+    border-radius: 5px;
+    margin: 15px auto;
+    padding: 10px;
+    width: 800px;
+}
+
+.pointOfInterestDetails img {
+    width: 600px;
+}
+
+.pointOfInterestDetails p {
+    color: #314a36;
+}
+
+.pointOfInterestDetailsTop {
+    display: flex;
+}
+
+.pointOfInterestDetailsTop button {
+    height: 30px;
+    width: 70px;
+    border: none;
+    background-color: #ea486a;
+    border-radius: 0 5px 5px 0;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    display: block;
+    margin-bottom: 5px;
+}

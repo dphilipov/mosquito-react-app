@@ -57,6 +57,7 @@ class Main extends Component {
                 <h3 className={style.activityTitle}>Activity Feed</h3>
 
                 <Link to="/create" ><button className={style.createButton}>CREATE</button></Link>
+                
                 {this.state.articles.map(article => (
                     <Article
                         key={article.id}

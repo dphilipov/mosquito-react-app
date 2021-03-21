@@ -73,10 +73,27 @@ function getOne(id) {
         })
 }
 
+function postComment(article) {
+        let {id} = article;
+        
+        DB.collection(`test`).doc(id).set({
+            ...article,
+            comments: article.comments
+        })
+            .then((res) => {
+                console.log('success');
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+}
+
+
 const funcs = {
     getInitial,
     getMore,
-    getOne
+    getOne,
+    postComment
 }
 
 export default funcs;

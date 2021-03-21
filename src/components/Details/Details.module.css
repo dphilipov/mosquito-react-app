@@ -1,9 +1,14 @@
+.container {
+    width: 800px;
+    margin: auto;
+}
+
 .pointOfInterestDetails {
     background-color: #ffb70a;
     border-radius: 5px;
     margin: 15px auto;
     padding: 10px;
-    width: 800px;
+    width: 100%;
 }
 
 .pointOfInterestDetails img {
@@ -29,4 +34,39 @@
     color: white;
     display: block;
     margin-bottom: 5px;
+}
+
+
+.comments {
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    margin: 25px auto;
+    padding: 10px;
+}
+
+.comments p {
+    color: #314a36;
+}
+
+.noComments p{
+    color: #314a36;
+    display: inline;
+    margin-right: 5px;
+}
+
+.commentForm textarea{
+    width: 100%;
+    display: block;
+}
+
+.commentForm input[name="Submit"] {
+    border: none;
+    height: 30px;
+    width: 70px;
+    background-color: #ea486a;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
 }

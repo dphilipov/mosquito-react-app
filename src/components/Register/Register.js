@@ -27,7 +27,7 @@ class Register extends Component {
         let { username, password, rePassword } = this.state;
 
         auth.createUserWithEmailAndPassword(username, password)
-            .then((userCredential) => {
+            .then((userCredentials) => {
                 this.props.history.push('/login');
 
 

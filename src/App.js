@@ -44,6 +44,24 @@ class App extends Component {
 		}
 	}
 
+	componentDidMount() {
+		if (Boolean(authServices.getUserData())) {
+			let updatedUser = authServices.getUserData();
+			this.setState({
+				email: updatedUser.email,
+				uid: updatedUser.uid,
+				isLogged: true
+			});
+
+		} else {
+			this.setState({
+				email: 'Guest',
+				uid: '',
+				isLogged: false,
+			});
+		}
+	}
+
 	render() {
 		return (
 			<UserProvider value={this.state}>

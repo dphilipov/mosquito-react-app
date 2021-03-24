@@ -1,16 +1,10 @@
 import firebase from '../../config/firebase.js';
 import style from './Create.module.css';
 import { Component } from 'react';
+import { dtFormat } from '../../config/dateFormat';
 
 const DB = firebase.firestore();
-const dtFormat = new Intl.DateTimeFormat('bg-BG', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric'
-});
+
 
 class Create extends Component {
     constructor(props) {

@@ -5,6 +5,7 @@ import { Component } from 'react';
 import postServices from '../../services/postServices'
 import Article from '../Article/Article'
 
+
 class Main extends Component {
 
     constructor(props) {
@@ -33,7 +34,17 @@ class Main extends Component {
             .catch(err => console.log(err))
     }
 
+    // userCheck = () => {
+	// 	if (Boolean(authServices.getUserData())) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
+
     componentDidMount() {
+        // this.context
+
         postServices.getInitial(2, this.state.latestDoc)
             .then(data => {
                 if (data !== undefined) {

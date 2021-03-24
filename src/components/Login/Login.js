@@ -1,5 +1,7 @@
 import firebase from '../../config/firebase.js';
-import {Component} from 'react';
+import { Component } from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
+import authServices from '../../services/authServices';
 import style from './Login.module.css';
 
 const auth = firebase.auth();
@@ -27,10 +29,9 @@ class Login extends Component {
 
         auth.signInWithEmailAndPassword(username, password)
             .then((userCredentials) => {
-                console.log(userCredentials);
-                // this.props.history.push('/login');
-
-
+                authServices.saveUserData(userCredentials);
+                this.props.action();
+                this.props.history.push('/');
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -41,35 +42,36 @@ class Login extends Component {
     }
 
     render() {
-
         let { username, password, rePassword } = this.state;
 
         return (
-            <form action="/login" method="POST" className={style.loginForm}>
-                
-                <label for="username">Username:</label>
+            <form className={style.loginForm}>
+
+                <label htmlFor="username">Username:</label>
                 <input
                     type="text"
                     name="username"
+                    id="username"
                     placeholder="Username"
                     value={username}
                     onChange={this.inputHandler}
                 />
 
-                <label for="password">Password:</label>
+                <label htmlFor="password">Password:</label>
                 <input
                     type="password"
                     name="password"
+                    id="password"
                     placeholder="Password"
                     value={password}
                     onChange={this.inputHandler}
                 />
-                
-                <input onClick={this.submitHandler} type="submit" name="Login" value="Login"/>
+
+                <input onClick={this.submitHandler} type="submit" name="Login" value="Login" />
             </form>
         )
     }
 
 }
 
-export default Login;
+export default withRouter(Login);

@@ -1,8 +1,10 @@
 import './App.module.css';
 
 import { Component } from 'react';
-import { Route, Link, NavLink, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { UserProvider } from './components/userContext';
 import React from 'react';
+import authServices from './services/authServices';
 import Header from './components/Header/Header';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
@@ -15,33 +17,59 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			email: 'Guest',
+			uid: '',
+			isLogged: false,
+		}
+
+		this.userCheck = this.userCheck.bind(this);
 	}
 
-	
+	userCheck = () => {
+		if (Boolean(authServices.getUserData())) {
+			let updatedUser = authServices.getUserData();
+			this.setState({
+				email: updatedUser.email,
+				uid: updatedUser.uid,
+				isLogged: true
+			});
+
+		} else {
+			this.setState({
+				email: 'Guest',
+				uid: '',
+				isLogged: false,
+			});
+		}
+	}
+
 	render() {
 		return (
-			<React.Fragment>
-				<Header />
+			<UserProvider value={this.state}>
+				<React.Fragment>
+					<Header action={this.userCheck} />
 
-				<Switch>
-					<Route path="/" exact>
-						<Main />
-					</Route>
+					<Switch>
+						<Route path="/" exact>
+							<Main />
+						</Route>
 
-					<Route path="/register" component={Register} />
+						<Route path="/register" component={Register} />
 
-					<Route path="/login" component={Login} />
+						<Route path="/login" render={(props) => <Login action={props, this.userCheck} />} />
 
-					<Route path="/create" component={Create} />
+						<Route path="/create" component={Create} />
 
-					<Route path="/article/:id" component={Details} />
+						<Route path="/article/:id" component={Details} />
 
-					<Route render={() => <h1>Error Page</h1>} />
-				</Switch>
+						<Route render={() => <h1>Error Page</h1>} />
+					</Switch>
 
 
-				<Footer />
-			</React.Fragment>
+					<Footer />
+				</React.Fragment>
+			</UserProvider>
 		);
 	}
 

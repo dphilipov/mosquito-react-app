@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Details from '../Details/Details';
 
 import pin from './location-map-pin.svg'
 import like from './badge-winner-won-star-award.svg'

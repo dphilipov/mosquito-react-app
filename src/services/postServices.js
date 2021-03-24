@@ -88,12 +88,11 @@ function postComment(article) {
             })
 }
 
-
 const funcs = {
     getInitial,
     getMore,
     getOne,
-    postComment
+    postComment,
 }
 
 export default funcs;

@@ -45,30 +45,33 @@ class Register extends Component {
         let { username, password, rePassword } = this.state;
 
         return (
-            <form action="/register" method="POST" className={style.registerForm}>
+            <form className={style.registerForm}>
 
-                <label for="username">Username:</label>
+                <label htmlFor="username">Username:</label>
                 <input
                     type="text"
                     name="username"
+                    id="username"
                     placeholder="Username"
                     value={username}
                     onChange={this.inputHandler}
                 />
-
-                <label for="password">Password:</label>
+                
+                <label htmlFor="password">Password:</label>
                 <input
                     type="password"
                     name="password"
+                    id="password"
                     placeholder="Password"
                     value={password}
                     onChange={this.inputHandler}
                 />
 
-                <label for="rePassword">Repeat Passoword:</label>
+                <label htmlFor="rePassword">Repeat Passoword:</label>
                 <input
                     type="password"
                     name="rePassword"
+                    id="rePassword"
                     placeholder="Repeat Password"
                     value={rePassword}
                     onChange={this.inputHandler}

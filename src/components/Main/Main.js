@@ -2,6 +2,7 @@ import style from './Main.module.css'
 
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
+import { UserConsumer } from '../userContext';
 import postServices from '../../services/postServices'
 import Article from '../Article/Article'
 
@@ -34,16 +35,7 @@ class Main extends Component {
             .catch(err => console.log(err))
     }
 
-    // userCheck = () => {
-	// 	if (Boolean(authServices.getUserData())) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
     componentDidMount() {
-        // this.context
 
         postServices.getInitial(2, this.state.latestDoc)
             .then(data => {
@@ -61,13 +53,26 @@ class Main extends Component {
     }
 
     render() {
-        // console.log(this.state.latestDoc.id);
+
         return (
 
             <div className={style.main}>
                 <h3 className={style.activityTitle}>Activity Feed</h3>
 
-                <Link to="/create" ><button className={style.createButton}>CREATE</button></Link>
+                <UserConsumer>
+                    {
+                        (userCheck) => {
+
+                            {
+                                if (userCheck.isLogged) {
+                                    return <Link to="/create" ><button className={style.createButton}>CREATE</button></Link>
+                                }
+
+                            }
+
+                        }
+                    }
+                </UserConsumer>
 
                 {this.state.articles.map(article => (
                     <Article

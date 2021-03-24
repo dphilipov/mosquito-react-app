@@ -29,7 +29,6 @@ const Header = (props) => {
                         <header>
                             <div className={style.wrapper}>
 
-                                {/* LOGO */}
                                 <Link to="/"><img src={logo} alt="Mosquito Home"
                                     className={style.logo} />
                                 </Link>
@@ -61,7 +60,6 @@ const Header = (props) => {
 
                                     }
 
-                                    {/* PROFILE */}
                                     <span>Welcome, {userCheck.email}!
                                         <Link to="/profile">
                                             <img src={profileIcon} alt="Profile" className={style.profile} />

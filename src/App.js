@@ -11,6 +11,7 @@ import Login from './components/Login/Login';
 import Create from './components/Create/Create';
 import Main from './components/Main/Main';
 import Details from './components/Details/Details';
+import Edit from './components/Edit/Edit';
 import Footer from './components/Footer/Footer';
 
 class App extends Component {
@@ -79,7 +80,9 @@ class App extends Component {
 
 						<Route path="/create" component={Create} />
 
-						<Route path="/article/:id" component={Details} />
+						<Route path="/article/:id" exact component={Details} />
+
+						<Route path="/article/:id/edit"  component={Edit} />
 
 						<Route render={() => <h1>Error Page</h1>} />
 					</Switch>

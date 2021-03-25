@@ -1,5 +1,5 @@
 import style from './Details.module.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { dtFormat } from '../../config/dateFormat';
 import { UserConsumer } from '../userContext';
@@ -25,7 +25,7 @@ const Details = ({ match }) => {
             .catch(err => console.log(err));
     }, [match]);
 
-    const SubmitHandler = async (event, userEmail) => {
+    const CommentHandler = async (event, userEmail) => {
         event.preventDefault();
         let postDate = dtFormat.format(new Date());
         let commentData = {
@@ -64,6 +64,24 @@ const Details = ({ match }) => {
             })
     }
 
+    // const EditHandler = () => {
+    //     console.log(article);
+    //     // DB.collection(`test`).doc(articleId).get()
+    //     // .then((res) => {
+
+    //     //     DB.collection(`test`).doc(articleId).set({
+    //     //         ...res.data(),
+
+    //     //     })
+    //     //         .then((res) => {
+
+    //     //         })
+    //     //         .catch((err) => {
+    //     //             console.log(err);
+    //     //         })
+    //     // })
+    // }
+
     return (
         <div className={style.container}>
             <div className={style.pointOfInterestDetails}>
@@ -71,7 +89,12 @@ const Details = ({ match }) => {
                     <img src={article.imgUrl} alt="Image Preview" />
                     <div className={style.buttons}>
                         <button onClick={DeleteHandler}>DELETE</button>
-                        <button>EDIT</button>
+                        <Link to={{
+                            pathname: `/article/${articleId}/edit`,
+                            articleProps: article
+                        }}>
+                            <button>EDIT</button>
+                        </Link>
                     </div>
                 </div>
                 <h2>{article.title}</h2>
@@ -107,7 +130,7 @@ const Details = ({ match }) => {
                                     type="submit"
                                     name="Submit"
                                     value="Submit"
-                                    onClick={(event) => SubmitHandler(event, userCheck.email)}
+                                    onClick={(event) => CommentHandler(event, userCheck.email)}
                                 />
                             )
                         }

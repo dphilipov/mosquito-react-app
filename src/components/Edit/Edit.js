@@ -1,13 +1,14 @@
 import firebase from '../../config/firebase.js';
-import style from './Create.module.css';
+import style from './Edit.module.css';
 import { Component } from 'react';
 import { dtFormat } from '../../config/dateFormat';
+import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
 
 const DB = firebase.firestore();
 
 
-class Create extends Component {
+class Edit extends Component {
     constructor(props) {
         super(props)
 
@@ -43,14 +44,13 @@ class Create extends Component {
 
     }
 
-    submitHandler = async (event) => {
+    editHandler = async (event) => {
         event.preventDefault();
-        await this.setState({
-            dateCreated: dtFormat.format(new Date()),
-        })
+        let articleId = this.props.match.params.id;
 
         DB.collection(`test`)
-            .add(this.state)
+            .doc(articleId)
+            .set(this.state)
             .then((res) => {
                 this.props.history.push('/');
             })
@@ -59,12 +59,25 @@ class Create extends Component {
             })
     }
 
+    componentDidMount() {
+        let articleId = this.props.match.params.id;
+
+        postServices.getOne(articleId)
+            .then(res => {
+                this.setState(res)
+            })
+            .catch(err => console.log(err));
+    }
+
     render() {
-        let { title, imgUrl, description } = this.state;
+        let { title, imgUrl, description, visited } = this.state;
+
+        let checkedStatus = visited.length > 0 ? true : false;
 
         return (
+
             <>
-                <h2>Create a new place!</h2>
+                <h2>Edit this place!</h2>
 
                 <form className={style.createForm}>
 
@@ -98,11 +111,12 @@ class Create extends Component {
                         id="visited"
                         name="visited"
                         value="Visited"
+                        checked={checkedStatus}
                         onChange={this.inputHandler}
                     />
                     <label htmlFor="visited">Посетен</label>
 
-                    <input onClick={this.submitHandler} type="submit" name="Create" value="Create" />
+                    <input onClick={this.editHandler} type="submit" name="Edit" value="Edit" />
                 </form>
             </>
         )
@@ -110,5 +124,5 @@ class Create extends Component {
 
 }
 
-export default Create;
+export default Edit;
 

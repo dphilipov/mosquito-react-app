@@ -1,4 +1,5 @@
 import style from './Details.module.css';
+import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { dtFormat } from '../../config/dateFormat';
 import { UserConsumer } from '../userContext';
@@ -10,6 +11,8 @@ const Details = ({ match }) => {
     let [article, setArticle] = useState({});
     let [input, setInput] = useState('');
     let [date, setDate] = useState('');
+
+    let history = useHistory();
 
     const DB = firebase.firestore();
     let articleId = match.params.id;
@@ -50,13 +53,24 @@ const Details = ({ match }) => {
             .catch(err => console.log(err))
     }
 
+    const DeleteHandler = () => {
+
+        DB.collection(`test`).doc(articleId).delete()
+            .then((res) => {
+                history.push('/');
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
     return (
         <div className={style.container}>
             <div className={style.pointOfInterestDetails}>
                 <div className={style.pointOfInterestDetailsTop}>
                     <img src={article.imgUrl} alt="Image Preview" />
                     <div className={style.buttons}>
-                        <button>DELETE</button>
+                        <button onClick={DeleteHandler}>DELETE</button>
                         <button>EDIT</button>
                     </div>
                 </div>

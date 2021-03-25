@@ -39,13 +39,14 @@ const Header = (props) => {
                                     {!userCheck.isLogged
                                         ?
                                         <>
+                                            <Link to="/login">
+                                                <li>LOGIN</li>
+                                            </Link>
+                                            
                                             <Link to="/register">
                                                 <li>REGISTER</li>
                                             </Link>
 
-                                            <Link to="/login">
-                                                <li>LOGIN</li>
-                                            </Link>
                                         </>
                                         :
                                         <>

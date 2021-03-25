@@ -2,6 +2,7 @@ import firebase from '../../config/firebase.js';
 import style from './Create.module.css';
 import { Component } from 'react';
 import { dtFormat } from '../../config/dateFormat';
+import authServices from '../../services/authServices';
 
 const DB = firebase.firestore();
 
@@ -15,14 +16,31 @@ class Create extends Component {
             imgUrl: '',
             description: '',
             dateCreated: '',
-            // visited: Boolean
+            visited: [],
         }
     }
 
     inputHandler = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value,
-        })
+        if (event.target.name === 'visited') {
+            if (event.target.checked === true) {
+                let userId = authServices.getUserData().uid;
+                let newVisited = this.state.visited;
+                newVisited.push(userId)
+                this.setState({
+                    [event.target.name]: newVisited,
+                }); 
+            } else {
+                this.setState({
+                    [event.target.name]: [],
+                }); 
+            }
+
+        } else {
+            this.setState({
+                [event.target.name]: event.target.value,
+            });
+        }
+
     }
 
     submitHandler = async (event) => {
@@ -47,7 +65,7 @@ class Create extends Component {
         return (
             <form className={style.createForm}>
 
-                <label for="title">Title:</label>
+                <label htmlFor="title">Title:</label>
                 <input
                     type="text"
                     name="title"
@@ -55,7 +73,7 @@ class Create extends Component {
                     placeholder="Title"
                     onChange={this.inputHandler} />
 
-                <label for="imgUrl">Image Photo:</label>
+                <label htmlFor="imgUrl">Image Photo:</label>
                 <input
                     type="text"
                     name="imgUrl"
@@ -63,7 +81,7 @@ class Create extends Component {
                     placeholder="Enter URL here"
                     onChange={this.inputHandler} />
 
-                <label for="description">Description:</label>
+                <label htmlFor="description">Description:</label>
                 <textarea
                     type="text"
                     name="description"
@@ -71,6 +89,15 @@ class Create extends Component {
                     onChange={this.inputHandler}
                 >
                 </textarea>
+
+                <input
+                    type="checkbox"
+                    id="visited"
+                    name="visited"
+                    value="Visited"
+                    onChange={this.inputHandler}
+                />
+                <label htmlFor="visited">Посетен</label>
 
                 <input onClick={this.submitHandler} type="submit" name="Create" value="Create" />
             </form>

@@ -13,8 +13,10 @@
 
 .createForm input[type="submit"]{
     margin-top: 10px;
+    display: block;
 }
 
 .createForm textarea{
     width: 208px;
 }
+

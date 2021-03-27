@@ -1,7 +1,6 @@
 import firebase from '../../config/firebase.js';
 import style from './Edit.module.css';
 import { Component } from 'react';
-import { dtFormat } from '../../config/dateFormat';
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
 
@@ -77,7 +76,7 @@ class Edit extends Component {
         return (
 
             <>
-                <h2>Edit this place!</h2>
+                <h2 className={style.editHeading}>Edit this place!</h2>
 
                 <form className={style.createForm}>
 

@@ -64,24 +64,6 @@ const Details = ({ match }) => {
             })
     }
 
-    // const EditHandler = () => {
-    //     console.log(article);
-    //     // DB.collection(`test`).doc(articleId).get()
-    //     // .then((res) => {
-
-    //     //     DB.collection(`test`).doc(articleId).set({
-    //     //         ...res.data(),
-
-    //     //     })
-    //     //         .then((res) => {
-
-    //     //         })
-    //     //         .catch((err) => {
-    //     //             console.log(err);
-    //     //         })
-    //     // })
-    // }
-
     return (
         <div className={style.container}>
             <div className={style.pointOfInterestDetails}>

@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import pin from './location-map-pin.svg'
-import like from './badge-winner-won-star-award.svg'
 import style from './Article.module.css'
 
 const Article = ({ props }) => {
-    console.log(props);
     return (
         <article className={style.pointOfInterest}>
             <div className={style.poiPreview}>
@@ -23,10 +21,8 @@ const Article = ({ props }) => {
                         : `Visited by ${props.visited.length} people`
                     }
                 </span>
-                <a href="/like"><img src={like} alt="Like" className={style.like}
-                    title="Like" /></a>
-                <a href="/like"><img src={pin} alt="Like button" className={style.pin}
-                    title="Add to map" /></a>
+                <img src={pin} onClick={() => console.log(`click`)} alt="Like button" className={style.pin}
+                    title="Add to map" />
             </div>
         </article>
     )

@@ -64,7 +64,7 @@ class Create extends Component {
 
         return (
             <>
-                <h2>Create a new place!</h2>
+                <h2 className={style.createHeading}>Create a new place!</h2>
 
                 <form className={style.createForm}>
 

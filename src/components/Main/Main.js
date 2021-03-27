@@ -15,8 +15,17 @@ class Main extends Component {
         this.state = {
             articles: [],
             latestDoc: 0,
-            isEnd: false
+            isEnd: false,
+            updateParent: false
         }
+
+        this.updateParent = this.updateParent.bind(this);
+    }
+
+    updateParent() {
+        this.setState(prevState => ({
+            updateParent: !prevState.updateParent
+        }))
     }
 
     updateArticlesState() {
@@ -37,7 +46,7 @@ class Main extends Component {
 
     componentDidMount() {
 
-        postServices.getInitial(2, this.state.latestDoc)
+        postServices.getInitial(2)
             .then(data => {
                 if (data !== undefined) {
                     this.setState(prevState => ({
@@ -50,6 +59,24 @@ class Main extends Component {
 
             })
             .catch(err => console.log(err))
+    }
+
+    componentDidUpdate() {
+        if (this.state.updateParent) {
+            postServices.getInitial(this.state.articles.length)
+            .then(data => {
+                console.log(data);
+                if (data !== undefined) {
+                    this.setState(prevState => ({
+                        articles: [...data.collection],
+                    }));
+                }
+
+            })
+            .catch(err => console.log(err))
+
+            this.setState({updateParent: false})
+        }
     }
 
     render() {
@@ -77,7 +104,8 @@ class Main extends Component {
                 {this.state.articles.map(article => (
                     <Article
                         key={article.id}
-                        props={article}
+                        articleData={article}
+                        updateParent={this.updateParent}
                     />
                 ))}
 

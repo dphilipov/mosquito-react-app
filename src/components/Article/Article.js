@@ -5,7 +5,7 @@ import like from './badge-winner-won-star-award.svg'
 import style from './Article.module.css'
 
 const Article = ({ props }) => {
-
+    console.log(props);
     return (
         <article className={style.pointOfInterest}>
             <div className={style.poiPreview}>
@@ -17,6 +17,12 @@ const Article = ({ props }) => {
                 <h2>{props.title}</h2>
                 <p>{props.description}</p>
                 <span><strong>Date Added:</strong> {props.dateCreated}</span>
+                <span>
+                    {props.visited.length === 1
+                        ? `Visited by ${props.visited.length} person`
+                        : `Visited by ${props.visited.length} people`
+                    }
+                </span>
                 <a href="/like"><img src={like} alt="Like" className={style.like}
                     title="Like" /></a>
                 <a href="/like"><img src={pin} alt="Like button" className={style.pin}

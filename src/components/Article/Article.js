@@ -14,7 +14,7 @@ const Article = ({ articleData, updateParent}) => {
         event.preventDefault();
 
         let userId = JSON.parse(localStorage.getItem('user')).uid;
-        
+
         postServices.getOne(articleData.id)
             .then(targetArticle => {
                 setVisited(targetArticle.visited)

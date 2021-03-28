@@ -62,7 +62,7 @@ const Header = (props) => {
                                     }
 
                                     <span>Welcome, {userCheck.email}!
-                                        <Link to="/profile">
+                                        <Link to={`/profile/${userCheck.email}`}>
                                             <img src={profileIcon} alt="Profile" className={style.profile} />
                                         </Link>
                                     </span>

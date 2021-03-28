@@ -9,6 +9,7 @@ import Header from './components/Header/Header';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Create from './components/Create/Create';
+import Profile from './components/Profile/Profile';
 import Main from './components/Main/Main';
 import Details from './components/Details/Details';
 import Edit from './components/Edit/Edit';
@@ -80,9 +81,11 @@ class App extends Component {
 
 						<Route path="/create" component={Create} />
 
+						<Route path="/profile/:profileName" render={(props) => <Profile action={props, this.userCheck} />} />
+
 						<Route path="/article/:id" exact component={Details} />
 
-						<Route path="/article/:id/edit"  component={Edit} />
+						<Route path="/article/:id/edit" component={Edit} />
 
 						<Route render={() => <h1>Error Page</h1>} />
 					</Switch>

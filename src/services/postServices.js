@@ -73,6 +73,33 @@ function getOne(id) {
         })
 }
 
+function getProfileActivity(id, limit) {
+    let collection = [];
+
+    return DB.collection("test")
+    .orderBy("dateCreated", "desc")
+    .where("creator", "==", id)
+        .limit(limit)
+        .get()
+        .then((data) => {
+            if (data.size !== 0) {
+                data.forEach((doc) => {
+                    let id = doc.id;
+                    let docData = doc.data();
+
+                    collection.push({ id, ...docData });
+
+                })
+
+                return collection;
+            } else {
+                return [];
+            }
+
+        })
+        .catch(err => console.log(err))
+}
+
 function postComment(article) {
         let {id} = article;
         
@@ -92,6 +119,7 @@ const funcs = {
     getInitial,
     getMore,
     getOne,
+    getProfileActivity,
     postComment,
 }
 

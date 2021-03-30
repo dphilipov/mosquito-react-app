@@ -42,11 +42,14 @@ const Header = (props) => {
                                             <Link to="/login">
                                                 <li>LOGIN</li>
                                             </Link>
-                                            
+
                                             <Link to="/register">
                                                 <li>REGISTER</li>
                                             </Link>
 
+                                            <span>Welcome, {userCheck.email}!
+
+                                            </span>
                                         </>
                                         :
                                         <>
@@ -57,15 +60,28 @@ const Header = (props) => {
                                             <Link to="/map">
                                                 <li>MAP</li>
                                             </Link>
+
+                                            <span>Welcome, {userCheck.email}!
+                                            <Link to={`/profile/${userCheck.email}`}>
+                                                    <img src={profileIcon} alt="Profile" className={style.profile} />
+                                                </Link>
+                                            </span>
                                         </>
 
                                     }
 
-                                    <span>Welcome, {userCheck.email}!
-                                        <Link to={`/profile/${userCheck.email}`}>
-                                            <img src={profileIcon} alt="Profile" className={style.profile} />
-                                        </Link>
-                                    </span>
+                                    {/* <span>Welcome, {userCheck.email}!
+                                    {userCheck.isLogged
+                                            ?
+                                            <Link to={`/profile/${userCheck.email}`}>
+                                                <img src={profileIcon} alt="Profile" className={style.profile} />
+                                            </Link>
+                                            :
+                                            ''
+                                    } */}
+
+
+                                    {/* </span> */}
 
 
 

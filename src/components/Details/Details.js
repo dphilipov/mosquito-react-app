@@ -31,15 +31,33 @@ const Details = ({ match }) => {
         let commentData = {
             comment: input,
             date: postDate,
-            user: userEmail
+            user: userEmail,
+            userId: JSON.parse(localStorage.getItem('user')).uid
         }
 
         await setDate(postDate);
+
 
         DB.collection(`test`)
             .doc(articleId)
             .update({
                 comments: firebase.firestore.FieldValue.arrayUnion(commentData)
+            })
+            .then((res) => {
+                setInput('');
+
+                postServices.getOne(articleId)
+                    .then(res => {
+                        setArticle(res)
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err))
+
+        DB.collection(`test`)
+            .doc(articleId)
+            .update({
+                commentsUserIds: firebase.firestore.FieldValue.arrayUnion(JSON.parse(localStorage.getItem('user')).uid)
             })
             .then((res) => {
                 setInput('');

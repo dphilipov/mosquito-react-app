@@ -1,9 +1,10 @@
 import style from './Profile.module.css';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { UserConsumer } from '../userContext';
 import firebase from '../../config/firebase.js';
 import Article from '../Article/Article';
+import Comment from '../Comment/Comment';
 import authServices from '../../services/authServices';
 import postServices from '../../services/postServices';
 
@@ -11,6 +12,7 @@ import postServices from '../../services/postServices';
 const Profile = (props) => {
     let [newEmail, setNewEmail] = useState('');
     let [activities, setActivities] = useState([]);
+    let [comments, setComments] = useState([]);
     let [updateParent, setUpdateParent] = useState(false);
 
     useEffect(() => {
@@ -68,6 +70,22 @@ const Profile = (props) => {
         setUpdateParent(true)
     }
 
+    
+
+    const showProfileCommentsHandler = () => {
+
+        let user = authServices.getUserData('user')
+
+        postServices.getProfileComments(user.uid, 2)
+            .then(commentsData => {
+                setComments(commentsData)
+            })
+            .catch(err => console.log(err))
+
+    }
+
+
+    // RE-FETCH ACTIVITY AFTER LIKING/DISLIKING
     useEffect(() => {
         let user = authServices.getUserData('user')
 
@@ -79,6 +97,7 @@ const Profile = (props) => {
             .catch(err => console.log(err))
     }, [updateParent])
 
+    
     return (
 
         <UserConsumer>
@@ -94,6 +113,15 @@ const Profile = (props) => {
                                 <Article
                                     key={activity.id}
                                     articleData={activity}
+                                    updateParent={updateParentHandler}
+                                />
+                            )}
+
+                            <h3 onClick={showProfileCommentsHandler}>Latest Comments</h3>
+                            {comments.map((comment, index) =>
+                                <Comment
+                                    key={index}
+                                    commentInfo={comment}
                                     updateParent={updateParentHandler}
                                 />
                             )}

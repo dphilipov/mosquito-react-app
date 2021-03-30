@@ -77,8 +77,8 @@ function getProfileActivity(id, limit) {
     let collection = [];
 
     return DB.collection("test")
-    .orderBy("dateCreated", "desc")
-    .where("creator", "==", id)
+        .orderBy("dateCreated", "desc")
+        .where("creator", "==", id)
         .limit(limit)
         .get()
         .then((data) => {
@@ -101,18 +101,50 @@ function getProfileActivity(id, limit) {
 }
 
 function postComment(article) {
-        let {id} = article;
-        
-        DB.collection(`test`).doc(id).set({
-            ...article,
-            comments: article.comments
+    let { id } = article;
+
+    DB.collection(`test`).doc(id).set({
+        ...article,
+        comments: article.comments
+    })
+        .then((res) => {
+            console.log('success');
         })
-            .then((res) => {
-                console.log('success');
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
+function getProfileComments(userId) {
+    let collection = [];
+    let newCollection = [];
+
+    return DB.collection("test")
+        .orderBy("dateCreated", "desc")
+        .where("commentsUserIds", "array-contains", userId)
+        .get()
+        .then((data) => {
+            if (data.size !== 0) {
+                data.forEach((doc) => {
+                    let id = doc.id;
+                    let docData = doc.data();
+
+                    collection.push({ id, ...docData });
+
+                    collection.forEach(item => {
+                        newCollection.push(...item.comments.filter(x => x.userId == userId));
+
+                    })
+
+                })
+
+                return newCollection;
+            } else {
+                return [];
+            }
+
+        })
+        .catch(err => console.log(err))
 }
 
 const funcs = {
@@ -121,6 +153,7 @@ const funcs = {
     getOne,
     getProfileActivity,
     postComment,
+    getProfileComments,
 }
 
 export default funcs;

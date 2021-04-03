@@ -147,6 +147,23 @@ function getProfileComments(userId) {
         .catch(err => console.log(err))
 }
 
+function checkIfTitleExists(title) {
+    let exists = false;
+
+    return DB.collection("test")
+        .where("title", "==", title)
+        .get()
+        .then((res) => {
+            res.forEach((doc) => {
+                exists = true;
+            })
+
+            return exists;
+        })
+        .catch(err => console.log(err))
+
+}
+
 const funcs = {
     getInitial,
     getMore,
@@ -154,6 +171,7 @@ const funcs = {
     getProfileActivity,
     postComment,
     getProfileComments,
+    checkIfTitleExists,
 }
 
 export default funcs;

@@ -7,11 +7,15 @@ import firebase from '../../config/firebase.js';
 import Comment from '../Comment/Comment';
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
+import Notification from '../Notification/Notification';
+
 
 const Details = ({ match }) => {
     let [article, setArticle] = useState({});
     let [input, setInput] = useState('');
     let [date, setDate] = useState('');
+    let [notificationType, setNotificationType] = useState('');
+    let [notificationMessage, setNotificationMessage] = useState('');
 
     let history = useHistory();
 
@@ -28,6 +32,10 @@ const Details = ({ match }) => {
 
     const CommentHandler = async (event, userEmail) => {
         event.preventDefault();
+
+        setNotificationType('');
+        setNotificationMessage('');
+
         let postDate = dtFormat.format(new Date());
         let commentData = {
             comment: input,
@@ -38,6 +46,15 @@ const Details = ({ match }) => {
 
         await setDate(postDate);
 
+        if (input == ``) {
+            let type = "bad";
+            let message = "Comment can't be empty"
+
+            setNotificationType(type);
+            setNotificationMessage(message);
+
+            return
+        }
 
         DB.collection(`test`)
             .doc(articleId)
@@ -121,6 +138,11 @@ const Details = ({ match }) => {
                 : article.comments.map((comment, index) => (
                     <Comment key={index} commentInfo={comment} />
                 ))
+            }
+
+            {notificationType !== ''
+                ? <Notification type={notificationType} message={notificationMessage} />
+                : ''
             }
 
             <form className={style.commentForm}>

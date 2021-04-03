@@ -30,7 +30,6 @@ class Login extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        notificationServices.notificationsHandler = notificationServices.notificationsHandler.bind(this)
 
         let { username, password } = this.state;
 
@@ -44,14 +43,14 @@ class Login extends Component {
                 let type = "bad";
                 let message = error.message;
 
-                notificationServices.notificationsHandler(type, message)
+                notificationServices.notificationsHandler.call(this, type, message)
 
             });
 
     }
 
     render() {
-        let { username, password, rePassword } = this.state;
+        let { username, password } = this.state;
 
         return (
 

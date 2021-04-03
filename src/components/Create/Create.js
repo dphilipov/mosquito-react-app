@@ -5,6 +5,7 @@ import { dtFormat } from '../../config/dateFormat';
 import authServices from '../../services/authServices';
 import Notification from '../Notification/Notification';
 import notificationServices from '../../services/notificationServices';
+import postServices from '../../services/postServices';
 
 
 const DB = firebase.firestore();
@@ -58,12 +59,14 @@ class Create extends Component {
             dateCreated: dtFormat.format(new Date()),
         })
 
-        this.setState({notification: {
-            type: '',
-            message: ''
-        }});
+        this.setState({
+            notification: {
+                type: '',
+                message: ''
+            }
+        });
 
-        let {title, imgUrl, description} = this.state;
+        let { title, imgUrl, description } = this.state;
 
         if (title == ``) {
             let type = "bad";
@@ -101,14 +104,26 @@ class Create extends Component {
             return
         }
 
-        DB.collection(`test`)
-            .add(this.state)
-            .then((res) => {
-                this.props.history.push('/');
+        postServices.checkIfTitleExists(title)
+            .then(res => {
+                if (res === false) {
+                    DB.collection(`test`)
+                        .add(this.state)
+                        .then((res) => {
+                            this.props.history.push('/');
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                } else {
+                    let type = "bad";
+                    let message = "This place already exists"
+
+                    notificationServices.notificationsHandler.call(this, type, message)
+                }
             })
-            .catch((err) => {
-                console.log(err);
-            })
+
+
     }
 
     render() {

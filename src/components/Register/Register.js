@@ -30,7 +30,6 @@ class Register extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        notificationServices.notificationsHandler = notificationServices.notificationsHandler.bind(this)
 
         this.setState({notification: {
             type: '',
@@ -43,7 +42,7 @@ class Register extends Component {
             let type = "bad";
             let message = "Passwords must match!"
 
-            notificationServices.notificationsHandler(type, message)
+            notificationServices.notificationsHandler.call(this, type, message)
 
         } else {
             auth.createUserWithEmailAndPassword(username, password)
@@ -54,7 +53,7 @@ class Register extends Component {
                     let type = "bad";
                     let message = error.message;
 
-                    notificationServices.notificationsHandler(type, message)
+                    notificationServices.notificationsHandler.call(this, type, message)
                 });
         }
 

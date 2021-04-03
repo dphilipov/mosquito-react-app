@@ -29,7 +29,7 @@ class Main extends Component {
     }
 
     updateArticlesState() {
-        postServices.getMore(2, this.state.latestDoc)
+        postServices.getMore(5, this.state.latestDoc)
             .then(data => {
                 if (data !== undefined) {
                     this.setState(prevState => ({
@@ -46,7 +46,7 @@ class Main extends Component {
 
     componentDidMount() {
 
-        postServices.getInitial(2)
+        postServices.getInitial(5)
             .then(data => {
                 if (data !== undefined) {
                     this.setState(prevState => ({

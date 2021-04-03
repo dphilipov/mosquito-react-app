@@ -13,6 +13,7 @@ import Profile from './components/Profile/Profile';
 import Main from './components/Main/Main';
 import Details from './components/Details/Details';
 import Edit from './components/Edit/Edit';
+import Map from './components/Map/Map';
 import Footer from './components/Footer/Footer';
 
 class App extends Component {
@@ -86,6 +87,8 @@ class App extends Component {
 						<Route path="/article/:id" exact component={Details} />
 
 						<Route path="/article/:id/edit" component={Edit} />
+
+						<Route path="/map" component={Map} />
 
 						<Route render={() => <h1>Error Page</h1>} />
 					</Switch>

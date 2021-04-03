@@ -1,0 +1,40 @@
+.profileContainer {
+    width: 1024px;
+    margin: auto;
+}
+
+.profileContainer h3 {
+    color: #314a36;
+}
+
+.profileContainer h3 {
+    color: #a2a46d;
+}
+
+
+
+.createButton {
+    border: none;
+    background-color: #ea486a;
+    border-radius: 5px;
+    color: #f8e6d3;
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 22px;
+    float: right;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+
+
+.showMore {
+    display: block;
+    margin: 0 auto;
+}
+
+p.end {
+    color: #a2a46d;
+    text-align: center;
+}

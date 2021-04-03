@@ -6,6 +6,7 @@ import { UserConsumer } from '../userContext';
 import firebase from '../../config/firebase.js';
 import Comment from '../Comment/Comment';
 import postServices from '../../services/postServices';
+import authServices from '../../services/authServices';
 
 const Details = ({ match }) => {
     let [article, setArticle] = useState({});
@@ -32,7 +33,7 @@ const Details = ({ match }) => {
             comment: input,
             date: postDate,
             user: userEmail,
-            userId: JSON.parse(localStorage.getItem('user')).uid
+            userId: authServices.getUserData().uid
         }
 
         await setDate(postDate);
@@ -57,7 +58,7 @@ const Details = ({ match }) => {
         DB.collection(`test`)
             .doc(articleId)
             .update({
-                commentsUserIds: firebase.firestore.FieldValue.arrayUnion(JSON.parse(localStorage.getItem('user')).uid)
+                commentsUserIds: firebase.firestore.FieldValue.arrayUnion(authServices.getUserData().uid)
             })
             .then((res) => {
                 setInput('');
@@ -87,15 +88,24 @@ const Details = ({ match }) => {
             <div className={style.pointOfInterestDetails}>
                 <div className={style.pointOfInterestDetailsTop}>
                     <img src={article.imgUrl} alt="Image Preview" />
-                    <div className={style.buttons}>
-                        <button onClick={DeleteHandler}>DELETE</button>
-                        <Link to={{
-                            pathname: `/article/${articleId}/edit`,
-                            articleProps: article
-                        }}>
-                            <button>EDIT</button>
-                        </Link>
-                    </div>
+
+
+                    {article.creator == authServices.getUserData().uid
+                        ?
+                        <div className={style.buttons}>
+                            <button onClick={DeleteHandler}>DELETE</button>
+                            <Link to={{
+                                pathname: `/article/${articleId}/edit`,
+                                articleProps: article
+                            }}>
+                                <button>EDIT</button>
+                            </Link>
+                        </div>
+                        :
+                        ''
+                    }
+
+
                 </div>
                 <h2>{article.title}</h2>
                 <p>{article.description}</p>

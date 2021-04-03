@@ -3,6 +3,8 @@ import style from './Edit.module.css';
 import { Component } from 'react';
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
+import Notification from '../Notification/Notification';
+import notificationServices from '../../services/notificationServices';
 
 const DB = firebase.firestore();
 
@@ -17,6 +19,10 @@ class Edit extends Component {
             description: '',
             dateCreated: '',
             visited: [],
+            notification: {
+                type: '',
+                message: ''
+            }
         }
     }
 
@@ -43,9 +49,57 @@ class Edit extends Component {
 
     }
 
-    editHandler = async (event) => {
+    editHandler = (event) => {
         event.preventDefault();
+
         let articleId = this.props.match.params.id;
+
+        this.setState({notification: {
+            type: '',
+            message: ''
+        }});
+
+
+        let {title, imgUrl, description} = this.state;
+
+        if (title == ``) {
+            let type = "bad";
+            let message = "Title can't be empty"
+
+            notificationServices.notificationsHandler.call(this, type, message)
+
+            return
+        }
+
+        if (imgUrl == ``) {
+            let type = "bad";
+            let message = "Image URL can't be empty"
+
+            notificationServices.notificationsHandler.call(this, type, message)
+
+            return
+
+        }
+
+        if (description == ``) {
+            let type = "bad";
+            let message = "Description can't be empty"
+
+            notificationServices.notificationsHandler.call(this, type, message)
+
+            return
+
+        }
+
+        if (description.length < 50) {
+            let type = "bad";
+            let message = "Description must be at least 50 characters"
+
+            notificationServices.notificationsHandler.call(this, type, message)
+
+            return
+
+        }
 
         DB.collection(`test`)
             .doc(articleId)
@@ -77,6 +131,11 @@ class Edit extends Component {
 
             <>
                 <h2 className={style.editHeading}>Edit this place!</h2>
+
+                {this.state.notification.type !== ''
+                    ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
+                    : ''
+                }
 
                 <form className={style.createForm}>
 

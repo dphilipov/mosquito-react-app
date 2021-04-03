@@ -2,6 +2,8 @@ import firebase from '../../config/firebase.js';
 import { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import authServices from '../../services/authServices';
+import Notification from '../Notification/Notification';
+import notificationServices from '../../services/notificationServices';
 import style from './Login.module.css';
 
 const auth = firebase.auth();
@@ -13,6 +15,10 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
+            notification: {
+                type: '',
+                message: ''
+            }
         }
     }
 
@@ -24,6 +30,7 @@ class Login extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
+        notificationServices.notificationsHandler = notificationServices.notificationsHandler.bind(this)
 
         let { username, password } = this.state;
 
@@ -34,9 +41,11 @@ class Login extends Component {
                 this.props.history.push('/');
             })
             .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(`Error code: ${errorCode} > ${errorMessage}`);
+                let type = "bad";
+                let message = error.message;
+
+                notificationServices.notificationsHandler(type, message)
+
             });
 
     }
@@ -45,30 +54,38 @@ class Login extends Component {
         let { username, password, rePassword } = this.state;
 
         return (
-            <form className={style.loginForm}>
 
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    placeholder="Username"
-                    value={username}
-                    onChange={this.inputHandler}
-                />
+            <>
+                {this.state.notification.type !== ''
+                    ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
+                    : ''
+                }
 
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={this.inputHandler}
-                />
+                <form className={style.loginForm}>
 
-                <input onClick={this.submitHandler} type="submit" name="Login" value="Login" />
-            </form>
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        placeholder="Username"
+                        value={username}
+                        onChange={this.inputHandler}
+                    />
+
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={this.inputHandler}
+                    />
+
+                    <input onClick={this.submitHandler} type="submit" name="Login" value="Login" />
+                </form>
+            </>
         )
     }
 

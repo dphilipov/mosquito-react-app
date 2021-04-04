@@ -105,7 +105,7 @@ const Profile = (props) => {
                                         updateParent={updateParentHandler}
                                     />
                                 )
-                                : <p>No places created yet</p>
+                                : ''
                             }
 
                             {comments.length > 0
@@ -116,7 +116,7 @@ const Profile = (props) => {
                                         updateParent={updateParentHandler}
                                     />
                                 )
-                                : <p>User has no commentsz yet</p>
+                                : ''
                             }
                         </div>
                     )

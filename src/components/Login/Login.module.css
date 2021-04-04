@@ -25,7 +25,7 @@ h3 {
     line-height: 50px;
     display: block;
     margin: 10px auto;
-    width: 100%;
+    width: calc(100% - 20px);
     padding-left: 20px;
 }
 
@@ -33,7 +33,6 @@ h3 {
     margin-top: 30px;
     font-size: 20px;
     padding: 0px;
-
     border: none;
     background-color: #ea486a;
     border-radius: 5px;

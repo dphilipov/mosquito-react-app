@@ -6,8 +6,6 @@
     width: 500px;
     -webkit-animation: fadeinout 5s linear forwards;
     animation: fadeinout 5s linear forwards;
-    height: 40px;
-    line-height: 35px;
 }
 
 @-webkit-keyframes fadeinout {

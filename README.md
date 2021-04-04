@@ -7,6 +7,8 @@ The website allows for a Guest view, with limited interaction and a Logged in vi
 
 Routing is done client-side via the React Router. The website uses a mix of class and functional components, the Context API, controlled forms and does styling via CSS components.
 
+Architecturally, components are split into folders, containing the relevant logic, styling and assets. Services related to Authentication, Fetching data and Notifications are kept separate and imported and invoked when necessary.
+
 # Getting Started
 
 Clone the repo and run `npm install` to install all dependencies.

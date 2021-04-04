@@ -1,6 +1,9 @@
 .activityTitle {
-    display: inline-block;
-    color: #a2a46d;
+    color: #314a36;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Bebas Neue', 'Arial', cursive;
+    margin: 25px 0 20px 0;
 }
 
 .createButton {
@@ -8,11 +11,9 @@
     background-color: #ea486a;
     border-radius: 5px;
     color: #f8e6d3;
-    width: 100px;
     height: 40px;
     font-weight: bold;
     font-size: 22px;
-    float: right;
     margin-top: 20px;
     cursor: pointer;
 }
@@ -20,14 +21,35 @@
 .main {
     width: 1024px;
     margin: auto;
+    padding-bottom: 65px;
 }
 
 .showMore {
     display: block;
     margin: 0 auto;
+    border: none;
+    background-color: #ea486a;
+    border-radius: 5px;
+    color: #f8e6d3;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
 }
 
-p.end {
-    color: #a2a46d;
+.showMoreArrow {
     text-align: center;
+    color: #ea486a;
+    margin: 0;
+    line-height: 9px;
+}
+
+span.end {
+    color: black;
+    text-align: center;
+}
+
+.endIcon {
+    width: 50px;
+    display: block;
+    margin: 0 auto;
 }

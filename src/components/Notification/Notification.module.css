@@ -1,21 +1,25 @@
 .notification{
     text-align: center;
     border-radius: 5px;
-    color: white;
+    color: #f8e6d3;
     margin: 5px auto;
     width: 500px;
-    -webkit-animation: fadeinout 2s linear forwards;
-    animation: fadeinout 2s linear forwards;
+    -webkit-animation: fadeinout 5s linear forwards;
+    animation: fadeinout 5s linear forwards;
+    height: 40px;
+    line-height: 35px;
 }
 
 @-webkit-keyframes fadeinout {
     0%,100% { opacity: 0; }
-    50% { opacity: 1; }
+    20% { opacity: 1; }
+    60% { opacity: 1; }
 }
   
 @keyframes fadeinout {
     0%,100% { opacity: 0; }
-    50% { opacity: 1; }
+    20% { opacity: 1; }
+    60% { opacity: 1; }
 }
 
 .good {
@@ -23,5 +27,5 @@
 }
 
 .bad {
-    background-color: red;
+    background-color: #ea486a;
 }

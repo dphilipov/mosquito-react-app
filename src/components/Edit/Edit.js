@@ -54,13 +54,15 @@ class Edit extends Component {
 
         let articleId = this.props.match.params.id;
 
-        this.setState({notification: {
-            type: '',
-            message: ''
-        }});
+        this.setState({
+            notification: {
+                type: '',
+                message: ''
+            }
+        });
 
 
-        let {title, imgUrl, description} = this.state;
+        let { title, imgUrl, description } = this.state;
 
         if (title == ``) {
             let type = "bad";
@@ -105,7 +107,7 @@ class Edit extends Component {
             .doc(articleId)
             .set(this.state)
             .then((res) => {
-                this.props.history.push('/');
+                this.props.history.push(`/article/${articleId}`);
             })
             .catch((err) => {
                 console.log(err);
@@ -130,12 +132,12 @@ class Edit extends Component {
         return (
 
             <>
-                <h2 className={style.editHeading}>Edit this place!</h2>
-
                 {this.state.notification.type !== ''
                     ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
                     : ''
                 }
+
+                <h3 className={style.editHeading}>Edit this place</h3>
 
                 <form className={style.createForm}>
 
@@ -144,7 +146,7 @@ class Edit extends Component {
                         type="text"
                         name="title"
                         value={title}
-                        placeholder="Title"
+                        placeholder="Title of the place"
                         onChange={this.inputHandler} />
 
                     <label htmlFor="imgUrl">Image Photo:</label>

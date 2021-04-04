@@ -21,13 +21,20 @@ header {
 }
 
 .navBar a:hover {
-    text-decoration: underline overline;
+    color: #314a36;
 }
 
 .navBar li {
     display: inline;
-    margin: 0 5px;
+    margin-left: 5px;
     font-weight: bold;
+    font-family: 'Bebas Neue', 'Arial', cursive;
+    font-size: 30px;
+    float: right;
+}
+
+.welcomeMessage {
+    text-align: right;
 }
 
 .profile {

@@ -1,10 +1,10 @@
 import style from './Main.module.css'
-
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
 import { UserConsumer } from '../userContext';
 import postServices from '../../services/postServices'
 import Article from '../Article/Article'
+import mountain from './mountain-peak-icon.png';
 
 
 class Main extends Component {
@@ -64,18 +64,18 @@ class Main extends Component {
     componentDidUpdate() {
         if (this.state.updateParent) {
             postServices.getInitial(this.state.articles.length)
-            .then(data => {
-                console.log(data);
-                if (data !== undefined) {
-                    this.setState(prevState => ({
-                        articles: [...data.collection],
-                    }));
-                }
+                .then(data => {
+                    console.log(data);
+                    if (data !== undefined) {
+                        this.setState(prevState => ({
+                            articles: [...data.collection],
+                        }));
+                    }
 
-            })
-            .catch(err => console.log(err))
+                })
+                .catch(err => console.log(err))
 
-            this.setState({updateParent: false})
+            this.setState({ updateParent: false })
         }
     }
 
@@ -84,7 +84,7 @@ class Main extends Component {
         return (
 
             <div className={style.main}>
-                <h3 className={style.activityTitle}>Activity Feed</h3>
+                <h3 className={style.activityTitle}>- DISCOVER PLACES -</h3>
 
                 <UserConsumer>
                     {
@@ -92,7 +92,7 @@ class Main extends Component {
 
                             {
                                 if (userCheck.isLogged) {
-                                    return <Link to="/create" ><button className={style.createButton}>CREATE</button></Link>
+                                    return <Link to="/create" ><button className={style.createButton}>ADD A NEW PLACE</button></Link>
                                 }
 
                             }
@@ -101,23 +101,37 @@ class Main extends Component {
                     }
                 </UserConsumer>
 
-                {this.state.articles.map(article => (
-                    <Article
-                        key={article.id}
-                        articleData={article}
-                        updateParent={this.updateParent}
-                    />
-                ))}
+                {this.state.articles.length > 0
+                    ? <>
+                        {this.state.articles.map(article => (
+                            <Article
+                                key={article.id}
+                                articleData={article}
+                                updateParent={this.updateParent}
+                            />
+                        ))}
+                        {this.state.isEnd
+                            ?
+                            <>
+                                <img src={mountain} className={style.endIcon}></img>
+                                <span className={style.end}>-NO MORE PLACES TO SHOW-</span>
+                            </>
+                            :
+                            <>
+                                < button onClick={() => {
+                                    this.updateArticlesState();
+                                }} className={style.showMore}>
+                                    SHOW MORE </button>
+                                <span className={style.showMoreArrow}>&#9660;</span>
+                            </>
+                        }
+                    </>
 
-                {this.state.isEnd ?
-                    <p className={style.end}>-NO MORE PLACES TO SHOW-</p>
-                    :
-                    <button onClick={() => {
-                        this.updateArticlesState();
-                    }} className={style.showMore}>
-                        SHOW MORE
-                    </button>
+                    : <p>No places yet</p>
                 }
+
+
+
 
             </div>
         )

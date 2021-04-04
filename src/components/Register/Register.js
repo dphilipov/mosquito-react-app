@@ -31,10 +31,12 @@ class Register extends Component {
     submitHandler = (event) => {
         event.preventDefault();
 
-        this.setState({notification: {
-            type: '',
-            message: ''
-        }});
+        this.setState({
+            notification: {
+                type: '',
+                message: ''
+            }
+        });
 
         let { username, password, rePassword } = this.state;
 
@@ -47,7 +49,17 @@ class Register extends Component {
         } else {
             auth.createUserWithEmailAndPassword(username, password)
                 .then((userCredentials) => {
-                    this.props.history.push('/login');
+
+                    let type = "good";
+                    let message = "Registration successful!"
+
+                    notificationServices.notificationsHandler.call(this, type, message)
+
+                    setTimeout(() => {
+                        this.props.history.push('/login');
+
+                    }, 2000)
+
                 })
                 .catch((error) => {
                     let type = "bad";
@@ -72,6 +84,8 @@ class Register extends Component {
                     : ''
                 }
 
+                <h3>Registration Info</h3>
+
                 <form className={style.registerForm}>
 
                     <label htmlFor="username">Username:</label>
@@ -79,7 +93,7 @@ class Register extends Component {
                         type="text"
                         name="username"
                         id="username"
-                        placeholder="Username"
+                        placeholder="Enter your email adress"
                         value={username}
                         onChange={this.inputHandler}
                     />
@@ -89,7 +103,7 @@ class Register extends Component {
                         type="password"
                         name="password"
                         id="password"
-                        placeholder="Password"
+                        placeholder="Enter your password"
                         value={password}
                         onChange={this.inputHandler}
                     />
@@ -99,7 +113,7 @@ class Register extends Component {
                         type="password"
                         name="rePassword"
                         id="rePassword"
-                        placeholder="Repeat Password"
+                        placeholder="Enter your password again"
                         value={rePassword}
                         onChange={this.inputHandler}
                     />

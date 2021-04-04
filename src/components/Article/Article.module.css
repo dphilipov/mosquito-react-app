@@ -7,9 +7,10 @@
 }
 
 .pointOfInterest img.thumbnail {
-    width: 100px;
-    height: 100px;
-    background-color: white;
+    width: 200px;
+    height: 150px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
 }
 
 .pointOfInterest p, span, h2 {
@@ -17,12 +18,20 @@
     color: #314a36;
 }
 
+.pointOfInterest span {
+    display: inline-block;
+    float: right;
+    font-style: italic;
+    font-size: 14px;
+}
+
 .pointOfInterest h2 {
     margin: 0;
+    display: inline-block;
 }
 
 .pointOfInterest p {
-    margin-top: 0px;
+    margin: 10px 0;
 }
 
 .poiPreview {
@@ -34,6 +43,11 @@
 }
 
 .pin {
-    width: 24px;
+    margin-top: 10px;
+    display: block;
+    background-color: #ea486a;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    color: white;
 }

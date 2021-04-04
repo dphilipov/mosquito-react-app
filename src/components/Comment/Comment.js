@@ -5,7 +5,7 @@ const Comment = (props) => {
     
     return (
         <div className={style.comment}>
-            <h3>{user}</h3>
+            <h4>{user}</h4>
             <p>{comment}</p>
             <span>{date}</span>        
         </div>

@@ -5,29 +5,42 @@
 
 .profileContainer h3 {
     color: #314a36;
+    display: inline-block;
 }
 
-.profileContainer h3 {
-    color: #a2a46d;
+.profileContainer ul {
+    padding: 0;
 }
 
+.profileContainer li {
+    font-size: 20px;
+    display: inline;
+    text-align: left;
+    margin-right: 50px;
+    font-weight: bold;
+    color: #314a36;
+    cursor: pointer;
+    background: #f1f1f1;
+    padding: 5px 10px;
+}
 
-
-.createButton {
+.deleteProfile {
     border: none;
-    background-color: #ea486a;
+    background-color: #f1f1f1;
     border-radius: 5px;
-    color: #f8e6d3;
-    width: 100px;
+    color: #a1a1a1;
     height: 40px;
     font-weight: bold;
     font-size: 22px;
-    float: right;
-    margin-top: 20px;
+    margin-top: 35px;
     cursor: pointer;
+    float: right;
 }
 
-
+.deleteProfile:hover {
+    background-color: #ea486a;
+    color: #f8e6d3;
+}
 
 .showMore {
     display: block;

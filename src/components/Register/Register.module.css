@@ -1,16 +1,35 @@
 .registerForm {
-    width: 200px;
-    margin: 30px auto;
+    width: 500px;
+    margin: 0px auto;
+    overflow: hidden;
 }
 
 .registerForm label{
     color: #314a36;
+    display: block;
+    font-size: 18px;
 }
 
 .registerForm input{
-    margin-bottom: 10px;
+    border: none;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    line-height: 50px;
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    padding-left: 20px;
 }
 
 .registerForm input[type="submit"]{
-    margin-top: 10px;
+    margin-top: 30px;
+    font-size: 20px;
+    padding: 0px;
+
+    border: none;
+    background-color: #ea486a;
+    border-radius: 5px;
+    color: #f8e6d3;
+    font-size: 18px;
+    cursor: pointer;
 }

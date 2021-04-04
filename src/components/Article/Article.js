@@ -2,13 +2,20 @@ import { Link } from 'react-router-dom';
 import firebase from '../../config/firebase.js';
 import postServices from '../../services/postServices';
 import { useState } from 'react';
-import pin from './location-map-pin.svg'
 import style from './Article.module.css'
+import authServices from '../../services/authServices';
+
 
 const DB = firebase.firestore();
 
-const Article = ({ articleData, updateParent}) => {
+const Article = ({ articleData, updateParent }) => {
     let [visited, setVisited] = useState(articleData);
+
+    let user = undefined;
+
+    if (authServices.getUserData()) {
+        user = authServices.getUserData().uid;
+    }
 
     const visitedHandler = (event) => {
         event.preventDefault();
@@ -48,21 +55,24 @@ const Article = ({ articleData, updateParent}) => {
         <article className={style.pointOfInterest}>
             <div className={style.poiPreview}>
                 <Link to={`/article/${articleData.id}`}>
-                    <img src={articleData.imgUrl} alt="Thumbnail" className={style.thumbnail} />
+                    <img src={articleData.imgUrl} className={style.thumbnail} />
                 </ Link>
             </div>
             <div>
                 <h2>{articleData.title}</h2>
+                <span className={style.dateAdded}><strong>Date Added:</strong> {articleData.dateCreated}</span>
                 <p>{articleData.description}</p>
-                <span><strong>Date Added:</strong> {articleData.dateCreated}</span>
-                <span>
+                <span className={style.visitedBy}>
                     {articleData.visited.length === 1
                         ? `Visited by ${articleData.visited.length} person`
                         : `Visited by ${articleData.visited.length} people`
                     }
                 </span>
-                <img src={pin} onClick={(event) => visitedHandler(event)} alt="Like button" className={style.pin}
-                    title="Add to map" />
+                {user
+                    ? <button onClick={(event) => visitedHandler(event)} className={style.pin}>TAG AS VISITED</ button>
+
+                    : ''
+                }
             </div>
         </article>
     )

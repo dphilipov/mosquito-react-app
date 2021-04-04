@@ -19,14 +19,16 @@ const Map = () => {
 
     return (
         <div>
-            <GoogleMap
+            {/* <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={8}
                 center={center}
             >
 
 
-            </GoogleMap>
+            </GoogleMap> */}
+
+            <h3>Under Construction</h3>
         </div>
     )
 

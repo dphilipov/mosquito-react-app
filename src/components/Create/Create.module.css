@@ -3,24 +3,50 @@
 }
 
 .createForm {
-    width: 200px;
-    margin: 30px auto;
+    width: 500px;
+    margin: 0px auto;
+    overflow: hidden;
 }
 
 .createForm label{
     color: #314a36;
+    font-size: 18px;
 }
 
 .createForm input{
-    margin-bottom: 10px;
+    border: none;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    line-height: 50px;
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    padding-left: 20px;
 }
 
 .createForm input[type="submit"]{
-    margin-top: 10px;
-    display: block;
+    margin-top: 30px;
+    font-size: 20px;
+    padding: 0px;
+    border: none;
+    background-color: #ea486a;
+    border-radius: 5px;
+    color: #f8e6d3;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 .createForm textarea{
-    width: 208px;
+    width: 100%;
+    height: 150px;
+    margin: 10px auto;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    border: none;
 }
 
+.createForm input[type="checkbox"]{
+    display: inline;
+    width: 16px;
+    margin-right: 5px;
+}

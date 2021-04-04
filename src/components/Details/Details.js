@@ -18,6 +18,11 @@ const Details = ({ match }) => {
     let [notificationMessage, setNotificationMessage] = useState('');
 
     let history = useHistory();
+    let user = undefined;
+
+    if (authServices.getUserData()) {
+        user = authServices.getUserData().uid;
+    }
 
     const DB = firebase.firestore();
     let articleId = match.params.id;
@@ -102,12 +107,15 @@ const Details = ({ match }) => {
 
     return (
         <div className={style.container}>
+            <h3>{article.title}</h3>
+
             <div className={style.pointOfInterestDetails}>
                 <div className={style.pointOfInterestDetailsTop}>
-                    <img src={article.imgUrl} alt="Image Preview" />
+
+                    <img src={article.imgUrl} />
 
 
-                    {article.creator == authServices.getUserData().uid
+                    {article.creator === user
                         ?
                         <div className={style.buttons}>
                             <button onClick={DeleteHandler}>DELETE</button>
@@ -124,16 +132,15 @@ const Details = ({ match }) => {
 
 
                 </div>
-                <h2>{article.title}</h2>
                 <p>{article.description}</p>
             </div>
 
-            <h2>Comments:</h2>
+            <h3>Comments:</h3>
 
             {(article.comments == undefined || article.comments.length == 0)
 
                 ? <div className={style.noComments}>
-                    <p>No comments yet. Be the first one to do it!</p>
+                    <p>No comments yet.</p>
                 </div>
                 : article.comments.map((comment, index) => (
                     <Comment key={index} commentInfo={comment} />
@@ -145,33 +152,40 @@ const Details = ({ match }) => {
                 : ''
             }
 
-            <form className={style.commentForm}>
-                <textarea
-                    type="text"
-                    name="comment"
-                    placeholder="Write your comment..."
-                    value={input}
-                    onChange={(event) => setInput(event.target.value)}
-                ></textarea>
+            {user
+                ? <form className={style.commentForm}>
+                    <textarea
+                        type="text"
+                        name="comment"
+                        placeholder="Write your comment..."
+                        value={input}
+                        onChange={(event) => setInput(event.target.value)}
+                    ></textarea>
 
-                <UserConsumer>
-                    {
-                        (userCheck) => {
-                            return (
-                                <input
-                                    type="submit"
-                                    name="Submit"
-                                    value="Submit"
-                                    onClick={(event) => CommentHandler(event, userCheck.email)}
-                                />
-                            )
+                    <UserConsumer>
+                        {
+                            (userCheck) => {
+                                return (
+                                    <input
+                                        type="submit"
+                                        name="Submit"
+                                        value="SUBMIT COMMENT"
+                                        onClick={(event) => CommentHandler(event, userCheck.email)}
+                                    />
+                                )
+                            }
+
                         }
 
-                    }
+                    </UserConsumer>
 
-                </UserConsumer>
+                </form>
+                : ''
 
-            </form>
+
+
+            }
+
         </div>
     )
 

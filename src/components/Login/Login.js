@@ -31,13 +31,29 @@ class Login extends Component {
     submitHandler = (event) => {
         event.preventDefault();
 
+        this.setState({
+            notification: {
+                type: '',
+                message: ''
+            }
+        });
+        
         let { username, password } = this.state;
 
         auth.signInWithEmailAndPassword(username, password)
             .then((userCredentials) => {
                 authServices.saveUserData(userCredentials);
                 this.props.action();
-                this.props.history.push('/');
+
+                let type = "good";
+                let message = "Login successful!"
+
+                notificationServices.notificationsHandler.call(this, type, message)
+
+                setTimeout(() => {
+                    this.props.history.push('/');
+
+                }, 2000)
             })
             .catch((error) => {
                 let type = "bad";
@@ -60,6 +76,8 @@ class Login extends Component {
                     : ''
                 }
 
+                <h3>Member Login</h3>
+
                 <form className={style.loginForm}>
 
                     <label htmlFor="username">Username:</label>
@@ -67,7 +85,7 @@ class Login extends Component {
                         type="text"
                         name="username"
                         id="username"
-                        placeholder="Username"
+                        placeholder="Enter your email adress"
                         value={username}
                         onChange={this.inputHandler}
                     />
@@ -77,7 +95,7 @@ class Login extends Component {
                         type="password"
                         name="password"
                         id="password"
-                        placeholder="Password"
+                        placeholder="Enter your password"
                         value={password}
                         onChange={this.inputHandler}
                     />

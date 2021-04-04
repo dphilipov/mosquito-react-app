@@ -33,59 +33,46 @@ const Header = (props) => {
                                     className={style.logo} />
                                 </Link>
 
-                                <ul className={style.navBar}>
+                                {!userCheck.isLogged
+                                    ?
+                                    <ul className={style.navBar}>
+                                        <Link to="/login">
+                                            <li>LOGIN</li>
+                                        </Link>
+
+                                        <Link to="/register">
+                                            <li>REGISTER</li>
+                                        </Link>
+
+                                        <span className={style.welcomeMessage}>Welcome, {userCheck.email}!
+
+                                        </span>
+                                    </ul>
 
 
-                                    {!userCheck.isLogged
-                                        ?
-                                        <>
-                                            <Link to="/login">
-                                                <li>LOGIN</li>
-                                            </Link>
+                                    :
+                                    <ul className={style.navBar}>
+                                        <Link to="/login" onClick={() => onLogout()}>
+                                            <li>LOGOUT</li>
+                                        </Link>
 
-                                            <Link to="/register">
-                                                <li>REGISTER</li>
-                                            </Link>
+                                        <Link to="/map">
+                                            <li>MAP</li>
+                                        </Link>
 
-                                            <span>Welcome, {userCheck.email}!
-
-                                            </span>
-                                        </>
-                                        :
-                                        <>
-                                            <Link to="/login" onClick={() => onLogout()}>
-                                                <li>LOGOUT</li>
-                                            </Link>
-
-                                            <Link to="/map">
-                                                <li>MAP</li>
-                                            </Link>
-
-                                            <span>Welcome, {userCheck.email}!
+                                        <span className={style.welcomeMessage}>
+                                            Welcome, 
                                             <Link to={`/profile/${userCheck.email}`}>
-                                                    <img src={profileIcon} alt="Profile" className={style.profile} />
-                                                </Link>
-                                            </span>
-                                        </>
-
-                                    }
-
-                                    {/* <span>Welcome, {userCheck.email}!
-                                    {userCheck.isLogged
-                                            ?
-                                            <Link to={`/profile/${userCheck.email}`}>
-                                                <img src={profileIcon} alt="Profile" className={style.profile} />
+                                                <strong> {userCheck.email}</strong>
                                             </Link>
-                                            :
-                                            ''
-                                    } */}
-
-
-                                    {/* </span> */}
+                                            !
+                                        </span>
+                                    </ul>
 
 
 
-                                </ul>
+                                }
+
                             </div>
                         </header>
                     )

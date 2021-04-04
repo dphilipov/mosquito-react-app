@@ -110,7 +110,15 @@ class Create extends Component {
                     DB.collection(`test`)
                         .add(this.state)
                         .then((res) => {
-                            this.props.history.push('/');
+
+                            let type = "good";
+                            let message = "Place created successfully!"
+
+                            notificationServices.notificationsHandler.call(this, type, message)
+
+                            setTimeout(() => {
+                                this.props.history.push('/');
+                            }, 2000)
                         })
                         .catch((err) => {
                             console.log(err);
@@ -123,7 +131,6 @@ class Create extends Component {
                 }
             })
 
-
     }
 
     render() {
@@ -131,12 +138,13 @@ class Create extends Component {
 
         return (
             <>
-                <h2 className={style.createHeading}>Create a new place!</h2>
 
                 {this.state.notification.type !== ''
                     ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
                     : ''
                 }
+
+                <h3 className={style.createHeading}>Create a new place!</h3>
 
                 <form className={style.createForm}>
 
@@ -145,7 +153,7 @@ class Create extends Component {
                         type="text"
                         name="title"
                         value={title}
-                        placeholder="Title"
+                        placeholder="Title of the place"
                         onChange={this.inputHandler} />
 
                     <label htmlFor="imgUrl">Image Photo:</label>
@@ -172,7 +180,7 @@ class Create extends Component {
                         value="Visited"
                         onChange={this.inputHandler}
                     />
-                    <label htmlFor="visited">Посетен</label>
+                    <label htmlFor="visited">Visited</label>
 
                     <input onClick={this.submitHandler} type="submit" name="Create" value="Create" />
                 </form>

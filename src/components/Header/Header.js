@@ -56,6 +56,10 @@ const Header = (props) => {
                                             <li>LOGOUT</li>
                                         </Link>
 
+                                        <Link to={`/profile/${userCheck.email}`}>
+                                            <li>PROFILE</li>
+                                        </Link>
+
                                         <Link to="/map">
                                             <li>MAP</li>
                                         </Link>

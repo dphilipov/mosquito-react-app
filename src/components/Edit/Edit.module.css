@@ -1,5 +1,6 @@
 .editHeading {
     text-align: center;
+    margin-bottom: 0px;
 }
 
 .createForm {
@@ -34,6 +35,7 @@
     color: #f8e6d3;
     font-size: 18px;
     cursor: pointer;
+    margin-bottom: 100px;
 }
 
 .createForm textarea{
@@ -49,5 +51,20 @@
     display: inline;
     width: 16px;
     margin-right: 5px;
+}
+
+.mandatory {
+    color: #314a36;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.hint {
+    text-align: center;
+    color: #314a36;
+    font-size: 14px;
+    font-style: italic;
+    margin-top: 0px;
+    margin-bottom: 30px;
 }
 

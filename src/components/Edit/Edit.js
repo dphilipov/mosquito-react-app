@@ -125,7 +125,7 @@ class Edit extends Component {
     }
 
     render() {
-        let { title, imgUrl, description, visited } = this.state;
+        let { title, imgUrl, lat, lng, description, visited } = this.state;
 
         let checkedStatus = visited.length > 0 ? true : false;
 
@@ -138,6 +138,7 @@ class Edit extends Component {
                 }
 
                 <h3 className={style.editHeading}>Edit this place</h3>
+                <p className={style.hint}>You use a website like https://www.latlong.net/ for the coordinates</p>
 
                 <form className={style.createForm}>
 
@@ -155,6 +156,22 @@ class Edit extends Component {
                         name="imgUrl"
                         value={imgUrl}
                         placeholder="Enter URL here"
+                        onChange={this.inputHandler} />
+
+                    <label htmlFor="lat">Latitude:*</label>
+                    <input
+                        type="text"
+                        name="lat"
+                        value={lat}
+                        placeholder="Enter place latitude (e.g. 42.144920)"
+                        onChange={this.inputHandler} />
+
+                    <label htmlFor="lng">Longitude:*</label>
+                    <input
+                        type="text"
+                        name="lng"
+                        value={lng}
+                        placeholder="Enter place longitude (e.g. 24.750320)"
                         onChange={this.inputHandler} />
 
                     <label htmlFor="description">Description:</label>

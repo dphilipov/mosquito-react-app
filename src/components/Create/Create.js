@@ -25,7 +25,9 @@ class Create extends Component {
             notification: {
                 type: '',
                 message: ''
-            }
+            },
+            lat: null,
+            lng: null,
         }
     }
 
@@ -145,10 +147,11 @@ class Create extends Component {
                 }
 
                 <h3 className={style.createHeading}>Create a new place!</h3>
+                <p className={style.hint}>You use a website like https://www.latlong.net/ for the coordinates</p>
 
                 <form className={style.createForm}>
 
-                    <label htmlFor="title">Title:</label>
+                    <label htmlFor="title">Title:*</label>
                     <input
                         type="text"
                         name="title"
@@ -156,7 +159,7 @@ class Create extends Component {
                         placeholder="Title of the place"
                         onChange={this.inputHandler} />
 
-                    <label htmlFor="imgUrl">Image Photo:</label>
+                    <label htmlFor="imgUrl">Image Photo:*</label>
                     <input
                         type="text"
                         name="imgUrl"
@@ -164,7 +167,23 @@ class Create extends Component {
                         placeholder="Enter URL here"
                         onChange={this.inputHandler} />
 
-                    <label htmlFor="description">Description:</label>
+                    <label htmlFor="lat">Latitude:*</label>
+                    <input
+                        type="text"
+                        name="lat"
+                        value={imgUrl}
+                        placeholder="Enter place latitude (e.g. 42.144920)"
+                        onChange={this.inputHandler} />
+
+                    <label htmlFor="lng">Longitude:*</label>
+                    <input
+                        type="text"
+                        name="lng"
+                        value={imgUrl}
+                        placeholder="Enter place longitude (e.g. 24.750320)"
+                        onChange={this.inputHandler} />
+
+                    <label htmlFor="description">Description:*</label>
                     <textarea
                         type="text"
                         name="description"
@@ -182,6 +201,7 @@ class Create extends Component {
                     />
                     <label htmlFor="visited">Visited</label>
 
+                    <p className={style.mandatory}>* are mandatory</p>
                     <input onClick={this.submitHandler} type="submit" name="Create" value="Create" />
                 </form>
             </>

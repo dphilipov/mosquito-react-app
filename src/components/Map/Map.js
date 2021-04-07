@@ -1,35 +1,84 @@
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-
-
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { useState, useEffect } from 'react';
+import style from './Map.module.css';
+import mapStyles from './mapStyles';
+import postServices from '../../services/postServices';
+import authServices from '../../services/authServices';
 
 const Map = () => {
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    })
+    const [markers, setMarkers] = useState([]);
+    
+    const options = {
+        styles: mapStyles,
+        disableDefaultUI: true,
+        zoomControl: true,
+    }
 
     const mapContainerStyle = {
         width: '100vw',
-        height: '100vh',
+        height: 'calc(100vh - 187px)',
     }
 
     const center = {
-        lat: 51.509865,
-        lng: -0.118092,
+        lat: 42.1500,
+        lng: 24.7500,
     }
 
+    useEffect(() => {
+
+        let user = authServices.getUserData('user')
+
+        postServices.getProfileActivity(user.uid)
+            .then(activitiesData => {
+                setMarkers(activitiesData);
+            })
+            .catch(err => console.log(err))
+
+    }, [])
+
     return (
-        <div>
-            {/* <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                zoom={8}
-                center={center}
-            >
+        <LoadScript
+            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        >
+            <div className={style.map}>
+                <GoogleMap
+                    mapContainerStyle={mapContainerStyle}
+                    zoom={8}
+                    center={center}
+                    options={options}
+                >
+                    {markers.length > 0
+                        ?
+                        markers.map((marker) => {
 
+                            let {id, lat, lng, title } = marker;
 
-            </GoogleMap> */}
+                            return (
+                                <Marker
+                                    key={id}
+                                    position={
+                                        {
+                                            lat,
+                                            lng
+                                        }
+                                    }
+                                    icon={{
+                                        url: "/map_pin_icon.svg.png",
+                                    }}
+                                    title={title}
+                                    animation={2}
+                                />
+                            )
 
-            <h3>Under Construction</h3>
-        </div>
+                        })
+                        :
+                        ''
+                    }
+
+                </GoogleMap>
+
+            </div>
+        </LoadScript>
     )
 
 

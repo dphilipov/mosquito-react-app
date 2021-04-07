@@ -61,7 +61,7 @@ const Header = (props) => {
                                         </Link>
 
                                         <Link to="/map">
-                                            <li>MAP</li>
+                                            <li>MY MAP</li>
                                         </Link>
 
                                         <span className={style.welcomeMessage}>

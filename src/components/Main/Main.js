@@ -127,7 +127,7 @@ class Main extends Component {
                         }
                     </>
 
-                    : <p>No places yet</p>
+                    : <p className={style.noPlaces}>No places yet</p>
                 }
 
 

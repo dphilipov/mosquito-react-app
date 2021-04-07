@@ -47,7 +47,7 @@ const Profile = (props) => {
     const showProfileActivityHandler = () => {
         let user = authServices.getUserData('user')
 
-        postServices.getProfileActivity(user.uid, 5)
+        postServices.getProfileActivity(user.uid)
             .then(activitiesData => {
                 setActivities(activitiesData)
                 setComments([])
@@ -60,7 +60,7 @@ const Profile = (props) => {
 
         let user = authServices.getUserData('user')
 
-        postServices.getProfileComments(user.uid, 2)
+        postServices.getProfileComments(user.uid)
             .then(commentsData => {
                 setComments(commentsData)
                 setActivities([]);
@@ -89,35 +89,38 @@ const Profile = (props) => {
             {
                 (userCheck) => {
                     return (
-                        <div className={style.profileContainer}>
-                            <h3>{userCheck.email}`s Profile Page</h3>
-                            <button className={style.deleteProfile} onClick={deleteProfileHandler}>DELETE PROFILE</button>
+                        <div className={style.main}>
 
-                            <ul>
-                                <li onClick={showProfileActivityHandler}>View {userCheck.email}`s Latest Activity &#9660;</li>
-                                <li onClick={showProfileCommentsHandler}>View {userCheck.email}`s Latest Comments &#9660;</li>
-                            </ul>
-                            {activities.length > 0
-                                ? activities.map(activity =>
-                                    <Article
-                                        key={activity.id}
-                                        articleData={activity}
-                                        updateParent={updateParentHandler}
-                                    />
-                                )
-                                : ''
-                            }
+                            <div className={style.profileContainer}>
+                                <h3>{userCheck.email}`s Profile Page</h3>
+                                <button className={style.deleteProfile} onClick={deleteProfileHandler}>DELETE PROFILE</button>
 
-                            {comments.length > 0
-                                ? comments.map((comment, index) =>
-                                    <Comment
-                                        key={index}
-                                        commentInfo={comment}
-                                        updateParent={updateParentHandler}
-                                    />
-                                )
-                                : ''
-                            }
+                                <ul>
+                                    <li onClick={showProfileActivityHandler}>View {userCheck.email}`s Latest Activity &#9660;</li>
+                                    <li onClick={showProfileCommentsHandler}>View {userCheck.email}`s Latest Comments &#9660;</li>
+                                </ul>
+                                {activities.length > 0
+                                    ? activities.map(activity =>
+                                        <Article
+                                            key={activity.id}
+                                            articleData={activity}
+                                            updateParent={updateParentHandler}
+                                        />
+                                    )
+                                    : ''
+                                }
+
+                                {comments.length > 0
+                                    ? comments.map((comment, index) =>
+                                        <Comment
+                                            key={index}
+                                            commentInfo={comment}
+                                            updateParent={updateParentHandler}
+                                        />
+                                    )
+                                    : ''
+                                }
+                            </div>
                         </div>
                     )
                 }

@@ -126,18 +126,20 @@ function getProfileComments(userId) {
         .then((data) => {
             if (data.size !== 0) {
                 data.forEach((doc) => {
+
                     let id = doc.id;
                     let docData = doc.data();
 
                     collection.push({ id, ...docData });
 
-                    collection.forEach(item => {
-                        newCollection.push(...item.comments.filter(x => x.userId == userId));
 
-                    })
 
                 })
 
+                collection.forEach(item => {
+                    newCollection.push(...item.comments.filter(x => x.userId == userId));
+                })
+                
                 return newCollection;
             } else {
                 return [];

@@ -136,7 +136,7 @@ class Create extends Component {
     }
 
     render() {
-        let { title, imgUrl, description } = this.state;
+        let { title, imgUrl, description, lat, lng } = this.state;
 
         return (
             <>
@@ -171,7 +171,7 @@ class Create extends Component {
                     <input
                         type="text"
                         name="lat"
-                        value={imgUrl}
+                        value={lat}
                         placeholder="Enter place latitude (e.g. 42.144920)"
                         onChange={this.inputHandler} />
 
@@ -179,7 +179,7 @@ class Create extends Component {
                     <input
                         type="text"
                         name="lng"
-                        value={imgUrl}
+                        value={lng}
                         placeholder="Enter place longitude (e.g. 24.750320)"
                         onChange={this.inputHandler} />
 

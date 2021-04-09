@@ -1,5 +1,4 @@
 import logo from './backpack-blue-rucksack-travel-canvas.svg';
-import profileIcon from './person-purple-hair-man.svg';
 import style from './Header.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import { UserConsumer } from '../userContext';

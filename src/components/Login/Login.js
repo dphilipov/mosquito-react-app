@@ -1,6 +1,6 @@
 import firebase from '../../config/firebase.js';
 import { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import authServices from '../../services/authServices';
 import Notification from '../Notification/Notification';
 import notificationServices from '../../services/notificationServices';

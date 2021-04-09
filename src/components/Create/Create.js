@@ -26,8 +26,8 @@ class Create extends Component {
                 type: '',
                 message: ''
             },
-            lat: null,
-            lng: null,
+            lat: '',
+            lng: '',
         }
     }
 
@@ -68,7 +68,10 @@ class Create extends Component {
             }
         });
 
-        let { title, imgUrl, description } = this.state;
+        let { title, imgUrl, description, creator, dateCreated, visited } = this.state;
+        let lat = Number(this.state.lat);
+        let lng = Number(this.state.lng);
+
 
         if (title == ``) {
             let type = "bad";
@@ -110,7 +113,7 @@ class Create extends Component {
             .then(res => {
                 if (res === false) {
                     DB.collection(`test`)
-                        .add(this.state)
+                        .add({title, imgUrl, description, creator, dateCreated, visited, lat, lng})
                         .then((res) => {
 
                             let type = "good";

@@ -1,5 +1,6 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import style from './Map.module.css';
 import mapStyles from './mapStyles';
 import postServices from '../../services/postServices';
@@ -7,7 +8,7 @@ import authServices from '../../services/authServices';
 
 const Map = () => {
     const [markers, setMarkers] = useState([]);
-    
+
     const options = {
         styles: mapStyles,
         disableDefaultUI: true,
@@ -23,6 +24,8 @@ const Map = () => {
         lat: 42.1500,
         lng: 24.7500,
     }
+
+    let history = useHistory();
 
     useEffect(() => {
 
@@ -51,7 +54,7 @@ const Map = () => {
                         ?
                         markers.map((marker) => {
 
-                            let {id, lat, lng, title } = marker;
+                            let { id, lat, lng, title } = marker;
 
                             return (
                                 <Marker
@@ -67,6 +70,7 @@ const Map = () => {
                                     }}
                                     title={title}
                                     animation={2}
+                                    onClick={(e) => history.push(`/article/${id}`)}
                                 />
                             )
 

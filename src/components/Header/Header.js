@@ -1,4 +1,4 @@
-import logo from './backpack-blue-rucksack-travel-canvas.svg';
+import logo from './mosquito-logo.png';
 import style from './Header.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import { UserConsumer } from '../userContext';
@@ -75,8 +75,10 @@ const Header = (props) => {
 
 
                                 }
+                            <span className={style.logoText}>MOSQUITO</span>
 
                             </div>
+
                         </header>
                     )
                 }

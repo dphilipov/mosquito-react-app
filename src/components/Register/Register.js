@@ -28,10 +28,10 @@ class Register extends Component {
         })
     }
 
-    submitHandler = (event) => {
+    submitHandler = async (event) => {
         event.preventDefault();
 
-        this.setState({
+        await this.setState({
             notification: {
                 type: '',
                 message: ''
@@ -43,7 +43,6 @@ class Register extends Component {
         if (password !== rePassword) {
             let type = "bad";
             let message = "Passwords must match!"
-
             notificationServices.notificationsHandler.call(this, type, message)
 
         } else {

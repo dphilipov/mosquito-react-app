@@ -28,10 +28,10 @@ class Login extends Component {
         })
     }
 
-    submitHandler = (event) => {
+    submitHandler = async (event) => {
         event.preventDefault();
 
-        this.setState({
+        await this.setState({
             notification: {
                 type: '',
                 message: ''

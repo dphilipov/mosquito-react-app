@@ -32,6 +32,8 @@
 
 .pointOfInterest p {
     margin: 10px 0;
+    width: 794px;
+    word-wrap: break-word;
 }
 
 .poiPreview {

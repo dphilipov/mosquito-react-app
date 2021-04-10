@@ -49,12 +49,12 @@ class Edit extends Component {
 
     }
 
-    editHandler = (event) => {
+    editHandler = async (event) => {
         event.preventDefault();
 
         let articleId = this.props.match.params.id;
 
-        this.setState({
+        await this.setState({
             notification: {
                 type: '',
                 message: ''

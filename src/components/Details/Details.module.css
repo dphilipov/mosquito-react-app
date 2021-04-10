@@ -21,6 +21,7 @@
     color: #314a36;
     margin: 0px;
     padding: 20px;
+    word-wrap: break-word;
 }
 
 .pointOfInterestDetailsTop button {

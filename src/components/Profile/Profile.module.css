@@ -51,3 +51,9 @@ p.end {
     color: #a2a46d;
     text-align: center;
 }
+
+.loader {
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}

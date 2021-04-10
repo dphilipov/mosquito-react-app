@@ -10,6 +10,13 @@ header {
 
 .logo {
     width: 10%;
+    margin-left: 15px;
+}
+
+.logoText {
+    font-family: 'Bebas Neue', 'Arial', cursive;
+    font-size: 40px;
+    margin-left: 5px;
 }
 
 .navBar {

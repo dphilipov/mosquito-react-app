@@ -73,7 +73,7 @@ class Create extends Component {
         let lng = Number(this.state.lng);
 
 
-        if (title == ``) {
+        if (title === ``) {
             let type = "bad";
             let message = "Title can't be empty"
 
@@ -82,7 +82,7 @@ class Create extends Component {
             return
         }
 
-        if (imgUrl == ``) {
+        if (imgUrl === ``) {
             let type = "bad";
             let message = "Image URL can't be empty"
 
@@ -91,7 +91,7 @@ class Create extends Component {
             return
         }
 
-        if (description == ``) {
+        if (description === ``) {
             let type = "bad";
             let message = "Description can't be empty"
 

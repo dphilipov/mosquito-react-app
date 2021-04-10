@@ -78,11 +78,11 @@ class App extends Component {
 
 						<Route path="/register" component={Register} />
 
-						<Route path="/login" render={(props) => <Login action={props, this.userCheck} />} />
+						<Route path="/login" render={(props) => <Login action={this.userCheck} />} />
 
 						<Route path="/create" component={Create} />
 
-						<Route path="/profile/:profileName" render={(props) => <Profile action={props, this.userCheck} />} />
+						<Route path="/profile/:profileName" render={(props) => <Profile action={this.userCheck} />} />
 
 						<Route path="/article/:id" exact component={Details} />
 

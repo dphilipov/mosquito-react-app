@@ -90,11 +90,8 @@ class Main extends Component {
                     {
                         (userCheck) => {
 
-                            {
-                                if (userCheck.isLogged) {
-                                    return <Link to="/create" ><button className={style.createButton}>ADD A NEW PLACE</button></Link>
-                                }
-
+                            if (userCheck.isLogged) {
+                                return <Link to="/create" ><button className={style.createButton}>ADD A NEW PLACE</button></Link>
                             }
 
                         }
@@ -113,7 +110,7 @@ class Main extends Component {
                         {this.state.isEnd
                             ?
                             <>
-                                <img src={mountain} className={style.endIcon}></img>
+                                <img src={mountain} className={style.endIcon} alt="" />
                                 <span className={style.end}>-NO MORE PLACES TO SHOW-</span>
                             </>
                             :

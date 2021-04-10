@@ -13,7 +13,7 @@ import Notification from '../Notification/Notification';
 const Details = ({ match }) => {
     let [article, setArticle] = useState({});
     let [input, setInput] = useState('');
-    let [date, setDate] = useState('');
+    // let [date, setDate] = useState('');
     let [notificationType, setNotificationType] = useState('');
     let [notificationMessage, setNotificationMessage] = useState('');
 
@@ -33,7 +33,7 @@ const Details = ({ match }) => {
                 setArticle(res)
             })
             .catch(err => console.log(err));
-    }, [match]);
+    }, []);
 
     const CommentHandler = async (event, userEmail) => {
         event.preventDefault();
@@ -49,9 +49,9 @@ const Details = ({ match }) => {
             userId: authServices.getUserData().uid
         }
 
-        await setDate(postDate);
+        // await setDate(postDate);
 
-        if (input == ``) {
+        if (input === ``) {
             let type = "bad";
             let message = "Comment can't be empty"
 
@@ -112,7 +112,7 @@ const Details = ({ match }) => {
             <div className={style.pointOfInterestDetails}>
                 <div className={style.pointOfInterestDetailsTop}>
 
-                    <img src={article.imgUrl} />
+                    <img src={article.imgUrl} alt="" />
 
 
                     {article.creator === user
@@ -137,7 +137,7 @@ const Details = ({ match }) => {
 
             <h3>Comments:</h3>
 
-            {(article.comments == undefined || article.comments.length == 0)
+            {(article.comments === undefined || article.comments.length === 0)
 
                 ? <div className={style.noComments}>
                     <p>No comments yet.</p>

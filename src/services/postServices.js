@@ -137,7 +137,7 @@ function getProfileComments(userId) {
                 })
 
                 collection.forEach(item => {
-                    newCollection.push(...item.comments.filter(x => x.userId == userId));
+                    newCollection.push(...item.comments.filter(x => x.userId === userId));
                 })
                 
                 return newCollection;

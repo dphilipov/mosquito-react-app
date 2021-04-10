@@ -1,5 +1,4 @@
 import style from './Notification.module.css';
-import warningIcon from './warning-icon.png';
 
 const Notification = ({type, message}) => {
 

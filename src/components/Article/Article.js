@@ -55,7 +55,7 @@ const Article = ({ articleData, updateParent }) => {
         <article className={style.pointOfInterest}>
             <div className={style.poiPreview}>
                 <Link to={`/article/${articleData.id}`}>
-                    <img src={articleData.imgUrl} className={style.thumbnail} />
+                    <img src={articleData.imgUrl} className={style.thumbnail} alt=""/>
                 </ Link>
             </div>
             <div>

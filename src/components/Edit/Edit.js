@@ -64,7 +64,7 @@ class Edit extends Component {
 
         let { title, imgUrl, description } = this.state;
 
-        if (title == ``) {
+        if (title === ``) {
             let type = "bad";
             let message = "Title can't be empty"
 
@@ -73,7 +73,7 @@ class Edit extends Component {
             return
         }
 
-        if (imgUrl == ``) {
+        if (imgUrl === ``) {
             let type = "bad";
             let message = "Image URL can't be empty"
 
@@ -83,7 +83,7 @@ class Edit extends Component {
 
         }
 
-        if (description == ``) {
+        if (description === ``) {
             let type = "bad";
             let message = "Description can't be empty"
 

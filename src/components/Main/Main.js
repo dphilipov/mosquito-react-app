@@ -69,7 +69,6 @@ class Main extends Component {
         if (this.state.updateParent) {
             postServices.getInitial(this.state.articles.length)
                 .then(data => {
-                    console.log(data);
                     if (data !== undefined) {
                         this.setState(prevState => ({
                             articles: [...data.collection],
@@ -102,8 +101,7 @@ class Main extends Component {
 
                 {this.state.isLoading === true
                     ? <img className={style.loader} src={spinner} alt="loader"></img>
-                    :
-                    this.state.articles.length > 0
+                    : this.state.articles.length > 0
                         ? <>
                             {this.state.articles.map(article => (
                                 <Article
@@ -113,27 +111,25 @@ class Main extends Component {
                                 />
                             ))}
                             {this.state.isEnd
-                                ?
-                                <>
+                                ? <>
                                     <img src={mountain} className={style.endIcon} alt="" />
                                     <span className={style.end}>-NO MORE PLACES TO SHOW-</span>
                                 </>
-                                :
-                                <>
-                                    < button onClick={() => {
-                                        this.updateArticlesState();
-                                    }} className={style.showMore}>
-                                        SHOW MORE </button>
+                                : <>
+                                    < button
+                                        onClick={() => {
+                                            this.updateArticlesState();
+                                        }}
+                                        className={style.showMore}
+                                    >
+                                        SHOW MORE
+                                    </button>
                                     <span className={style.showMoreArrow}>&#9660;</span>
                                 </>
                             }
                         </>
-
                         : <p className={style.noPlaces}>No places yet</p>
                 }
-
-
-
 
             </div>
         )

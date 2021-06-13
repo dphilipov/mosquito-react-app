@@ -13,7 +13,6 @@ import Notification from '../Notification/Notification';
 const Details = ({ match }) => {
     let [article, setArticle] = useState({});
     let [input, setInput] = useState('');
-    // let [date, setDate] = useState('');
     let [notificationType, setNotificationType] = useState('');
     let [notificationMessage, setNotificationMessage] = useState('');
 
@@ -33,7 +32,7 @@ const Details = ({ match }) => {
                 setArticle(res)
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [articleId]);
 
     const CommentHandler = async (event, userEmail) => {
         event.preventDefault();

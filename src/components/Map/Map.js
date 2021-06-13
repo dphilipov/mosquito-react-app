@@ -21,8 +21,12 @@ const Map = () => {
     }
 
     const center = {
-        lat: 42.1500,
-        lng: 24.7500,
+        lat: 42.765833,
+        lng: 25.238611,
+    }
+
+    const icon = {
+        url: "/map_pin_icon.svg.png",
     }
 
     let history = useHistory();
@@ -51,10 +55,9 @@ const Map = () => {
                     options={options}
                 >
                     {markers.length > 0
-                        ?
-                        markers.map((marker) => {
+                        ? markers.map((marker) => {
 
-                            let { id, lat, lng, title } = marker;
+                            const { id, lat, lng, title } = marker;
 
                             return (
                                 <Marker
@@ -65,9 +68,7 @@ const Map = () => {
                                             lng
                                         }
                                     }
-                                    icon={{
-                                        url: "/map_pin_icon.svg.png",
-                                    }}
+                                    icon={icon}
                                     title={title}
                                     animation={2}
                                     onClick={(e) => history.push(`/article/${id}`)}
@@ -75,8 +76,7 @@ const Map = () => {
                             )
 
                         })
-                        :
-                        ''
+                        : null
                     }
 
                 </GoogleMap>

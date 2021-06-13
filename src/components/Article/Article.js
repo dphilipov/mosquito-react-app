@@ -9,7 +9,7 @@ import authServices from '../../services/authServices';
 const DB = firebase.firestore();
 
 const Article = ({ articleData, updateParent }) => {
-    let [visited, setVisited] = useState(articleData);
+    const [visited, setVisited] = useState(articleData);
 
     let user = undefined;
 

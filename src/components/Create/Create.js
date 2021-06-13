@@ -91,7 +91,7 @@ class Create extends Component {
             return
         }
 
-        if (lat === `` || Number(lat) === NaN) {
+        if (lat === `` || isNaN(Number(lat))) {
             let type = "bad";
             let message = "Latitude can't be empty and must be a number"
             notificationServices.notificationsHandler.call(this, type, message)
@@ -99,7 +99,7 @@ class Create extends Component {
             return
         }
 
-        if (lng === `` || Number(lng) === NaN) {
+        if (lng === `` || isNaN(Number(lng))) {
             let type = "bad";
             let message = "Longitude can't be empty and must be a number"
 

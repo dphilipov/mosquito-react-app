@@ -9,7 +9,7 @@ import authServices from '../../services/authServices';
 const DB = firebase.firestore();
 
 const Article = ({ articleData, updateParent }) => {
-    const [visited, setVisited] = useState(articleData);
+    const [visited, setVisited] = useState(articleData.visited);
 
     let user = undefined;
 
@@ -22,40 +22,43 @@ const Article = ({ articleData, updateParent }) => {
 
         let userId = JSON.parse(localStorage.getItem('user')).uid;
 
-        postServices.getOne(articleData.id)
-            .then(targetArticle => {
-                setVisited(targetArticle.visited)
-
-                if (targetArticle.visited.includes(userId)) {
-                    DB.collection(`test`)
-                        .doc(targetArticle.id)
-                        .update({
-                            visited: firebase.firestore.FieldValue.arrayRemove(userId)
-                        })
-                        .then((res) => {
+        if (visited.includes(userId)) {
+            DB.collection(`test`)
+                .doc(articleData.id)
+                .update({
+                    visited: firebase.firestore.FieldValue.arrayRemove(userId)
+                })
+                .then((res) => {
+                    postServices.getOne(articleData.id)
+                        .then(res => {
+                            setVisited(res.visited);
                             updateParent()
                         })
-                        .catch(err => console.log(err))
-                } else {
-                    DB.collection(`test`)
-                        .doc(targetArticle.id)
-                        .update({
-                            visited: firebase.firestore.FieldValue.arrayUnion(userId)
-                        })
-                        .then((res) => {
+                })
+                .catch(err => console.log(err))
+        } else {
+            DB.collection(`test`)
+                .doc(articleData.id)
+                .update({
+                    visited: firebase.firestore.FieldValue.arrayUnion(userId)
+                })
+                .then((res) => {
+                    postServices.getOne(articleData.id)
+                        .then(res => {
+                            setVisited(res.visited);
                             updateParent()
                         })
-                        .catch(err => console.log(err))
-                }
+                })
+                .catch(err => console.log(err))
+        }
 
-            })
     }
 
     return (
         <article className={style.pointOfInterest}>
             <div className={style.poiPreview}>
                 <Link to={`/article/${articleData.id}`}>
-                    <img src={articleData.imgUrl} className={style.thumbnail} alt=""/>
+                    <img src={articleData.imgUrl} className={style.thumbnail} alt="" />
                 </ Link>
             </div>
             <div>
@@ -63,9 +66,9 @@ const Article = ({ articleData, updateParent }) => {
                 <span className={style.dateAdded}><strong>Date Added:</strong> {articleData.dateCreated}</span>
                 <p>{articleData.description}</p>
                 <span className={style.visitedBy}>
-                    {articleData.visited.length === 1
-                        ? `Visited by ${articleData.visited.length} person`
-                        : `Visited by ${articleData.visited.length} people`
+                    {visited.length === 1
+                        ? `Visited by ${visited.length} person`
+                        : `Visited by ${visited.length} people`
                     }
                 </span>
                 {user

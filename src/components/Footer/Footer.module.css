@@ -7,7 +7,9 @@ footer {
     position: absolute;
     bottom: 0px;
     width: 100%;
-    line-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .wrapper {

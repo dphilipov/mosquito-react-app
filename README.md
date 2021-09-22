@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/dphilipov/mosquito-app">
+  <a href="https://github.com/dphilipov/mosquito-react-app.git">
     <img src="./src/components/Header/mosquito-logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -114,7 +114,7 @@ The project is built using:
 
 Dimitar Filipov - dphilipov@mail.bg
 
-Project Link: [https://github.com/dphilipov/mosquito-app.git](https://github.com/dphilipov/mosquito-app.git)
+Project Link: [https://github.com/dphilipov/mosquito-react-app.git](https://github.com/dphilipov/mosquito-react-app.git)
 
 
 

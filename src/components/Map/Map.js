@@ -1,37 +1,25 @@
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+// import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { MapContainer, TileLayer, Marker, Tooltip } from 'react-leaflet'
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
 import style from './Map.module.css';
-import mapStyles from './mapStyles';
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
+import L from 'leaflet';
+import icon from './map-pin.png';
 
-// const MAPS_API_KEY = "Insert your API key here"
 
 const Map = () => {
     const [markers, setMarkers] = useState([]);
-
-    const options = {
-        styles: mapStyles,
-        disableDefaultUI: true,
-        zoomControl: true,
-    }
-
-    const mapContainerStyle = {
-        width: '100vw',
-        height: 'calc(100vh - 87px)',
-    }
 
     const center = {
         lat: 42.765833,
         lng: 25.238611,
     }
 
-    const icon = {
-        url: "/map_pin_icon.svg.png",
-    }
-
-    let history = useHistory();
+    const markerIcon = new L.Icon({
+        iconUrl: icon,
+        iconAnchor: [15, 42],
+    });
 
     useEffect(() => {
 
@@ -46,45 +34,32 @@ const Map = () => {
     }, [])
 
     return (
-        <LoadScript
-            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || MAPS_API_KEY}
+        <MapContainer
+            className={style.map}
+            center={center}
+            zoom={8}
+            scrollWheelZoom={true}
         >
-            <div className={style.map}>
-                <GoogleMap
-                    mapContainerStyle={mapContainerStyle}
-                    zoom={8}
-                    center={center}
-                    options={options}
-                >
-                    {markers.length > 0
-                        ? markers.map((marker) => {
+            <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-                            const { id, lat, lng, title } = marker;
+            {markers.map(marker => {
+                return (
+                    <Marker
+                        position={[marker.lat, marker.lng]}
+                        key={marker.id}
+                        icon={markerIcon}
+                    >
+                        <Tooltip direction="bottom" opacity={1}>
+                            {marker.title}
+                        </Tooltip>
+                    </Marker>
+                )
+            })}
 
-                            return (
-                                <Marker
-                                    key={id}
-                                    position={
-                                        {
-                                            lat,
-                                            lng
-                                        }
-                                    }
-                                    icon={icon}
-                                    title={title}
-                                    animation={2}
-                                    onClick={(e) => history.push(`/article/${id}`)}
-                                />
-                            )
-
-                        })
-                        : null
-                    }
-
-                </GoogleMap>
-
-            </div>
-        </LoadScript>
+        </MapContainer>
     )
 
 

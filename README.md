@@ -79,11 +79,7 @@ The project is built using:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-<!-- Clone the repo and run `npm install` to install all dependencies.
 
-Run `npm start` to launch the website at http://localhost:3000.
-
-In case you are getting `ERROR: No version of chokidar is available.` run `npm update` and then `npm start` again.  -->
 
 ### Installation
 
@@ -110,7 +106,7 @@ In case you are getting `ERROR: No version of chokidar is available.` run `npm u
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-**Register** a new account & **Login**. This allows you to **Create** new landmarks, to **Comment** on all existing ones and to *Tag/Untag* on the ones you have visited. Furthermore, you can **Edit** & **Delete** the landmarks you have created. Going to **Map** loads a map with all of your created landmarks. In your **Profile** page you can view your latest activity and **Delete** your account if needed.
+**Register** a new account & **Login**. This allows you to **Create** new landmarks, to **Comment** on all existing ones and to **Tag/Untag** on the ones you have visited. Furthermore, you can **Edit** & **Delete** the landmarks you have created. Going to **Map** loads a map with all of your created landmarks. In your **Profile** page you can view your latest activity and **Delete** your account if needed.
 
 
 <!-- CONTACT -->

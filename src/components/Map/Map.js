@@ -6,6 +6,8 @@ import mapStyles from './mapStyles';
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
 
+// const MAPS_API_KEY = "Insert your API key here"
+
 const Map = () => {
     const [markers, setMarkers] = useState([]);
 
@@ -45,7 +47,7 @@ const Map = () => {
 
     return (
         <LoadScript
-            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || MAPS_API_KEY}
         >
             <div className={style.map}>
                 <GoogleMap

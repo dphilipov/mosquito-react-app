@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/dphilipov/mosquito-react-app.git">
-    <img src="./src/components/Header/mosquito-logo.png" alt="Logo" width="80" height="80">
+    <img src="./src/components/Header/mosquito-logo.png" alt="Logo" width="160" height="160">
   </a>
 
   <h3 align="center">Mosquito App</h3>
@@ -59,7 +59,7 @@ Mosquito allows you to find and add information about natural landmarks, to shar
     * **Delete** or **Edit** any place they have created 
     * Access their **Profile** page, which shows the latest user activity & latest comments
 * Client-side **Routing** via **React Router**
-* Integration of **Google Maps API**
+* Integration of **Open Street Maps**
 
 The website **intentionally** uses a mix of class and functional components for practice purposes, the **Context API**, **Controlled Forms** and does styling via **CSS modules**.
 
@@ -72,7 +72,7 @@ Architecturally, components are split into folders, containing the relevant logi
 The project is built using:
 * [React](https://reactjs.org/)
 * [Firebase Auth & Firestore](https://firebase.google.com/)
-* [Google Maps API](https://developers.google.com/maps/documentation/embed/get-started)
+* [Open Street Maps via React Leaflet](https://react-leaflet.js.org/)
 
 
 
@@ -83,20 +83,15 @@ The project is built using:
 
 ### Installation
 
-1. To enable the Google Maps functionality, get a [Google Maps API Key](https://developers.google.com/maps/documentation/maps-static/get-api-key)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/dphilipov/mosquito-app.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Go to `/src/components/Map/Map.js`, add your API key on the top and uncomment it
-   ```JS
-   const MAPS_API_KEY = "Insert your API key here"
-   ```
-5. Start the project
+3. Start the project
    ```sh
    npm start
    ```

@@ -6,11 +6,19 @@ header {
 .wrapper {
     width: 1024px;
     margin: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.logoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .logo {
-    width: 10%;
-    margin-left: 15px;
+    width: 75px;
 }
 
 .logoText {
@@ -19,8 +27,13 @@ header {
     margin-left: 5px;
 }
 
+.navContainer {
+    display: flex;
+    flex-direction: column;
+}
+
 .navBar {
-    float: right;
+    margin: 0 0 10px 0;
 }
 
 .navBar a {
@@ -37,7 +50,7 @@ header {
     font-weight: bold;
     font-family: 'Bebas Neue', 'Arial', cursive;
     font-size: 30px;
-    float: right;
+
 }
 
 .welcomeMessage {

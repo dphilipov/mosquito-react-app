@@ -27,56 +27,52 @@ const Header = (props) => {
                     return (
                         <header>
                             <div className={style.wrapper}>
+                                <div className={style.logoContainer}>
+                                    <Link to="/"><img src={logo} alt="Mosquito Home"
+                                        className={style.logo} />
+                                    </Link>
+                                    <span className={style.logoText}>MOSQUITO</span>
+                                </div>
 
-                                <Link to="/"><img src={logo} alt="Mosquito Home"
-                                    className={style.logo} />
-                                </Link>
-
-                                {!userCheck.isLogged
-                                    ?
+                                <div className={style.navContainer}>
                                     <ul className={style.navBar}>
-                                        <Link to="/login">
-                                            <li>LOGIN</li>
-                                        </Link>
 
-                                        <Link to="/register">
-                                            <li>REGISTER</li>
-                                        </Link>
+                                        {!userCheck.isLogged ?
+                                            <>
+                                                <Link to="/login">
+                                                    <li>LOGIN</li>
+                                                </Link>
 
-                                        <span className={style.welcomeMessage}>Welcome, {userCheck.email}!
+                                                <Link to="/register">
+                                                    <li>REGISTER</li>
+                                                </Link>
 
-                                        </span>
+                                            </>
+                                            :
+                                            <>
+                                                <Link to="/map">
+                                                    <li>MY MAP</li>
+                                                </Link>
+
+                                                <Link to={`/profile/${userCheck.email}`}>
+                                                    <li>PROFILE</li>
+                                                </Link>
+
+                                                <Link to="/login" onClick={() => onLogout()}>
+                                                    <li>LOGOUT</li>
+                                                </Link>
+                                            </>
+                                        }
                                     </ul>
 
-
-                                    :
-                                    <ul className={style.navBar}>
-                                        <Link to="/login" onClick={() => onLogout()}>
-                                            <li>LOGOUT</li>
-                                        </Link>
-
+                                    <span className={style.welcomeMessage}>
+                                        Welcome, 
                                         <Link to={`/profile/${userCheck.email}`}>
-                                            <li>PROFILE</li>
+                                            <strong>{userCheck.email}</strong>
                                         </Link>
-
-                                        <Link to="/map">
-                                            <li>MY MAP</li>
-                                        </Link>
-
-                                        <span className={style.welcomeMessage}>
-                                            Welcome, 
-                                            <Link to={`/profile/${userCheck.email}`}>
-                                                <strong> {userCheck.email}</strong>
-                                            </Link>
-                                            !
-                                        </span>
-                                    </ul>
-
-
-
-                                }
-                            <span className={style.logoText}>MOSQUITO</span>
-
+                                        !
+                                    </span>
+                                </div>
                             </div>
 
                         </header>

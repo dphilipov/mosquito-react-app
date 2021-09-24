@@ -6,6 +6,10 @@ import postServices from '../../services/postServices'
 import Article from '../Article/Article'
 import mountain from './mountain-peak-icon.png';
 import spinner from './ajax-loader.gif';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
 
 class Main extends Component {
 
@@ -93,7 +97,7 @@ class Main extends Component {
                     {
                         (userCheck) => {
                             if (userCheck.isLogged) {
-                                return <Link to="/create" ><button className={style.createButton}>ADD A NEW PLACE</button></Link>
+                                return <Link to="/create" ><button className={style.createButton}><FontAwesomeIcon icon={faPlusSquare} /> ADD A NEW PLACE</button></Link>
                             }
                         }
                     }
@@ -111,11 +115,11 @@ class Main extends Component {
                                 />
                             ))}
                             {this.state.isEnd
-                                ? <>
-                                    <img src={mountain} className={style.endIcon} alt="" />
-                                    <span className={style.end}>-NO MORE PLACES TO SHOW-</span>
-                                </>
-                                : <>
+                                ? <div className={style.endContainer}>
+                                    <FontAwesomeIcon icon={faMapSigns} className={style.endIcon}/>
+                                    <span className={style.endText}>YOU REACHED THE END</span>
+                                </div>
+                                : <div className={style.showMoreContainer}>
                                     < button
                                         onClick={() => {
                                             this.updateArticlesState();
@@ -124,8 +128,8 @@ class Main extends Component {
                                     >
                                         SHOW MORE
                                     </button>
-                                    <span className={style.showMoreArrow}>&#9660;</span>
-                                </>
+                                    <FontAwesomeIcon icon={faChevronDown} />
+                                </div>
                             }
                         </>
                         : <p className={style.noPlaces}>No places yet</p>

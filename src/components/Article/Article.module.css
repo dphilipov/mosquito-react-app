@@ -1,44 +1,71 @@
 .pointOfInterest {
-    background-color: #ffb70a;
-    border-radius: 5px;
-    margin: 15px 0 15px 0;
-    padding: 10px;
+    margin: 15px 0 35px 0;
     display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted #c3c3c3;
+    padding-bottom: 35px;
 }
 
-.pointOfInterest img.thumbnail {
-    width: 200px;
-    height: 150px;
+.pointOfInterest:last-of-type {
+    border-bottom: none;
+}
+
+.poiPreview .thumbnail {
+    width: 341px;
+    height: 100%;
+    object-fit: cover;
     background-color: #f1f1f1;
     border-radius: 5px;
 }
 
-.pointOfInterest p, span, h2 {
-    display: block;
+.topContentContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bottomContentContainer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    align-self: end;
+}
+
+.poiContent {
+    padding: 0 10px 0 20px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+
+.poiContent p, span, h2 {
     color: #314a36;
 }
 
-.pointOfInterest span {
-    display: inline-block;
-    float: right;
+.poiContent h2 {
+    font-family: 'Bebas Neue', Calibri, Arial, sans-serif;
+    font-size: 32px;
+}
+
+.poiContent span {
     font-style: italic;
     font-size: 14px;
 }
 
-.pointOfInterest h2 {
+.poiContent h2 {
     margin: 0;
     display: inline-block;
 }
 
-.pointOfInterest p {
-    margin: 10px 0;
-    width: 794px;
-    word-wrap: break-word;
-    white-space: pre-line;
+.poiContent h2:hover {
+    text-decoration: underline;
 }
 
-.poiPreview {
-    margin-right: 10px;
+.poiContent p {
+    margin: 10px 0;
+    word-wrap: break-word;
+    white-space: pre-line;
+    font-size: 15px;
 }
 
 .like {
@@ -46,11 +73,16 @@
 }
 
 .pin {
-    margin-top: 10px;
-    display: block;
-    background-color: #ea486a;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
-    color: white;
+    font-size: 30px;
+    color: #D9483C;
+    margin-right: 10px;
+}
+
+.pin:hover {
+    color: #D9483C
+}
+
+.visitedBy {
+    color: #D9483C;
 }

@@ -12,6 +12,10 @@ footer {
     justify-content: center;
 }
 
+footer a {
+    height: 30px;
+}
+
 .wrapper {
     width: 1024px;
     margin: auto;

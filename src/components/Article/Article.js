@@ -4,7 +4,8 @@ import postServices from '../../services/postServices';
 import { useState } from 'react';
 import style from './Article.module.css'
 import authServices from '../../services/authServices';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 const DB = firebase.firestore();
 
@@ -61,21 +62,26 @@ const Article = ({ articleData, updateParent }) => {
                     <img src={articleData.imgUrl} className={style.thumbnail} alt="" />
                 </ Link>
             </div>
-            <div>
-                <h2>{articleData.title}</h2>
-                <span className={style.dateAdded}><strong>Date Added:</strong> {articleData.dateCreated}</span>
-                <p>{articleData.description}</p>
-                <span className={style.visitedBy}>
-                    {visited.length === 1
-                        ? `Visited by ${visited.length} person`
-                        : `Visited by ${visited.length} people`
-                    }
-                </span>
-                {user
-                    ? <button onClick={(event) => visitedHandler(event)} className={style.pin}>TAG AS VISITED</ button>
+            <div className={style.poiContent}>
+                <div>
+                    <div className={style.topContentContainer}>
+                        <Link to={`/article/${articleData.id}`}>
+                            <h2>{articleData.title}</h2>
+                        </ Link>
+                        <span className={style.dateAdded}><strong>Date Added:</strong> {articleData.dateCreated}</span>
+                    </div>
+                    <p>{articleData.description}</p>
+                </div>
+                <div className={style.bottomContentContainer}>
+                    {user
+                        ? <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(event) => visitedHandler(event)} className={style.pin} />
 
-                    : ''
-                }
+                        : ''
+                    }
+                    <span className={style.visitedBy}>
+                        {`Visited by ${visited.length} ${visited.length === 1 ? "person" : "people"}`}
+                    </span>
+                </div>
             </div>
         </article>
     )

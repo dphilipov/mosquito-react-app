@@ -28,6 +28,7 @@ class Create extends Component {
             },
             lat: '',
             lng: '',
+            timestamp: undefined
         }
     }
 
@@ -59,6 +60,7 @@ class Create extends Component {
 
         await this.setState({
             dateCreated: dtFormat.format(new Date()),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
 
         this.setState({
@@ -68,7 +70,7 @@ class Create extends Component {
             }
         });
 
-        let { title, imgUrl, description, creator, dateCreated, visited } = this.state;
+        let { title, imgUrl, description, creator, dateCreated, visited, timestamp } = this.state;
         let lat = Number(this.state.lat);
         let lng = Number(this.state.lng);
 
@@ -130,7 +132,7 @@ class Create extends Component {
             .then(res => {
                 if (res === false) {
                     DB.collection(`test`)
-                        .add({title, imgUrl, description, creator, dateCreated, visited, lat, lng})
+                        .add({ title, imgUrl, description, creator, dateCreated, visited, lat, lng, timestamp })
                         .then((res) => {
 
                             let type = "good";

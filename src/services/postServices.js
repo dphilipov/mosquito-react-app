@@ -7,7 +7,7 @@ function getInitial(limit) {
     let collection = [];
 
     return DB.collection("test")
-        .orderBy("dateCreated", "desc")
+        .orderBy("timestamp", "desc")
         .limit(limit)
         .get()
         .then((data) => {

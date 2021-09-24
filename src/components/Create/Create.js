@@ -1,6 +1,7 @@
 import firebase from '../../config/firebase.js';
 import style from './Create.module.css';
 import { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { dtFormat } from '../../config/dateFormat';
 import authServices from '../../services/authServices';
 import Notification from '../Notification/Notification';
@@ -169,7 +170,9 @@ class Create extends Component {
                 }
 
                 <h3 className={style.createHeading}>Create a new place!</h3>
-                <p className={style.hint}>You use a website like https://www.latlong.net/ for the coordinates</p>
+                <p className={style.hint}>
+                    You use a website like <Link to={{ pathname: "https://www.latlong.net" }} target="_blank">https://www.latlong.net</Link> for the coordinates
+                </p>
 
                 <form className={style.createForm}>
 
@@ -210,6 +213,7 @@ class Create extends Component {
                         type="text"
                         name="description"
                         value={description}
+                        placeholder="Enter a description (min. 50 characters)"
                         onChange={this.inputHandler}
                     >
                     </textarea>

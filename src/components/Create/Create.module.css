@@ -21,7 +21,7 @@
     line-height: 50px;
     display: block;
     margin: 10px auto;
-    width: calc(100% - 20px);
+    width: calc(100% - 22px);
     padding-left: 20px;
 }
 
@@ -35,15 +35,19 @@
     color: #f8e6d3;
     font-size: 18px;
     cursor: pointer;
+    width: 100%;
 }
 
 .createForm textarea{
-    width: 100%;
+    width: calc(100% - 25px);
     height: 150px;
     margin: 10px auto;
     border-radius: 5px;
     background-color: #f1f1f1;
     border: none;
+    padding-left: 20px;
+    padding-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .createForm input[type="checkbox"]{
@@ -58,10 +62,6 @@
     font-style: italic;
 }
 
-.error {
-    border: 1px solid red;
-}
-
 .hint {
     text-align: center;
     color: #314a36;
@@ -69,4 +69,8 @@
     font-style: italic;
     margin-top: 0px;
     margin-bottom: 30px;
+}
+
+.hint a {
+    color: #ea486a;
 }

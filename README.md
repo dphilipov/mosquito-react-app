@@ -117,5 +117,5 @@ Project Link: [https://github.com/dphilipov/mosquito-react-app.git](https://gith
 
 
 
-[app-screenshot]: public/screenshot.png
+[app-screenshot]: public/screenshot-updated.png
 [sctructure-screenshot]: public/structure.png

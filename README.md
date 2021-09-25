@@ -101,6 +101,8 @@ The project is built using:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+### [View the Live Demo](https://www.mosquitoapp.net)
+
 **Register** a new account & **Login**. This allows you to **Create** new landmarks, to **Comment** on all existing ones and to **Tag/Untag** on the ones you have visited. Furthermore, you can **Edit** & **Delete** the landmarks you have created. Going to **Map** loads a map with all of your created landmarks. In your **Profile** page you can view your latest activity and **Delete** your account if needed.
 
 

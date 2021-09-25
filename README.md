@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/dphilipov/mosquito-react-app.git">
-    <img src="./src/components/Header/mosquito-logo.png" alt="Logo" width="160" height="160">
+    <img src="./src/components/Header/mosquito-logo.png" alt="Logo" width="75">
   </a>
 
   <h3 align="center">Mosquito App</h3>

@@ -77,9 +77,7 @@ function getProfileActivity(id, limit) {
     let collection = [];
 
     return DB.collection("test")
-        .orderBy("dateCreated", "desc")
-        .where("creator", "==", id)
-        .limit(limit)
+        .where("visited", "array-contains", id)
         .get()
         .then((data) => {
             if (data.size !== 0) {

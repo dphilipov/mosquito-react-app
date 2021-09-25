@@ -45,7 +45,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
+![App Screen Shot][app-screenshot]
 
 Mosquito allows you to find and add information about natural landmarks, to share comments & opinions about them, to tag/untag on places you have visited and to generate your own landmarks map!
 

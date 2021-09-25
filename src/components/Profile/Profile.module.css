@@ -12,16 +12,29 @@
     padding: 0;
 }
 
+.userControls {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
 .profileContainer li {
     font-size: 20px;
     display: inline;
     text-align: left;
-    margin-right: 50px;
     font-weight: bold;
     color: #314a36;
     cursor: pointer;
     background: #f1f1f1;
     padding: 5px 10px;
+    flex: 1;
+    border: 1px solid #314a36;
+    text-align: center;
+}
+
+.profileContainer li:hover {
+    color: #f1f1f1;
+    background: #314a36;
 }
 
 .deleteProfile {
@@ -29,12 +42,12 @@
     background-color: #f1f1f1;
     border-radius: 5px;
     color: #a1a1a1;
-    height: 40px;
     font-weight: bold;
     font-size: 22px;
     margin-top: 35px;
     cursor: pointer;
     float: right;
+    padding: 10px 15px;
 }
 
 .deleteProfile:hover {

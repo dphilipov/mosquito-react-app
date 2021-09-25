@@ -14,17 +14,6 @@ const Profile = (props) => {
     let [comments, setComments] = useState([]);
     let [updateParent, setUpdateParent] = useState(false);
 
-    // useEffect(() => {
-    //     let user = authServices.getUserData('user')
-
-    //     postServices.getProfileActivity(user.uid, 5)
-    //         .then(activitiesData => {
-    //             setActivities(activitiesData)
-    //         })
-    //         .catch(err => console.log(err))
-
-    // }, []);
-
     let history = useHistory();
 
     const deleteProfileHandler = () => {
@@ -95,7 +84,7 @@ const Profile = (props) => {
                                 <h3>{userCheck.email}`s Profile Page</h3>
                                 <button className={style.deleteProfile} onClick={deleteProfileHandler}>DELETE PROFILE</button>
 
-                                <ul>
+                                <ul className={style.userControls}>
                                     <li onClick={showProfileActivityHandler}>View {userCheck.email}`s Latest Activity &#9660;</li>
                                     <li onClick={showProfileCommentsHandler}>View {userCheck.email}`s Latest Comments &#9660;</li>
                                 </ul>

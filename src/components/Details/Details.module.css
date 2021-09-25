@@ -85,11 +85,14 @@
     border: none;
     background-color: #f1f1f1;
     border-radius: 5px;
-    line-height: 50px;
+    line-height: 2em;
     display: block;
     margin: 10px auto;
     width: calc(100% - 26px);
     padding-left: 20px;
+    padding-top: 10px;
+    height: 200px;
+
 }
 
 .commentForm input[name="Submit"] {

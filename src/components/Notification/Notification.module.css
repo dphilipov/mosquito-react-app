@@ -8,6 +8,12 @@
     padding: 10px 20px;
     -webkit-animation: fadeinout 5s linear forwards;
     animation: fadeinout 5s linear forwards;
+    display: flex;
+    align-items: center;
+}
+
+.notification span {
+    color: #f8e6d3;
 }
 
 @-webkit-keyframes fadeinout {
@@ -28,4 +34,8 @@
 
 .bad {
     background-color: #f44336;
+}
+
+.notificationIcon {
+    margin-right: 5px;
 }

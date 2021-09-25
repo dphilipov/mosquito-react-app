@@ -118,8 +118,4 @@ Project Link: [https://github.com/dphilipov/mosquito-react-app.git](https://gith
 
 
 
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[app-screenshot]: public/screenshot.png
 [sctructure-screenshot]: public/structure.png

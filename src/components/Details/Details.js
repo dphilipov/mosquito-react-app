@@ -8,7 +8,9 @@ import Comment from '../Comment/Comment';
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
 import Notification from '../Notification/Notification';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 const Details = ({ match }) => {
     let [article, setArticle] = useState({});
@@ -47,8 +49,6 @@ const Details = ({ match }) => {
             user: userEmail,
             userId: authServices.getUserData().uid
         }
-
-        // await setDate(postDate);
 
         if (input === ``) {
             let type = "bad";
@@ -113,25 +113,33 @@ const Details = ({ match }) => {
 
                     <img src={article.imgUrl} alt="" />
 
+                </div>
+
+                <div className={style.pointOfInterestDetailsContent} >
+                    <p>{article.description}</p>
 
                     {article.creator === user
                         ?
                         <div className={style.buttons}>
-                            <button onClick={DeleteHandler}>DELETE</button>
                             <Link to={{
                                 pathname: `/article/${articleId}/edit`,
                                 articleProps: article
                             }}>
-                                <button>EDIT</button>
+                                <button>
+                                    <FontAwesomeIcon icon={faPen} className={style.icon}/>
+                                    EDIT
+                                </button>
                             </Link>
+
+                            <button onClick={DeleteHandler}>
+                                <FontAwesomeIcon icon={faTrash} className={style.icon}/>
+                                DELETE
+                            </button>
                         </div>
                         :
                         ''
                     }
-
-
                 </div>
-                <p>{article.description}</p>
             </div>
 
             <h3>Comments:</h3>

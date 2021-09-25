@@ -5,8 +5,6 @@
 }
 
 .pointOfInterestDetails {
-    background-color: #ffb70a;
-    border-radius: 5px;
     margin: 15px auto;
     width: 100%;
 }
@@ -15,28 +13,50 @@
     width: 100%;
     margin: 0 auto;
     display: block;
+    border-radius: 5px;
 }
 
 .pointOfInterestDetails p {
     color: #314a36;
     margin: 0px;
-    padding: 20px;
     word-wrap: break-word;
     white-space: pre-line;
 }
 
-.pointOfInterestDetailsTop button {
-    height: 30px;
-    width: 70px;
-    border: none;
-    background-color: #D9483C;
-    border-radius: 0 0 5px 5px;
-    font-weight: bold;
-    cursor: pointer;
-    color: white;
-    margin-left: 20px;
+.pointOfInterestDetailsContent {
+    border: 1px solid #314a36;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 20px;
 }
 
+.pointOfInterestDetailsContent button {
+    border: 1px solid #D9483C;
+    background-color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #D9483C;
+    margin-left: 20px;
+    padding: 5px 10px;
+}
+
+.pointOfInterestDetailsContent button:hover {
+    background-color: #D9483C;
+    color: #fff;    
+}
+
+.buttons {
+    display: flex;
+    margin-top: 20px;
+    justify-content: end;
+    border-top: 1px dashed #314a36;
+    padding-top: 20px;
+}
+
+.buttons .icon {
+    margin-right: 5px;
+}
 
 .comments {
     width: 100%;
@@ -68,7 +88,7 @@
     line-height: 50px;
     display: block;
     margin: 10px auto;
-    width: 100%;
+    width: calc(100% - 26px);
     padding-left: 20px;
 }
 

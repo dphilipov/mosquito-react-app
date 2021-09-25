@@ -1,7 +1,6 @@
 footer {
     background: #a2a46d;
     text-align: center;
-    margin-top: 10px;
     height: 50px;
     color: #f8e6d3;
     position: absolute;
@@ -12,11 +11,16 @@ footer {
     justify-content: center;
 }
 
-footer a {
-    height: 30px;
+footer span {
+    color: #f8e6d3;
+    margin-right: 10px;
 }
 
 .wrapper {
     width: 1024px;
     margin: auto;
+}
+
+.icon {
+    font-size: 20px;
 }

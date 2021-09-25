@@ -4,7 +4,6 @@ import { Component } from 'react';
 import { UserConsumer } from '../userContext';
 import postServices from '../../services/postServices'
 import Article from '../Article/Article'
-import mountain from './mountain-peak-icon.png';
 import spinner from './ajax-loader.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'

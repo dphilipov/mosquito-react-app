@@ -26,9 +26,9 @@
 
 .bottomContentContainer {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
-    align-self: end;
+    align-self: flex-end;
 }
 
 .poiContent {

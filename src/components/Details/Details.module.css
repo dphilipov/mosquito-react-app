@@ -49,7 +49,7 @@
 .buttons {
     display: flex;
     margin-top: 20px;
-    justify-content: end;
+    justify-content: flex-end;
     border-top: 1px dashed #314a36;
     padding-top: 20px;
 }

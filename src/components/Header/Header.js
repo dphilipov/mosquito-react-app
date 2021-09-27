@@ -66,10 +66,14 @@ const Header = (props) => {
                                     </ul>
 
                                     <span className={style.welcomeMessage}>
-                                        Welcome, 
-                                        <Link to={`/profile/${userCheck.email}`}>
-                                            <strong>{userCheck.email}</strong>
-                                        </Link>
+                                        Welcome,
+                                        {userCheck.isLogged ?
+                                            <Link to={`/profile/${userCheck.email}`}>
+                                                <strong> {userCheck.email}</strong>
+                                            </Link>
+                                            :
+                                            <span> Guest</span>
+                                        }
                                         !
                                     </span>
                                 </div>

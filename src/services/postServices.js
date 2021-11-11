@@ -3,38 +3,38 @@ import firebase from '../config/firebase'
 const DB = firebase.firestore();
 
 
-function getInitial(limit) {
-    let collection = [];
+// function getInitial(limit) {
+//     let collection = [];
 
-    return DB.collection("test")
-        .orderBy("timestamp", "desc")
-        .limit(limit)
-        .get()
-        .then((data) => {
-            if (data.size > 0) {
-                data.forEach((doc) => {
-                    const id = doc.id;
-                    const docData = doc.data();
+//     return DB.collection("test")
+//         .orderBy("timestamp", "desc")
+//         .limit(limit)
+//         .get()
+//         .then((data) => {
+//             if (data.size > 0) {
+//                 data.forEach((doc) => {
+//                     const id = doc.id;
+//                     const docData = doc.data();
 
-                    collection.push({ id, ...docData });
+//                     collection.push({ id, ...docData });
 
-                })
+//                 })
 
-                return {
-                    collection,
-                    latestDoc: data.docs[data.docs.length - 1]
-                }
-            } else {
-                return {
-                    collection,
-                    latestDoc: undefined
-                }
-            }
+//                 return {
+//                     collection,
+//                     latestDoc: data.docs[data.docs.length - 1]
+//                 }
+//             } else {
+//                 return {
+//                     collection,
+//                     latestDoc: undefined
+//                 }
+//             }
 
-        })
-}
+//         })
+// }
 
-function getMore(limit, latestDoc) {
+function getPlaces(limit, latestDoc={}) {
     let collection = [];
 
     return DB.collection("test")
@@ -173,8 +173,7 @@ function checkIfTitleExists(title) {
 }
 
 const funcs = {
-    getInitial,
-    getMore,
+    getPlaces,
     getOne,
     getProfileActivity,
     postComment,

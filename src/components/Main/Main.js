@@ -33,7 +33,7 @@ const Main = () => {
     }
 
     const fetchMoreArticles = () => {
-        postServices.getMore(5, latestDoc)
+        postServices.getPlaces(5, latestDoc)
             .then(data => {
                 if (data !== undefined) {
                     setArticles(prevState => [...prevState, ...data.collection]);
@@ -49,7 +49,7 @@ const Main = () => {
     useEffect(() => {
         setIsLoading(true);
 
-        postServices.getInitial(5)
+        postServices.getPlaces(5)
             .then(data => {
                 if (data !== undefined) {
                     setArticles(prevState => [...prevState, ...data.collection]);

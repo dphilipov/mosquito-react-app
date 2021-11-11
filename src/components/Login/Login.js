@@ -1,52 +1,58 @@
-import firebase from '../../config/firebase.js';
-import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import authServices from '../../services/authServices';
+// React, Hooks
+import { useState, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+
+// Components
+import Article from '../Article/Article'
 import Notification from '../Notification/Notification';
+
+// Services
+import authServices from '../../services/authServices';
 import notificationServices from '../../services/notificationServices';
+
+// CSS
 import style from './Login.module.css';
+
+import firebase from '../../config/firebase.js';
 
 const auth = firebase.auth();
 
-class Login extends Component {
-    constructor(props) {
-        super(props)
+const Login = () => {
+    const [loginCredentials, setLoginCredentials] = useState({
+        username: '',
+        password: ''
+    });
+    const [notification, setNotification] = useState({
+        type: '',
+        message: ''
+    });
 
-        this.state = {
-            username: '',
-            password: '',
-            notification: {
-                type: '',
-                message: ''
-            }
-        }
+    const inputHandler = (e) => {
+        setLoginCredentials(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
     }
 
-    inputHandler = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value,
-        })
-    }
+    const submitHandler = async (e) => {
+        e.preventDefault();
 
-    submitHandler = async (event) => {
-        event.preventDefault();
+        const { username, password } = loginCredentials;
 
-        await this.setState({
+        setNotification({
             notification: {
                 type: '',
                 message: ''
             }
         });
-        
-        let { username, password } = this.state;
 
         auth.signInWithEmailAndPassword(username, password)
             .then((userCredentials) => {
                 authServices.saveUserData(userCredentials);
                 this.props.action();
 
-                let type = "good";
-                let message = "Login successful!"
+                const type = "good";
+                const message = "Login successful!"
 
                 notificationServices.notificationsHandler.call(this, type, message)
 
@@ -65,46 +71,46 @@ class Login extends Component {
 
     }
 
-    render() {
-        let { username, password } = this.state;
-        
-        return (
+    return (
 
-            <>
-                {this.state.notification.type !== ''
-                    ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
-                    : ''
-                }
+        <>
+            {notification.type !== ''
+                ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
+                : ''
+            }
 
-                <h3>Member Login</h3>
+            <h3>Member Login</h3>
 
-                <form className={style.loginForm}>
+            <form className={style.loginForm}>
 
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Enter your email adress"
-                        value={username}
-                        onChange={this.inputHandler}
-                    />
+                <label htmlFor="username">Username:</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter your email adress"
+                    value={loginCredentials.username}
+                    onChange={inputHandler}
+                />
 
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={this.inputHandler}
-                    />
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    value={loginCredentials.password}
+                    onChange={inputHandler}
+                />
 
-                    <input onClick={this.submitHandler} type="submit" name="Login" value="Login" />
-                </form>
-            </>
-        )
-    }
+                <button
+                    onClick={submitHandler}
+                    className={style.submitBtn}
+                    type="submit"
+                >Login</button>
+            </form>
+        </>
+    )
 
 }
 

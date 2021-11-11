@@ -2,38 +2,6 @@ import firebase from '../config/firebase'
 
 const DB = firebase.firestore();
 
-
-// function getInitial(limit) {
-//     let collection = [];
-
-//     return DB.collection("test")
-//         .orderBy("timestamp", "desc")
-//         .limit(limit)
-//         .get()
-//         .then((data) => {
-//             if (data.size > 0) {
-//                 data.forEach((doc) => {
-//                     const id = doc.id;
-//                     const docData = doc.data();
-
-//                     collection.push({ id, ...docData });
-
-//                 })
-
-//                 return {
-//                     collection,
-//                     latestDoc: data.docs[data.docs.length - 1]
-//                 }
-//             } else {
-//                 return {
-//                     collection,
-//                     latestDoc: undefined
-//                 }
-//             }
-
-//         })
-// }
-
 function getPlaces(limit, latestDoc={}) {
     let collection = [];
 

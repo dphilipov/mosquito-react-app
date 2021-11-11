@@ -31,19 +31,19 @@ h3 {
     margin-right: 0;
 }
 
-.loginForm input[type="submit"]{
+.submitBtn {
     margin-top: 30px;
     font-size: 20px;
-    padding: 0px;
     border: none;
     background-color: #D9483C;
     border-radius: 5px;
     color: #f8e6d3;
     cursor: pointer;
     width: calc(100% - 20px);
+    padding: 13px 0;
 }
 
-.loginForm input[type="submit"]:hover {
+.submitBtn:hover {
     filter: drop-shadow(0px 3px 0px #9B3148);
 }
 

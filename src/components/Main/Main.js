@@ -1,143 +1,136 @@
-import style from './Main.module.css'
+// React, Hooks
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Component } from 'react';
+
+// Context
 import { UserConsumer } from '../userContext';
+
+// Services
 import postServices from '../../services/postServices'
+
+// Components
 import Article from '../Article/Article'
-import spinner from './ajax-loader.gif';
+
+// CSS
+import style from './Main.module.css'
+
+// FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
+import { faCompass } from '@fortawesome/free-solid-svg-icons'
 
-class Main extends Component {
+const Main = () => {
+    const [articles, setArticles] = useState([]);
+    const [latestDoc, setLatestDoc] = useState(0);
+    const [isEnd, setIsEnd] = useState(false);
+    const [updateParent, setUpdateParent] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            articles: [],
-            latestDoc: 0,
-            isEnd: false,
-            updateParent: false,
-            isLoading: false
-        }
-
-        this.updateParent = this.updateParent.bind(this);
+    const updateParentHandler = () => {
+        setUpdateParent(prevState => !prevState);
     }
 
-    updateParent() {
-        this.setState(prevState => ({
-            updateParent: !prevState.updateParent
-        }))
-    }
-
-    updateArticlesState() {
-        postServices.getMore(5, this.state.latestDoc)
+    const updateArticlesState = () => {
+        postServices.getMore(5, latestDoc)
             .then(data => {
                 if (data !== undefined) {
-                    this.setState(prevState => ({
-                        articles: [...prevState.articles, ...data.collection],
-                        latestDoc: data.latestDoc
-                    }));
+                    setArticles(prevState => [...prevState, ...data.collection]);
+                    setLatestDoc(data.latestDoc);
                 } else {
-                    this.setState({ isEnd: true });
+                    setIsEnd(true);
                 }
 
             })
             .catch(err => console.log(err))
     }
 
-    componentDidMount() {
-        this.setState({ isLoading: true });
+    useEffect(() => {
+        setIsLoading(true);
 
         postServices.getInitial(5)
             .then(data => {
                 if (data !== undefined) {
-                    this.setState(prevState => ({
-                        articles: [...prevState.articles, ...data.collection],
-                        latestDoc: data.latestDoc
-                    }));
+                    console.log(data);
+                    setArticles(prevState => [...prevState, ...data.collection]);
+                    setLatestDoc(data.latestDoc);
                 } else {
-                    this.setState({ isEnd: true });
+                    setIsEnd(true);
                 }
 
-                this.setState({ isLoading: false });
+                setIsLoading(false);
 
             })
             .catch(err => console.log(err))
-    }
+    }, [])
 
-    componentDidUpdate() {
-        if (this.state.updateParent) {
-            postServices.getInitial(this.state.articles.length)
-                .then(data => {
-                    if (data !== undefined) {
-                        this.setState(prevState => ({
-                            articles: [...data.collection],
-                        }));
-                    }
+    // componentDidUpdate() {
+    //     if (this.state.updateParent) {
+    //         postServices.getInitial(this.state.articles.length)
+    //             .then(data => {
+    //                 if (data !== undefined) {
+    //                     this.setState(prevState => ({
+    //                         articles: [...data.collection],
+    //                     }));
+    //                 }
 
-                })
-                .catch(err => console.log(err))
+    //             })
+    //             .catch(err => console.log(err))
 
-            this.setState({ updateParent: false })
-        }
-    }
+    //         this.setState({ updateParent: false })
+    //     }
+    // }
 
-    render() {
+    return (
 
-        return (
+        <div className={style.main}>
+            <h3 className={style.activityTitle}>- DISCOVER PLACES -</h3>
 
-            <div className={style.main}>
-                <h3 className={style.activityTitle}>- DISCOVER PLACES -</h3>
-
-                <UserConsumer>
-                    {
-                        (userCheck) => {
-                            if (userCheck.isLogged) {
-                                return <Link to="/create" ><button className={style.createButton}><FontAwesomeIcon icon={faPlusSquare} /> ADD A NEW PLACE</button></Link>
-                            }
+            <UserConsumer>
+                {
+                    (userCheck) => {
+                        if (userCheck.isLogged) {
+                            return <Link to="/create" ><button className={style.createButton}><FontAwesomeIcon icon={faPlusSquare} /> ADD A NEW PLACE</button></Link>
                         }
                     }
-                </UserConsumer>
-
-                {this.state.isLoading === true
-                    ? <img className={style.loader} src={spinner} alt="loader"></img>
-                    : this.state.articles.length > 0
-                        ? <>
-                            {this.state.articles.map(article => (
-                                <Article
-                                    key={article.id}
-                                    articleData={article}
-                                    updateParent={this.updateParent}
-                                />
-                            ))}
-                            {this.state.isEnd
-                                ? <div className={style.endContainer}>
-                                    <FontAwesomeIcon icon={faMapSigns} className={style.endIcon}/>
-                                    <span className={style.endText}>YOU REACHED THE END</span>
-                                </div>
-                                : <div className={style.showMoreContainer}>
-                                    < button
-                                        onClick={() => {
-                                            this.updateArticlesState();
-                                        }}
-                                        className={style.showMore}
-                                    >
-                                        SHOW MORE
-                                    </button>
-                                    <FontAwesomeIcon icon={faChevronDown} />
-                                </div>
-                            }
-                        </>
-                        : <p className={style.noPlaces}>No places yet</p>
                 }
+            </UserConsumer>
 
-            </div>
-        )
-    }
+            {isLoading
+                ? <FontAwesomeIcon icon={faCompass} className={style.spinner} spin />
+                : articles.length > 0
+            ? <>
+                {articles.map(article => (
+                    <Article
+                        key={article.id}
+                        articleData={article}
+                        updateParent={updateParentHandler}
+                    />
+                ))}
+                {isEnd
+                    ? <div className={style.endContainer}>
+                        <FontAwesomeIcon icon={faMapSigns} className={style.endIcon} />
+                        <span className={style.endText}>YOU REACHED THE END</span>
+                    </div>
+                    : <div className={style.showMoreContainer}>
+                        < button
+                            onClick={() => {
+                                updateArticlesState();
+                            }}
+                            className={style.showMore}
+                        >
+                            SHOW MORE
+                        </button>
+                        <FontAwesomeIcon icon={faChevronDown} />
+                    </div>
+                }
+            </>
+            : <p className={style.noPlaces}>No places yet</p>
+            }
 
+        </div>
+    )
 }
 
 export default Main;

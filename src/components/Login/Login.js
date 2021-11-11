@@ -1,23 +1,19 @@
 // React, Hooks
-import { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { useState } from 'react';
 
 // Components
-import Article from '../Article/Article'
 import Notification from '../Notification/Notification';
 
 // Services
 import authServices from '../../services/authServices';
-import notificationServices from '../../services/notificationServices';
+// import notificationServices from '../../services/notificationServices';
 
 // CSS
 import style from './Login.module.css';
 
 import firebase from '../../config/firebase.js';
 
-const auth = firebase.auth();
-
-const Login = () => {
+const Login = ({ history }) => {
     const [loginCredentials, setLoginCredentials] = useState({
         username: '',
         password: ''
@@ -46,26 +42,25 @@ const Login = () => {
             }
         });
 
-        auth.signInWithEmailAndPassword(username, password)
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(username, password)
             .then((userCredentials) => {
                 authServices.saveUserData(userCredentials);
-                this.props.action();
 
                 const type = "good";
                 const message = "Login successful!"
 
-                notificationServices.notificationsHandler.call(this, type, message)
+                // notificationServices.notificationsHandler.call(this, type, message)
 
-                setTimeout(() => {
-                    this.props.history.push('/');
+                history.push('/');
 
-                }, 2000)
             })
             .catch((error) => {
                 let type = "bad";
                 let message = error.message;
 
-                notificationServices.notificationsHandler.call(this, type, message)
+                // notificationServices.notificationsHandler.call(this, type, message)
 
             });
 
@@ -74,10 +69,10 @@ const Login = () => {
     return (
 
         <>
-            {notification.type !== ''
-                ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
+            {/* {notification.type !== ''
+                ? <Notification type={notification.type} message={notification.message} />
                 : ''
-            }
+            } */}
 
             <h3>Member Login</h3>
 
@@ -114,4 +109,4 @@ const Login = () => {
 
 }
 
-export default withRouter(Login);
+export default Login;

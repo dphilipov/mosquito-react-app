@@ -11,10 +11,10 @@ function getInitial(limit) {
         .limit(limit)
         .get()
         .then((data) => {
-            if (data.size !== 0) {
+            if (data.size > 0) {
                 data.forEach((doc) => {
-                    let id = doc.id;
-                    let docData = doc.data();
+                    const id = doc.id;
+                    const docData = doc.data();
 
                     collection.push({ id, ...docData });
 
@@ -25,7 +25,10 @@ function getInitial(limit) {
                     latestDoc: data.docs[data.docs.length - 1]
                 }
             } else {
-                return undefined;
+                return {
+                    collection,
+                    latestDoc: undefined
+                }
             }
 
         })
@@ -42,8 +45,8 @@ function getMore(limit, latestDoc) {
         .then((data) => {
             if (data.size !== 0) {
                 data.forEach((doc) => {
-                    let id = doc.id;
-                    let docData = doc.data();
+                    const id = doc.id;
+                    const docData = doc.data();
 
                     collection.push({ id, ...docData });
 
@@ -54,7 +57,10 @@ function getMore(limit, latestDoc) {
                     latestDoc: data.docs[data.docs.length - 1]
                 }
             } else {
-                return undefined;
+                return {
+                    collection,
+                    latestDoc: undefined
+                }
             }
 
         })
@@ -65,7 +71,9 @@ function getOne(id) {
         .doc(id)
         .get()
         .then((data) => {
-            let article = { ...data.data(), id: data.id };
+            const id = data.id;
+            const article = { ...data.data(), id };
+
             return article;
         })
         .catch((err) => {
@@ -73,7 +81,7 @@ function getOne(id) {
         })
 }
 
-function getProfileActivity(id, limit) {
+function getProfileActivity(id) {
     let collection = [];
 
     return DB.collection("test")
@@ -82,8 +90,8 @@ function getProfileActivity(id, limit) {
         .then((data) => {
             if (data.size !== 0) {
                 data.forEach((doc) => {
-                    let id = doc.id;
-                    let docData = doc.data();
+                    const id = doc.id;
+                    const docData = doc.data();
 
                     collection.push({ id, ...docData });
 
@@ -101,10 +109,12 @@ function getProfileActivity(id, limit) {
 function postComment(article) {
     let { id } = article;
 
-    DB.collection(`test`).doc(id).set({
-        ...article,
-        comments: article.comments
-    })
+    DB.collection(`test`)
+        .doc(id)
+        .set({
+            ...article,
+            comments: article.comments
+        })
         .then((res) => {
             console.log('success');
         })
@@ -125,19 +135,17 @@ function getProfileComments(userId) {
             if (data.size !== 0) {
                 data.forEach((doc) => {
 
-                    let id = doc.id;
-                    let docData = doc.data();
+                    const id = doc.id;
+                    const docData = doc.data();
 
                     collection.push({ id, ...docData });
-
-
 
                 })
 
                 collection.forEach(item => {
                     newCollection.push(...item.comments.filter(x => x.userId === userId));
                 })
-                
+
                 return newCollection;
             } else {
                 return [];

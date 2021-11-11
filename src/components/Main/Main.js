@@ -32,7 +32,7 @@ const Main = () => {
         setUpdateParent(prevState => !prevState);
     }
 
-    const updateArticlesState = () => {
+    const fetchMoreArticles = () => {
         postServices.getMore(5, latestDoc)
             .then(data => {
                 if (data !== undefined) {
@@ -52,7 +52,6 @@ const Main = () => {
         postServices.getInitial(5)
             .then(data => {
                 if (data !== undefined) {
-                    console.log(data);
                     setArticles(prevState => [...prevState, ...data.collection]);
                     setLatestDoc(data.latestDoc);
                 } else {
@@ -97,18 +96,18 @@ const Main = () => {
                 }
             </UserConsumer>
 
+            {articles.map(article => (
+                <Article
+                    key={article.id}
+                    articleData={article}
+                    updateParent={updateParentHandler}
+                />
+            ))}
+
             {isLoading
                 ? <FontAwesomeIcon icon={faCompass} className={style.spinner} spin />
-                : articles.length > 0
-            ? <>
-                {articles.map(article => (
-                    <Article
-                        key={article.id}
-                        articleData={article}
-                        updateParent={updateParentHandler}
-                    />
-                ))}
-                {isEnd
+                :
+                isEnd
                     ? <div className={style.endContainer}>
                         <FontAwesomeIcon icon={faMapSigns} className={style.endIcon} />
                         <span className={style.endText}>YOU REACHED THE END</span>
@@ -116,7 +115,7 @@ const Main = () => {
                     : <div className={style.showMoreContainer}>
                         < button
                             onClick={() => {
-                                updateArticlesState();
+                                fetchMoreArticles();
                             }}
                             className={style.showMore}
                         >
@@ -124,12 +123,9 @@ const Main = () => {
                         </button>
                         <FontAwesomeIcon icon={faChevronDown} />
                     </div>
-                }
-            </>
-            : <p className={style.noPlaces}>No places yet</p>
             }
 
-        </div>
+        </div >
     )
 }
 

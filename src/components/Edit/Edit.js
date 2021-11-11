@@ -1,5 +1,6 @@
 // React, Hooks
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // Components
 import Notification from '../Notification/Notification';
@@ -132,7 +133,9 @@ const Edit = ({ match, history }) => {
             } */}
 
             <h3 className={style.editHeading}>Edit this place</h3>
-            <p className={style.hint}>You can use a website like https://www.latlong.net/ for the coordinates</p>
+            <p className={style.hint}>
+                You can use a website like <Link to={{ pathname: "https://www.latlong.net/" }} target="_blank" rel="noreferrer">https://www.latlong.net/</Link> for the coordinates
+            </p>
 
             <form className={style.createForm}>
 
@@ -185,9 +188,13 @@ const Edit = ({ match, history }) => {
                     checked={formData.visited.length > 0 ? true : false}
                     onChange={inputHandler}
                 />
-                <label htmlFor="visited">Посетен</label>
+                <label htmlFor="visited">Visited</label>
 
-                <input onClick={editHandler} type="submit" name="Edit" value="Edit" />
+                <button
+                    onClick={editHandler}
+                    className={style.submitBtn}
+                    type="submit"
+                >EDIT</button>
             </form>
         </>
     )

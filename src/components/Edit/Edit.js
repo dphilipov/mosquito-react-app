@@ -1,74 +1,78 @@
-import firebase from '../../config/firebase.js';
+// React, Hooks
+import { useState, useEffect } from 'react';
+
+// Components
+import Notification from '../Notification/Notification';
+
+// CSS
 import style from './Edit.module.css';
-import { Component } from 'react';
+
+// Services
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
-import Notification from '../Notification/Notification';
 import notificationServices from '../../services/notificationServices';
+
+import firebase from '../../config/firebase.js';
 
 const DB = firebase.firestore();
 
 
-class Edit extends Component {
-    constructor(props) {
-        super(props)
+const Edit = ({ match, history }) => {
+    const [formData, setFormData] = useState({
+        title: '',
+        imgUrl: '',
+        description: '',
+        dateCreated: '',
+        visited: []
+    })
 
-        this.state = {
-            title: '',
-            imgUrl: '',
-            description: '',
-            dateCreated: '',
-            visited: [],
-            notification: {
-                type: '',
-                message: ''
-            }
-        }
-    }
+    const [notification, setNotification] = useState({
+        type: '',
+        message: ''
+    });
 
-    inputHandler = (event) => {
-        if (event.target.name === 'visited') {
-            if (event.target.checked === true) {
-                let userId = authServices.getUserData().uid;
-                let newVisited = this.state.visited;
+    const inputHandler = (e) => {
+        if (e.target.name === 'visited') {
+            if (e.target.checked === true) {
+                const userId = authServices.getUserData().uid;
+                const newVisited = this.state.visited;
                 newVisited.push(userId)
                 this.setState({
-                    [event.target.name]: newVisited,
+                    [e.target.name]: newVisited,
                 });
             } else {
                 this.setState({
-                    [event.target.name]: [],
+                    [e.target.name]: [],
                 });
             }
 
-        } else {
-            this.setState({
-                [event.target.name]: event.target.value,
-            });
         }
+
+        setFormData(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
 
     }
 
-    editHandler = async (event) => {
-        event.preventDefault();
+    const editHandler = async (e) => {
+        e.preventDefault();
 
-        let articleId = this.props.match.params.id;
+        let articleId = match.params.id;
 
-        await this.setState({
-            notification: {
-                type: '',
-                message: ''
-            }
-        });
+        // await this.setState({
+        //     notification: {
+        //         type: '',
+        //         message: ''
+        //     }
+        // });
 
 
-        let { title, imgUrl, description } = this.state;
+        let { title, imgUrl, description } = formData;
 
         if (title === ``) {
             let type = "bad";
             let message = "Title can't be empty"
-
-            notificationServices.notificationsHandler.call(this, type, message)
 
             return
         }
@@ -76,8 +80,6 @@ class Edit extends Component {
         if (imgUrl === ``) {
             let type = "bad";
             let message = "Image URL can't be empty"
-
-            notificationServices.notificationsHandler.call(this, type, message)
 
             return
 
@@ -87,8 +89,6 @@ class Edit extends Component {
             let type = "bad";
             let message = "Description can't be empty"
 
-            notificationServices.notificationsHandler.call(this, type, message)
-
             return
 
         }
@@ -97,107 +97,100 @@ class Edit extends Component {
             let type = "bad";
             let message = "Description must be at least 50 characters"
 
-            notificationServices.notificationsHandler.call(this, type, message)
-
             return
 
         }
 
         DB.collection(`test`)
             .doc(articleId)
-            .set(this.state)
+            .set(formData)
             .then((res) => {
-                this.props.history.push(`/article/${articleId}`);
+                history.push(`/article/${articleId}`);
             })
             .catch((err) => {
                 console.log(err);
             })
     }
 
-    componentDidMount() {
-        let articleId = this.props.match.params.id;
+    useEffect(() => {
+        const articleId = match.params.id;
 
-        postServices.getOne(articleId)
+        postServices
+            .getOne(articleId)
             .then(res => {
-                this.setState(res)
+                setFormData(res)
             })
             .catch(err => console.log(err));
-    }
+    }, [])
 
-    render() {
-        let { title, imgUrl, lat, lng, description, visited } = this.state;
+    return (
 
-        let checkedStatus = visited.length > 0 ? true : false;
+        <>
+            {/* {notification.type !== ''
+                ? <Notification type={notification.type} message={notification.message} />
+                : ''
+            } */}
 
-        return (
+            <h3 className={style.editHeading}>Edit this place</h3>
+            <p className={style.hint}>You can use a website like https://www.latlong.net/ for the coordinates</p>
 
-            <>
-                {this.state.notification.type !== ''
-                    ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
-                    : ''
-                }
+            <form className={style.createForm}>
 
-                <h3 className={style.editHeading}>Edit this place</h3>
-                <p className={style.hint}>You use a website like https://www.latlong.net/ for the coordinates</p>
+                <label htmlFor="title">Title:</label>
+                <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    placeholder="Title of the place"
+                    onChange={inputHandler} />
 
-                <form className={style.createForm}>
+                <label htmlFor="imgUrl">Image Photo:</label>
+                <input
+                    type="text"
+                    name="imgUrl"
+                    value={formData.imgUrl}
+                    placeholder="Enter URL here"
+                    onChange={inputHandler} />
 
-                    <label htmlFor="title">Title:</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={title}
-                        placeholder="Title of the place"
-                        onChange={this.inputHandler} />
+                <label htmlFor="lat">Latitude:*</label>
+                <input
+                    type="number"
+                    name="lat"
+                    value={formData.lat}
+                    placeholder="Enter place latitude (e.g. 42.144920)"
+                    onChange={inputHandler} />
 
-                    <label htmlFor="imgUrl">Image Photo:</label>
-                    <input
-                        type="text"
-                        name="imgUrl"
-                        value={imgUrl}
-                        placeholder="Enter URL here"
-                        onChange={this.inputHandler} />
+                <label htmlFor="lng">Longitude:*</label>
+                <input
+                    type="number"
+                    name="lng"
+                    value={formData.lng}
+                    placeholder="Enter place longitude (e.g. 24.750320)"
+                    onChange={inputHandler} />
 
-                    <label htmlFor="lat">Latitude:*</label>
-                    <input
-                        type="text"
-                        name="lat"
-                        value={lat}
-                        placeholder="Enter place latitude (e.g. 42.144920)"
-                        onChange={this.inputHandler} />
+                <label htmlFor="description">Description:</label>
+                <textarea
+                    type="text"
+                    name="description"
+                    value={formData.description}
+                    onChange={inputHandler}
+                >
+                </textarea>
 
-                    <label htmlFor="lng">Longitude:*</label>
-                    <input
-                        type="text"
-                        name="lng"
-                        value={lng}
-                        placeholder="Enter place longitude (e.g. 24.750320)"
-                        onChange={this.inputHandler} />
+                <input
+                    type="checkbox"
+                    id="visited"
+                    name="visited"
+                    value="Visited"
+                    checked={formData.visited.length > 0 ? true : false}
+                    onChange={inputHandler}
+                />
+                <label htmlFor="visited">Посетен</label>
 
-                    <label htmlFor="description">Description:</label>
-                    <textarea
-                        type="text"
-                        name="description"
-                        value={description}
-                        onChange={this.inputHandler}
-                    >
-                    </textarea>
-
-                    <input
-                        type="checkbox"
-                        id="visited"
-                        name="visited"
-                        value="Visited"
-                        checked={checkedStatus}
-                        onChange={this.inputHandler}
-                    />
-                    <label htmlFor="visited">Посетен</label>
-
-                    <input onClick={this.editHandler} type="submit" name="Edit" value="Edit" />
-                </form>
-            </>
-        )
-    }
+                <input onClick={editHandler} type="submit" name="Edit" value="Edit" />
+            </form>
+        </>
+    )
 
 }
 

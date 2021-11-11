@@ -6,13 +6,15 @@ import authServices from '../../services/authServices';
 import firebase from '../../config/firebase';
 
 
-const Header = (props) => {
+const Header = ({ action }) => {
 
     function onLogout() {
-        firebase.auth().signOut()
+        firebase
+            .auth()
+            .signOut()
             .then((response) => {
                 authServices.clearUserData();
-                props.action();
+                action();
                 <Redirect to="/login" />
             })
             .catch((err) => {

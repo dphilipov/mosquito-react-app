@@ -21,7 +21,7 @@ const Article = ({ articleData, updateParent }) => {
     const visitedHandler = (event) => {
         event.preventDefault();
 
-        let userId = JSON.parse(localStorage.getItem('user')).uid;
+        const userId = JSON.parse(localStorage.getItem('user')).uid;
 
         if (visited.includes(userId)) {
             DB.collection(`test`)
@@ -73,11 +73,7 @@ const Article = ({ articleData, updateParent }) => {
                     <p>{articleData.description}</p>
                 </div>
                 <div className={style.bottomContentContainer}>
-                    {user
-                        ? <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(event) => visitedHandler(event)} className={style.pin} />
-
-                        : ''
-                    }
+                    {user&& <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(event) => visitedHandler(event)} className={style.pin} />}
                     <span className={style.visitedBy}>
                         {`Visited by ${visited.length} ${visited.length === 1 ? "person" : "people"}`}
                     </span>

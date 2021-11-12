@@ -1,24 +1,47 @@
-import style from './Details.module.css';
-import { useHistory, Link } from 'react-router-dom';
+// React, Hooks
 import { useEffect, useState } from 'react';
-import { dtFormat } from '../../config/dateFormat';
+import { Link } from 'react-router-dom';
+
+// Context
 import { UserConsumer } from '../userContext';
-import firebase from '../../config/firebase.js';
-import Comment from '../Comment/Comment';
+
+// Services
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
+
+// Components
+import Comment from '../Comment/Comment';
 import Notification from '../Notification/Notification';
+
+// CSS
+import style from './Details.module.css';
+
+// Other
+import { dtFormat } from '../../config/dateFormat';
+import firebase from '../../config/firebase.js';
+
+// FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
-const Details = ({ match }) => {
-    let [article, setArticle] = useState({});
-    let [input, setInput] = useState('');
-    let [notificationType, setNotificationType] = useState('');
-    let [notificationMessage, setNotificationMessage] = useState('');
+const Details = ({ match, history }) => {
+    const [articleData, setArticleData] = useState({
+        title: '',
+        imgUrl: '',
+        creator: '',
+        description: '',
+        dateCreated: '',
+        visited: [],
+        commentsUserIds: [],
+        comments: [],
+        lat: 0,
+        lng: 0
+    });
+    const [input, setInput] = useState('');
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
-    let history = useHistory();
     let user = undefined;
 
     if (authServices.getUserData()) {
@@ -26,17 +49,18 @@ const Details = ({ match }) => {
     }
 
     const DB = firebase.firestore();
-    let articleId = match.params.id;
+    const articleId = match.params.id;
 
     useEffect(() => {
-        postServices.getOne(articleId)
+        postServices
+            .getOne(articleId)
             .then(res => {
-                setArticle(res)
+                setArticleData(res)
             })
             .catch(err => console.log(err));
     }, [articleId]);
 
-    const CommentHandler = async (event, userEmail) => {
+    const commentHandler = async (event, userEmail) => {
         event.preventDefault();
 
         setNotificationType('');
@@ -70,7 +94,7 @@ const Details = ({ match }) => {
 
                 postServices.getOne(articleId)
                     .then(res => {
-                        setArticle(res)
+                        setArticleData(res)
                     })
                     .catch(err => console.log(err));
             })
@@ -86,14 +110,14 @@ const Details = ({ match }) => {
 
                 postServices.getOne(articleId)
                     .then(res => {
-                        setArticle(res)
+                        setArticleData(res)
                     })
                     .catch(err => console.log(err));
             })
             .catch(err => console.log(err))
     }
 
-    const DeleteHandler = () => {
+    const deleteHandler = () => {
 
         DB.collection(`test`).doc(articleId).delete()
             .then((res) => {
@@ -106,33 +130,33 @@ const Details = ({ match }) => {
 
     return (
         <div className={style.container}>
-            <h3>{article.title}</h3>
+            <h3>{articleData.title}</h3>
 
             <div className={style.pointOfInterestDetails}>
                 <div className={style.pointOfInterestDetailsTop}>
 
-                    <img src={article.imgUrl} alt="" />
+                    <img src={articleData.imgUrl} alt="" />
 
                 </div>
 
                 <div className={style.pointOfInterestDetailsContent} >
-                    <p>{article.description}</p>
+                    <p>{articleData.description}</p>
 
-                    {article.creator === user
+                    {articleData.creator === user
                         ?
                         <div className={style.buttons}>
                             <Link to={{
                                 pathname: `/article/${articleId}/edit`,
-                                articleProps: article
+                                articleProps: articleData
                             }}>
                                 <button>
-                                    <FontAwesomeIcon icon={faPen} className={style.icon}/>
+                                    <FontAwesomeIcon icon={faPen} className={style.icon} />
                                     EDIT
                                 </button>
                             </Link>
 
-                            <button onClick={DeleteHandler}>
-                                <FontAwesomeIcon icon={faTrash} className={style.icon}/>
+                            <button onClick={deleteHandler}>
+                                <FontAwesomeIcon icon={faTrash} className={style.icon} />
                                 DELETE
                             </button>
                         </div>
@@ -144,12 +168,11 @@ const Details = ({ match }) => {
 
             <h3>Comments:</h3>
 
-            {(article.comments === undefined || article.comments.length === 0)
-
+            {(articleData.comments.length === 0)
                 ? <div className={style.noComments}>
                     <p>No comments yet.</p>
                 </div>
-                : article.comments.map((comment, index) => (
+                : articleData.comments.map((comment, index) => (
                     <Comment key={index} commentInfo={comment} />
                 ))
             }
@@ -160,7 +183,7 @@ const Details = ({ match }) => {
             }
 
             {user
-                ? <form className={style.commentForm}>
+                && <form className={style.commentForm}>
                     <textarea
                         type="text"
                         name="comment"
@@ -177,7 +200,7 @@ const Details = ({ match }) => {
                                         type="submit"
                                         name="Submit"
                                         value="SUBMIT COMMENT"
-                                        onClick={(event) => CommentHandler(event, userCheck.email)}
+                                        onClick={(event) => commentHandler(event, userCheck.email)}
                                     />
                                 )
                             }
@@ -187,10 +210,6 @@ const Details = ({ match }) => {
                     </UserConsumer>
 
                 </form>
-                : ''
-
-
-
             }
 
         </div>

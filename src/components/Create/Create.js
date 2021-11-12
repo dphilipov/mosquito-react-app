@@ -27,6 +27,7 @@ class Create extends Component {
                 type: '',
                 message: ''
             },
+            comments: [],
             lat: '',
             lng: '',
             timestamp: undefined
@@ -71,7 +72,7 @@ class Create extends Component {
             }
         });
 
-        let { title, imgUrl, description, creator, dateCreated, visited, timestamp } = this.state;
+        let { title, imgUrl, description, creator, dateCreated, visited, timestamp, comments } = this.state;
         let lat = Number(this.state.lat);
         let lng = Number(this.state.lng);
 

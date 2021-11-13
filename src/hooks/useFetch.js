@@ -35,12 +35,6 @@ function useFetch(limit, startAfter) {
         setFetchedData(limit, startAfter);
     }, [limit, startAfter])
 
-    // useEffect(() => {
-    //     setIsEnd(data.length >= totalCount);
-    // }, [data, totalCount])
-
-
-
     return { data, latestDoc, isEnd, isLoading, error };
 
 }

@@ -70,7 +70,6 @@ const App = () => {
 
 
 	return (
-		<UserProvider value={user}>
 			<>
 				<Header action={userCheck} />
 
@@ -81,7 +80,7 @@ const App = () => {
 
 					<Route path="/register" component={Register} />
 
-					<Route path="/login" render={(props) => <Login action={userCheck} />} />
+					<Route path="/login" component={Login} />
 
 					<Route path="/create" component={Create} />
 
@@ -98,7 +97,6 @@ const App = () => {
 
 				<Footer />
 			</>
-		</UserProvider>
 	);
 
 }

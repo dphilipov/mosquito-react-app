@@ -1,5 +1,9 @@
 // React, Hooks
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+
+// Context
+import AuthContext from '../../context/authContext';
 
 // Components
 import Notification from '../Notification/Notification';
@@ -14,6 +18,8 @@ import style from './Login.module.css';
 import firebase from '../../config/firebase.js';
 
 const Login = ({ history }) => {
+    const user = useContext(AuthContext);
+
     const [loginCredentials, setLoginCredentials] = useState({
         username: '',
         password: ''
@@ -47,14 +53,13 @@ const Login = ({ history }) => {
             .signInWithEmailAndPassword(username, password)
             .then((userCredentials) => {
                 authServices.saveUserData(userCredentials);
+                user.checkIfLogged();
 
                 const type = "good";
                 const message = "Login successful!"
 
                 // notificationServices.notificationsHandler.call(this, type, message)
-
-                history.push('/');
-
+                history.push("/")
             })
             .catch((error) => {
                 let type = "bad";

@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import authServices from '../services/authServices';
 
-const AuthContext = React.createContext();
+const AuthContext = React.createContext({
+    isLogged: false,
+    info: {},
+    checkIfLogged: () => { },
+});
 
 export default AuthContext;
 
 export const AuthContextProvider = ({ children }) => {
     const [isLogged, setIsLogged] = useState(false);
-    let user = authServices.getUserData()
+    const [info, setInfo] = useState({});
 
-    useEffect(() => {
+    const checkIfLoggedHandler = () => {
+        const user = authServices.getUserData();
+
         if (user) {
             setIsLogged(true)
+            setInfo(user);
         } else {
             setIsLogged(false);
+            setInfo({});
         }
-    }, [user])
+    }
 
     return (
         <AuthContext.Provider
-            value={isLogged}
+            value={{
+                isLogged,
+                info,
+                checkIfLogged: checkIfLoggedHandler,
+            }}
         >
             {children}
         </AuthContext.Provider>

@@ -1,10 +1,9 @@
 // React, Hooks
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 
 // Context
-import { UserConsumer } from '../userContext';
 import AuthContext from '../../context/authContext';
 
 // Components
@@ -21,7 +20,7 @@ import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
 import { faCompass } from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
-    const userIsLogged = useContext(AuthContext)
+    const user = useContext(AuthContext)
 
     const [startAfter, setStartAfter] = useState({});
     const [updateParent, setUpdateParent] = useState(false);
@@ -32,6 +31,10 @@ const Main = () => {
         isLoading,
         error
     } = useFetch(5, startAfter);
+
+    useEffect(() => {
+        user.checkIfLogged();    
+    }, [])
 
     const fetchMoreArticles = () => {
         setStartAfter(latestDoc);
@@ -63,7 +66,7 @@ const Main = () => {
         <div className={style.main}>
             <h3 className={style.activityTitle}>- DISCOVER PLACES -</h3>
 
-            {userIsLogged && <Link to="/create" ><button className={style.createButton}><FontAwesomeIcon icon={faPlusSquare} /> ADD A NEW PLACE</button></Link>}
+            {user.isLogged && <Link to="/create" ><button className={style.createButton}><FontAwesomeIcon icon={faPlusSquare} /> ADD A NEW PLACE</button></Link>}
 
             {articles?.map(article => (
                 <Article

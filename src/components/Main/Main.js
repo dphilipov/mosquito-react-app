@@ -1,13 +1,11 @@
 // React, Hooks
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 
 // Context
 import { UserConsumer } from '../userContext';
-
-// Services
-import postServices from '../../services/postServices'
+import AuthContext from '../../context/authContext';
 
 // Components
 import Article from '../Article/Article'
@@ -23,9 +21,10 @@ import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
 import { faCompass } from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
+    const userIsLogged = useContext(AuthContext)
+
     const [startAfter, setStartAfter] = useState({});
     const [updateParent, setUpdateParent] = useState(false);
-
     const {
         data: articles,
         latestDoc,
@@ -35,7 +34,7 @@ const Main = () => {
     } = useFetch(5, startAfter);
 
     const fetchMoreArticles = () => {
-        setStartAfter(latestDoc); 
+        setStartAfter(latestDoc);
     }
 
     const updateParentHandler = () => {
@@ -64,15 +63,7 @@ const Main = () => {
         <div className={style.main}>
             <h3 className={style.activityTitle}>- DISCOVER PLACES -</h3>
 
-            <UserConsumer>
-                {
-                    (userCheck) => {
-                        if (userCheck.isLogged) {
-                            return <Link to="/create" ><button className={style.createButton}><FontAwesomeIcon icon={faPlusSquare} /> ADD A NEW PLACE</button></Link>
-                        }
-                    }
-                }
-            </UserConsumer>
+            {userIsLogged && <Link to="/create" ><button className={style.createButton}><FontAwesomeIcon icon={faPlusSquare} /> ADD A NEW PLACE</button></Link>}
 
             {articles?.map(article => (
                 <Article
@@ -92,9 +83,7 @@ const Main = () => {
                     </div>
                     : <div className={style.showMoreContainer}>
                         < button
-                            onClick={() => {
-                                fetchMoreArticles();
-                            }}
+                            onClick={fetchMoreArticles}
                             className={style.showMore}
                         >
                             SHOW MORE

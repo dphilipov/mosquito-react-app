@@ -1,4 +1,3 @@
-
 function getUserData() {
     let user = localStorage.getItem(`user`);
 
@@ -16,10 +15,10 @@ function clearUserData() {
     localStorage.removeItem(`user`);
 }
 
-const funcs = {
+const authServices = {
     getUserData,
     saveUserData,
     clearUserData
 }
 
-export default funcs;
+export default authServices;

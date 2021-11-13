@@ -1,16 +1,22 @@
 // React, Hooks
 import { useContext, useEffect } from 'react';
-
-import logo from './mosquito-logo.png';
-import style from './Header.module.css';
 import { Link } from 'react-router-dom';
-import authServices from '../../services/authServices';
-import firebase from '../../config/firebase';
-import Navigation from '../Navigation/Navigation';
 
 // Context
 import AuthContext from '../../context/authContext';
 
+// Components
+import Navigation from '../Navigation/Navigation';
+
+// Services
+import authServices from '../../services/authServices';
+
+// CSS
+import style from './Header.module.css';
+
+// Other
+import firebase from '../../config/firebase';
+import logo from './mosquito-logo.png';
 
 const Header = () => {
     const user = useContext(AuthContext)
@@ -19,7 +25,7 @@ const Header = () => {
         user.checkIfLogged();
     }, [])
 
-    const onLogout = () => {
+    const onLogoutHandler = () => {
         firebase
             .auth()
             .signOut()
@@ -38,13 +44,17 @@ const Header = () => {
         <header>
             <div className={style.wrapper}>
                 <div className={style.logoContainer}>
-                    <Link to="/"><img src={logo} alt="Mosquito Home"
-                        className={style.logo} />
+                    <Link to="/">
+                        <img
+                            src={logo}
+                            alt="Mosquito Home"
+                            className={style.logo}
+                        />
                     </Link>
                     <span className={style.logoText}>MOSQUITO</span>
                 </div>
 
-                <Navigation user={user} onLogout={onLogout} />
+                <Navigation user={user} onLogout={onLogoutHandler} />
             </div>
         </header>
     )

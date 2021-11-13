@@ -10,7 +10,6 @@ function getPlaces(limit, latestDoc = {}) {
         .get()
         .then((fetchedPlaces) => {
             const collection = returnFetchedDataInArray(fetchedPlaces);
-
             return {
                 collection,
                 latestDoc: fetchedPlaces.docs[fetchedPlaces.docs.length - 1]

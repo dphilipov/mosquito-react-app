@@ -1,6 +1,7 @@
 // React, Hooks
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
 
 // Context
 import { UserConsumer } from '../userContext';
@@ -22,47 +23,24 @@ import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
 import { faCompass } from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
-    const [articles, setArticles] = useState([]);
-    const [latestDoc, setLatestDoc] = useState(0);
-    const [isEnd, setIsEnd] = useState(false);
+    const [startAfter, setStartAfter] = useState({});
     const [updateParent, setUpdateParent] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const {
+        data: articles,
+        latestDoc,
+        isEnd,
+        isLoading,
+        error
+    } = useFetch(5, startAfter);
+
+    const fetchMoreArticles = () => {
+        setStartAfter(latestDoc); 
+    }
 
     const updateParentHandler = () => {
         setUpdateParent(prevState => !prevState);
     }
-
-    const fetchMoreArticles = () => {
-        postServices.getPlaces(5, latestDoc)
-            .then(data => {
-                if (data !== undefined) {
-                    setArticles(prevState => [...prevState, ...data.collection]);
-                    setLatestDoc(data.latestDoc);
-                } else {
-                    setIsEnd(true);
-                }
-
-            })
-            .catch(err => console.log(err))
-    }
-
-    useEffect(() => {
-        setIsLoading(true);
-
-        postServices.getPlaces(5)
-            .then(data => {
-                if (data !== undefined) {
-                    setArticles(prevState => [...prevState, ...data.collection]);
-                    setLatestDoc(data.latestDoc);
-                } else {
-                    setIsEnd(true);
-                }
-
-                setIsLoading(false);
-
-            })
-            .catch(err => console.log(err))
-    }, [])
 
     // componentDidUpdate() {
     //     if (this.state.updateParent) {
@@ -96,7 +74,7 @@ const Main = () => {
                 }
             </UserConsumer>
 
-            {articles.map(article => (
+            {articles?.map(article => (
                 <Article
                     key={article.id}
                     articleData={article}

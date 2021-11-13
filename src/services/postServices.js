@@ -4,7 +4,7 @@ const DB = firebase.firestore();
 
 function getPlaces(limit, latestDoc = {}) {
     return DB.collection("test")
-        .orderBy("dateCreated", "desc")
+        .orderBy("timestamp", "desc")
         .startAfter(latestDoc)
         .limit(limit)
         .get()
@@ -81,7 +81,7 @@ function getProfileComments(userId) {
         .catch(err => console.log(err))
 }
 
-function checkIfTitleExists(title) {
+function checkIfPlaceExists(title) {
     let exists = false;
 
     return DB.collection("test")
@@ -123,7 +123,7 @@ const postServices = {
     getProfileActivity,
     postComment,
     getProfileComments,
-    checkIfTitleExists,
+    checkIfPlaceExists,
 }
 
 export default postServices;

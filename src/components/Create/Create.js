@@ -1,240 +1,265 @@
-import firebase from '../../config/firebase.js';
-import style from './Create.module.css';
-import { Component } from 'react';
+// React, Hooks
+import { Component, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { dtFormat } from '../../helpers/dateFormat';
-import authServices from '../../services/authServices';
-import Notification from '../Notification/Notification';
-import notificationServices from '../../services/notificationServices';
-import postServices from '../../services/postServices';
 
+// Services, Helpers
+import postServices from '../../services/postServices';
+import authServices from '../../services/authServices';
+// import notificationServices from '../../services/notificationServices';
+import { dtFormat } from '../../helpers/dateFormat';
+
+// Components
+import Notification from '../Notification/Notification';
+
+// CSS
+import style from './Create.module.css';
+
+// Other
+import firebase from '../../config/firebase.js';
 
 const DB = firebase.firestore();
 
+const Create = ({ history }) => {
+    const [placeInfo, setPlaceInfo] = useState({
+        title: '',
+        imgUrl: '',
+        description: '',
+        dateCreated: '',
+        creator: authServices.getUserData().uid,
+        visited: [],
+        comments: [],
+        lat: null,
+        lng: null,
+        timestamp: 0
+    })
 
-class Create extends Component {
-    constructor(props) {
-        super(props)
+    const [notification, setNotification] = useState({
+        type: '',
+        message: ''
+    });
 
-        this.state = {
-            title: '',
-            imgUrl: '',
-            description: '',
-            dateCreated: '',
-            creator: authServices.getUserData().uid,
-            visited: [],
-            notification: {
-                type: '',
-                message: ''
-            },
-            comments: [],
-            lat: '',
-            lng: '',
-            timestamp: undefined
-        }
-    }
-
-    inputHandler = (event) => {
-        if (event.target.name === 'visited') {
-            if (event.target.checked === true) {
+    const inputHandler = (e) => {
+        if (e.target.name === 'visited') {
+            if (e.target.checked === true) {
                 let userId = authServices.getUserData().uid;
-                let newVisited = this.state.visited;
-                newVisited.push(userId)
-                this.setState({
-                    [event.target.name]: newVisited,
-                });
-            } else {
-                this.setState({
-                    [event.target.name]: [],
-                });
+                let newVisited = placeInfo.visited;
+                newVisited.push(userId);
+
+                setPlaceInfo(prevState => ({
+                    ...prevState,
+                    [e.target.name]: newVisited,
+                }))
+
+                return;
             }
 
-        } else {
-            this.setState({
-                [event.target.name]: event.target.value,
-            });
+            setPlaceInfo(prevState => ({
+                ...prevState,
+                [e.target.name]: [],
+            }))
+
+            return;
         }
+
+        setPlaceInfo(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
 
     }
 
-    submitHandler = async (event) => {
-        event.preventDefault();
+    const submitHandler = (e) => {
+        e.preventDefault();
 
-        await this.setState({
+        setPlaceInfo(prevState => ({
+            ...prevState,
             dateCreated: dtFormat.format(new Date()),
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        })
-
-        this.setState({
-            notification: {
-                type: '',
-                message: ''
-            }
-        });
-
-        let { title, imgUrl, description, creator, dateCreated, visited, timestamp, comments } = this.state;
-        let lat = Number(this.state.lat);
-        let lng = Number(this.state.lng);
+        }))
 
 
-        if (title === ``) {
-            let type = "bad";
-            let message = "Title can't be empty"
+        const placeToCreate = {
+            ...placeInfo,
+            lat: Number(placeInfo.lat),
+            lng: Number(placeInfo.lng)
+        }
 
-            notificationServices.notificationsHandler.call(this, type, message)
+
+        if (placeToCreate.title === ``) {
+            setNotification({
+                type: "bad",
+                messagetype: "Title can't be empty"
+            })
+
+            // notificationServices.notificationsHandler.call(this, type, message)
 
             return
         }
 
-        if (imgUrl === ``) {
-            let type = "bad";
-            let message = "Image URL can't be empty"
+        if (placeToCreate.imgUrl === ``) {
+            setNotification({
+                type: "bad",
+                messagetype: "Image URL can't be empty"
+            })
 
-            notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        if (lat === `` || isNaN(Number(lat))) {
-            let type = "bad";
-            let message = "Latitude can't be empty and must be a number"
-            notificationServices.notificationsHandler.call(this, type, message)
+            // notificationServices.notificationsHandler.call(this, type, message)
 
             return
         }
 
-        if (lng === `` || isNaN(Number(lng))) {
-            let type = "bad";
-            let message = "Longitude can't be empty and must be a number"
+        if (placeToCreate.lat === `` || isNaN(Number(placeToCreate.lat))) {
+            setNotification({
+                type: "bad",
+                messagetype: "Latitude can't be empty and must be a number"
+            })
 
-            notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        if (description === ``) {
-            let type = "bad";
-            let message = "Description can't be empty"
-
-            notificationServices.notificationsHandler.call(this, type, message)
+            // notificationServices.notificationsHandler.call(this, type, message)
 
             return
         }
 
-        if (description.length < 50) {
-            let type = "bad";
-            let message = "Description must be at least 50 characters"
+        if (placeToCreate.lng === `` || isNaN(Number(placeToCreate.lng))) {
+            setNotification({
+                type: "bad",
+                messagetype: "Longitude can't be empty and must be a number"
+            })
 
-            notificationServices.notificationsHandler.call(this, type, message)
+            // notificationServices.notificationsHandler.call(this, type, message)
 
             return
         }
 
-        postServices.checkIfTitleExists(title)
+        if (placeToCreate.description === ``) {
+            setNotification({
+                type: "bad",
+                messagetype: "Description can't be empty"
+            })
+
+            // notificationServices.notificationsHandler.call(this, type, message)
+
+            return
+        }
+
+        if (placeToCreate.description.length < 50) {
+            setNotification({
+                type: "bad",
+                messagetype: "Description must be at least 50 characters"
+            })
+
+            // notificationServices.notificationsHandler.call(this, type, message)
+
+            return
+        }
+
+        postServices.checkIfPlaceExists(placeInfo.title)
             .then(res => {
-                if (res === false) {
-                    DB.collection(`test`)
-                        .add({ title, imgUrl, description, creator, dateCreated, visited, lat, lng, timestamp })
-                        .then((res) => {
+                if (res) {
+                    setNotification({
+                        type: "bad",
+                        messagetype: "This place already exists"
+                    })
 
-                            let type = "good";
-                            let message = "Place created successfully!"
-
-                            notificationServices.notificationsHandler.call(this, type, message)
-
-                            setTimeout(() => {
-                                this.props.history.push('/');
-                            }, 2000)
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        })
-                } else {
-                    let type = "bad";
-                    let message = "This place already exists"
-
-                    notificationServices.notificationsHandler.call(this, type, message)
+                    return;
                 }
+
+                DB.collection(`test`)
+                    .add(placeToCreate)
+                    .then((res) => {
+
+                        let type = "good";
+                        let message = "Place created successfully!"
+
+                        // notificationServices.notificationsHandler.call(this, type, message)
+
+                        setTimeout(() => {
+                            history.push('/');
+                        }, 2000)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
             })
 
     }
 
-    render() {
-        let { title, imgUrl, description, lat, lng } = this.state;
+    return (
+        <>
 
-        return (
-            <>
-
-                {this.state.notification.type !== ''
+            {/* {this.state.notification.type !== ''
                     ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
                     : ''
-                }
+                } */}
 
-                <h3 className={style.createHeading}>Create a new place!</h3>
-                <p className={style.hint}>
-                    You use a website like <Link to={{ pathname: "https://www.latlong.net" }} target="_blank">https://www.latlong.net</Link> for the coordinates
-                </p>
+            <h3 className={style.createHeading}>Create a new place!</h3>
+            <p className={style.hint}>
+                You use a website like <Link to={{ pathname: "https://www.latlong.net" }} target="_blank">https://www.latlong.net</Link> for the coordinates
+            </p>
 
-                <form className={style.createForm}>
+            <form className={style.createForm}>
 
-                    <label htmlFor="title">Title:*</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={title}
-                        placeholder="Title of the place"
-                        onChange={this.inputHandler} />
+                <label htmlFor="title">Title:*</label>
+                <input
+                    type="text"
+                    name="title"
+                    value={placeInfo.title}
+                    placeholder="Title of the place"
+                    onChange={inputHandler} />
 
-                    <label htmlFor="imgUrl">Image Photo:*</label>
-                    <input
-                        type="text"
-                        name="imgUrl"
-                        value={imgUrl}
-                        placeholder="Enter URL here"
-                        onChange={this.inputHandler} />
+                <label htmlFor="imgUrl">Image Photo:*</label>
+                <input
+                    type="text"
+                    name="imgUrl"
+                    value={placeInfo.imgUrl}
+                    placeholder="Enter URL here"
+                    onChange={inputHandler} />
 
-                    <label htmlFor="lat">Latitude:*</label>
-                    <input
-                        type="text"
-                        name="lat"
-                        value={lat}
-                        placeholder="Enter place latitude (e.g. 42.144920)"
-                        onChange={this.inputHandler} />
+                <label htmlFor="lat">Latitude:*</label>
+                <input
+                    type="text"
+                    name="lat"
+                    value={placeInfo.lat}
+                    placeholder="Enter place latitude (e.g. 42.144920)"
+                    onChange={inputHandler} />
 
-                    <label htmlFor="lng">Longitude:*</label>
-                    <input
-                        type="text"
-                        name="lng"
-                        value={lng}
-                        placeholder="Enter place longitude (e.g. 24.750320)"
-                        onChange={this.inputHandler} />
+                <label htmlFor="lng">Longitude:*</label>
+                <input
+                    type="text"
+                    name="lng"
+                    value={placeInfo.lng}
+                    placeholder="Enter place longitude (e.g. 24.750320)"
+                    onChange={inputHandler} />
 
-                    <label htmlFor="description">Description:*</label>
-                    <textarea
-                        type="text"
-                        name="description"
-                        value={description}
-                        placeholder="Enter a description (min. 50 characters)"
-                        onChange={this.inputHandler}
-                    >
-                    </textarea>
+                <label htmlFor="description">Description:*</label>
+                <textarea
+                    type="text"
+                    name="description"
+                    value={placeInfo.description}
+                    minLength="50"
+                    maxLength="500"
+                    placeholder="Enter a description (min. 50 characters)"
+                    onChange={inputHandler}
+                >
+                </textarea>
 
-                    <input
-                        type="checkbox"
-                        id="visited"
-                        name="visited"
-                        value="Visited"
-                        onChange={this.inputHandler}
-                    />
-                    <label htmlFor="visited">Visited</label>
+                <input
+                    type="checkbox"
+                    id="visited"
+                    name="visited"
+                    value="Visited"
+                    onChange={inputHandler}
+                />
+                <label htmlFor="visited">Visited</label>
 
-                    <p className={style.mandatory}>* are mandatory</p>
-                    <input onClick={this.submitHandler} type="submit" name="Create" value="Create" />
-                </form>
-            </>
-        )
-    }
-
+                <p className={style.mandatory}>* are mandatory</p>
+                <input
+                    onClick={submitHandler}
+                    type="submit"
+                    name="Create"
+                    value="Create"
+                />
+            </form>
+        </>
+    )
 }
 
 export default Create;

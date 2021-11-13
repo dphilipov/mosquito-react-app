@@ -25,6 +25,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
+const DB = firebase.firestore();
+
 const Details = ({ match, history }) => {
     const [articleData, setArticleData] = useState({
         title: '',
@@ -48,7 +50,6 @@ const Details = ({ match, history }) => {
         user = authServices.getUserData().uid;
     }
 
-    const DB = firebase.firestore();
     const articleId = match.params.id;
 
     useEffect(() => {
@@ -60,8 +61,8 @@ const Details = ({ match, history }) => {
             .catch(err => console.log(err));
     }, [articleId]);
 
-    const commentHandler = async (event, userEmail) => {
-        event.preventDefault();
+    const commentHandler = async (e, userEmail) => {
+        e.preventDefault();
 
         setNotificationType('');
         setNotificationMessage('');
@@ -118,8 +119,9 @@ const Details = ({ match, history }) => {
     }
 
     const deleteHandler = () => {
-
-        DB.collection(`test`).doc(articleId).delete()
+        DB.collection(`test`)
+            .doc(articleId)
+            .delete()
             .then((res) => {
                 history.push('/');
             })

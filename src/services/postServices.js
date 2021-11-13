@@ -2,33 +2,18 @@ import firebase from '../config/firebase'
 
 const DB = firebase.firestore();
 
-function getPlaces(limit, latestDoc={}) {
-    let collection = [];
-
+function getPlaces(limit, latestDoc = {}) {
     return DB.collection("test")
         .orderBy("dateCreated", "desc")
         .startAfter(latestDoc)
         .limit(limit)
         .get()
-        .then((data) => {
-            if (data.size !== 0) {
-                data.forEach((doc) => {
-                    const id = doc.id;
-                    const docData = doc.data();
+        .then((fetchedPlaces) => {
+            const collection = returnFetchedDataInArray(fetchedPlaces);
 
-                    collection.push({ id, ...docData });
-
-                })
-
-                return {
-                    collection,
-                    latestDoc: data.docs[data.docs.length - 1]
-                }
-            } else {
-                return {
-                    collection,
-                    latestDoc: undefined
-                }
+            return {
+                collection,
+                latestDoc: fetchedPlaces.docs[fetchedPlaces.docs.length - 1]
             }
 
         })
@@ -38,9 +23,9 @@ function getOne(id) {
     return DB.collection(`test`)
         .doc(id)
         .get()
-        .then((data) => {
-            const id = data.id;
-            const article = { ...data.data(), id };
+        .then((fetchedPlace) => {
+            const id = fetchedPlace.id;
+            const article = { ...fetchedPlace.data(), id };
 
             return article;
         })
@@ -50,26 +35,13 @@ function getOne(id) {
 }
 
 function getProfileActivity(id) {
-    let collection = [];
-
     return DB.collection("test")
         .where("visited", "array-contains", id)
         .get()
-        .then((data) => {
-            if (data.size !== 0) {
-                data.forEach((doc) => {
-                    const id = doc.id;
-                    const docData = doc.data();
+        .then((profileActivity) => {
+            const collection = returnFetchedDataInArray(profileActivity);
 
-                    collection.push({ id, ...docData });
-
-                })
-
-                return collection;
-            } else {
-                return [];
-            }
-
+            return collection;
         })
         .catch(err => console.log(err))
 }
@@ -92,7 +64,6 @@ function postComment(article) {
 }
 
 function getProfileComments(userId) {
-    let collection = [];
     let newCollection = [];
 
     return DB.collection("test")
@@ -100,25 +71,13 @@ function getProfileComments(userId) {
         .where("commentsUserIds", "array-contains", userId)
         .get()
         .then((data) => {
-            if (data.size !== 0) {
-                data.forEach((doc) => {
+            const collection = returnFetchedDataInArray(data);
 
-                    const id = doc.id;
-                    const docData = doc.data();
+            collection.forEach(item => {
+                newCollection.push(...item.comments.filter(x => x.userId === userId));
+            })
 
-                    collection.push({ id, ...docData });
-
-                })
-
-                collection.forEach(item => {
-                    newCollection.push(...item.comments.filter(x => x.userId === userId));
-                })
-
-                return newCollection;
-            } else {
-                return [];
-            }
-
+            return newCollection;
         })
         .catch(err => console.log(err))
 }
@@ -137,10 +96,29 @@ function checkIfTitleExists(title) {
             return exists;
         })
         .catch(err => console.log(err))
-
 }
 
-const funcs = {
+function returnFetchedDataInArray(fetchedData) {
+    let collection = [];
+
+    if (fetchedData.size === 0) {
+        return {
+            collection,
+            latestDoc: undefined
+        }
+    }
+
+    fetchedData.forEach((doc) => {
+        const id = doc.id;
+        const placeData = doc.data();
+
+        collection.push({ id, ...placeData });
+    })
+
+    return collection;
+}
+
+const postServices = {
     getPlaces,
     getOne,
     getProfileActivity,
@@ -149,4 +127,4 @@ const funcs = {
     checkIfTitleExists,
 }
 
-export default funcs;
+export default postServices;

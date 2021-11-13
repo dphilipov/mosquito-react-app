@@ -2,12 +2,10 @@
 
 h1, h2, h3, h4, h5, label {
   font-family: Calibri, Arial, Helvetica, sans-serif;
-  color: #f8e6d3;
 }
 
 p, a, span, button {
   font-family: Roboto, Arial, Helvetica, sans-serif;
-  color: #f8e6d3;
 }
 
 .wrapper {

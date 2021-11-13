@@ -1,13 +1,14 @@
+// CSS
 import style from './Comment.module.css';
 
-const Comment = (props) => {
-    let {user, comment, date} = props.commentInfo;
-    
+const Comment = ({ commentInfo }) => {
+    let { user, comment, date } = commentInfo;
+
     return (
         <div className={style.comment}>
             <h4>{user}</h4>
             <p>{comment}</p>
-            <span>{date}</span>        
+            <span>{date}</span>
         </div>
     )
 }

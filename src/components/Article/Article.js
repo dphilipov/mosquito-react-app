@@ -1,11 +1,20 @@
-import { Link } from 'react-router-dom';
-import firebase from '../../config/firebase.js';
-import postServices from '../../services/postServices';
+// React, Hooks
 import { useState } from 'react';
-import style from './Article.module.css'
+import { Link } from 'react-router-dom';
+
+// Services
+import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
+
+// CSS
+import style from './Article.module.css'
+
+// FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+
+// Other
+import firebase from '../../config/firebase.js';
 
 const DB = firebase.firestore();
 

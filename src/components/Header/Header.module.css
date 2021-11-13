@@ -38,6 +38,7 @@ header {
 
 .navBar a {
     text-decoration: none;
+    color: #f8e6d3;
 }
 
 .navBar a:hover {
@@ -50,11 +51,11 @@ header {
     font-weight: bold;
     font-family: 'Bebas Neue', 'Arial', cursive;
     font-size: 30px;
-
 }
 
 .welcomeMessage {
     text-align: right;
+    color: #f8e6d3;
 }
 
 .profile {

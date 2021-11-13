@@ -71,7 +71,7 @@ const App = () => {
 
 	return (
 			<>
-				<Header action={userCheck} />
+				<Header />
 
 				<Switch>
 					<Route path="/" exact>

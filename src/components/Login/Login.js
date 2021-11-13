@@ -53,12 +53,14 @@ const Login = ({ history }) => {
             .signInWithEmailAndPassword(username, password)
             .then((userCredentials) => {
                 authServices.saveUserData(userCredentials);
-                user.checkIfLogged();
 
                 const type = "good";
                 const message = "Login successful!"
 
                 // notificationServices.notificationsHandler.call(this, type, message)
+            })
+            .then(res => {
+                user.checkIfLogged();
                 history.push("/")
             })
             .catch((error) => {

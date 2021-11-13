@@ -4,7 +4,6 @@ import { useContext, useEffect } from 'react';
 import logo from './mosquito-logo.png';
 import style from './Header.module.css';
 import { Link, Redirect } from 'react-router-dom';
-import { UserConsumer } from '../userContext';
 import authServices from '../../services/authServices';
 import firebase from '../../config/firebase';
 
@@ -12,7 +11,7 @@ import firebase from '../../config/firebase';
 import AuthContext from '../../context/authContext';
 
 
-const Header = ({ action }) => {
+const Header = () => {
     const user = useContext(AuthContext)
 
     useEffect(() => {
@@ -25,8 +24,9 @@ const Header = ({ action }) => {
             .signOut()
             .then((response) => {
                 authServices.clearUserData();
-                action();
-                <Redirect to="/login" />
+            })
+            .then(res => {
+                user.checkIfLogged();
             })
             .catch((err) => {
                 console.log(err);
@@ -67,8 +67,8 @@ const Header = ({ action }) => {
                                     <li>PROFILE</li>
                                 </Link>
 
-                                <Link to="/login" onClick={() => onLogout()}>
-                                    <li>LOGOUT</li>
+                                <Link to='/login'>
+                                    <li onClick={onLogout}>LOGOUT</li>
                                 </Link>
                             </>
                         }

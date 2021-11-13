@@ -2,7 +2,7 @@ import firebase from '../../config/firebase.js';
 import style from './Create.module.css';
 import { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { dtFormat } from '../../config/dateFormat';
+import { dtFormat } from '../../helpers/dateFormat';
 import authServices from '../../services/authServices';
 import Notification from '../Notification/Notification';
 import notificationServices from '../../services/notificationServices';

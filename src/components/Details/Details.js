@@ -17,7 +17,7 @@ import Notification from '../Notification/Notification';
 import style from './Details.module.css';
 
 // Other
-import { dtFormat } from '../../config/dateFormat';
+import { dtFormat } from '../../helpers/dateFormat';
 import firebase from '../../config/firebase.js';
 
 // FontAwesome

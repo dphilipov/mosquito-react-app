@@ -1,0 +1,34 @@
+.navContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.navBar {
+    margin: 0 0 10px 0;
+}
+
+.navBar a {
+    text-decoration: none;
+    color: #f8e6d3;
+}
+
+.navBar a:hover {
+    color: #314a36;
+}
+
+.navBar li {
+    display: inline;
+    margin-left: 15px;
+    font-weight: bold;
+    font-family: 'Bebas Neue', 'Arial', cursive;
+    font-size: 30px;
+}
+
+.welcomeMessage {
+    text-align: right;
+    color: #f8e6d3;
+}
+
+.profile {
+    width: 10%;
+}

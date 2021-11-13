@@ -3,9 +3,10 @@ import { useContext, useEffect } from 'react';
 
 import logo from './mosquito-logo.png';
 import style from './Header.module.css';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import authServices from '../../services/authServices';
 import firebase from '../../config/firebase';
+import Navigation from '../Navigation/Navigation';
 
 // Context
 import AuthContext from '../../context/authContext';
@@ -18,7 +19,7 @@ const Header = () => {
         user.checkIfLogged();
     }, [])
 
-    function onLogout() {
+    const onLogout = () => {
         firebase
             .auth()
             .signOut()
@@ -43,51 +44,8 @@ const Header = () => {
                     <span className={style.logoText}>MOSQUITO</span>
                 </div>
 
-                <div className={style.navContainer}>
-                    <ul className={style.navBar}>
-
-                        {!user.isLogged ?
-                            <>
-                                <Link to="/login">
-                                    <li>LOGIN</li>
-                                </Link>
-
-                                <Link to="/register">
-                                    <li>REGISTER</li>
-                                </Link>
-
-                            </>
-                            :
-                            <>
-                                <Link to="/map">
-                                    <li>MY MAP</li>
-                                </Link>
-
-                                <Link to={`/profile/${user.info.email}`}>
-                                    <li>PROFILE</li>
-                                </Link>
-
-                                <Link to='/login'>
-                                    <li onClick={onLogout}>LOGOUT</li>
-                                </Link>
-                            </>
-                        }
-                    </ul>
-
-                    <span className={style.welcomeMessage}>
-                        Welcome,
-                        {user.isLogged ?
-                            <Link to={`/profile/${user.info.email}`}>
-                                <strong> {user.info.email}</strong>
-                            </Link>
-                            :
-                            <span> Guest</span>
-                        }
-                        !
-                    </span>
-                </div>
+                <Navigation user={user} onLogout={onLogout} />
             </div>
-
         </header>
     )
 }

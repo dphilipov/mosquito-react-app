@@ -11,6 +11,10 @@
     Find & edit information about amazing natural landmarks!
     <br />
     <br />
+    <img width ='46px' src ='https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/reactjs.svg'>
+    <img width ='46px' src ='https://github.com/rahulbanerjee26/githubProfileReadmeGenerator/blob/main/icons/firebase.svg'>
+    <img width ='146px' src ='https://github.com/Leaflet/Leaflet/blob/master/src/images/logo.svg'>
+    <br />
     <a href="https://www.mosquitoapp.net">Live Demo</a>
     ·
     <a href="https://github.com/dphilipov?tab=repositories">Explore my other projects</a>

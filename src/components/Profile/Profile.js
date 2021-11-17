@@ -51,9 +51,9 @@ const Profile = ({ history }) => {
 
         const currentUser = authServices.getUserData('user')
 
-        postServices.getProfileActivity(currentUser.uid)
-            .then(activitesInfo => {
-                setArticles(activitesInfo)
+        postServices.getProfileVisitedPlaces(currentUser.uid)
+            .then(activitiesInfo => {
+                setArticles(activitiesInfo)
                 setComments([])
                 setIsLoading(false);
             })
@@ -83,9 +83,9 @@ const Profile = ({ history }) => {
 
         const currentUser = authServices.getUserData('user')
 
-        postServices.getProfileActivity(currentUser.uid, 5)
-            .then(activitesInfo => {
-                setArticles(activitesInfo);
+        postServices.getProfileVisitedPlaces(currentUser.uid)
+            .then(activitiesInfo => {
+                setArticles(activitiesInfo);
                 setUpdateParent(false);
                 setIsLoading(false);
             })
@@ -101,7 +101,7 @@ const Profile = ({ history }) => {
                 <button className={style.deleteProfile} onClick={deleteProfileHandler}>DELETE PROFILE</button>
 
                 <ul className={style.userControls}>
-                    <li onClick={showProfileActivitiesHandler}>{user.info.email}`s Latest Activity &#9660;</li>
+                    <li onClick={showProfileActivitiesHandler}>{user.info.email}`s Visited Places &#9660;</li>
                     <li onClick={showProfileCommentsHandler}>{user.info.email}`s Latest Comments &#9660;</li>
                 </ul>
 
@@ -111,7 +111,7 @@ const Profile = ({ history }) => {
                     && articles.map(activity =>
                         <Article
                             key={activity.id}
-                            activitesInfo={activity}
+                            activitiesInfo={activity}
                             updateParent={updateParentHandler}
                         />
                     )

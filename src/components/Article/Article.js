@@ -18,8 +18,8 @@ import firebase from '../../config/firebase.js';
 
 const DB = firebase.firestore();
 
-const Article = ({ activitesInfo, updateParent }) => {
-    const [visited, setVisited] = useState(activitesInfo.visited);
+const Article = ({ activitiesInfo, updateParent }) => {
+    const [visited, setVisited] = useState(activitiesInfo.visited);
 
     let user = undefined;
 
@@ -34,12 +34,12 @@ const Article = ({ activitesInfo, updateParent }) => {
 
         if (visited.includes(userId)) {
             DB.collection(`test`)
-                .doc(activitesInfo.id)
+                .doc(activitiesInfo.id)
                 .update({
                     visited: firebase.firestore.FieldValue.arrayRemove(userId)
                 })
                 .then((res) => {
-                    postServices.getOne(activitesInfo.id)
+                    postServices.getOne(activitiesInfo.id)
                         .then(res => {
                             setVisited(res.visited);
                             updateParent()
@@ -48,12 +48,12 @@ const Article = ({ activitesInfo, updateParent }) => {
                 .catch(err => console.log(err))
         } else {
             DB.collection(`test`)
-                .doc(activitesInfo.id)
+                .doc(activitiesInfo.id)
                 .update({
                     visited: firebase.firestore.FieldValue.arrayUnion(userId)
                 })
                 .then((res) => {
-                    postServices.getOne(activitesInfo.id)
+                    postServices.getOne(activitiesInfo.id)
                         .then(res => {
                             setVisited(res.visited);
                             updateParent()
@@ -67,19 +67,19 @@ const Article = ({ activitesInfo, updateParent }) => {
     return (
         <article className={style.pointOfInterest}>
             <div className={style.poiPreview}>
-                <Link to={`/article/${activitesInfo.id}`}>
-                    <img src={activitesInfo.imgUrl} className={style.thumbnail} alt="" />
+                <Link to={`/article/${activitiesInfo.id}`}>
+                    <img src={activitiesInfo.imgUrl} className={style.thumbnail} alt="" />
                 </ Link>
             </div>
             <div className={style.poiContent}>
                 <div>
                     <div className={style.topContentContainer}>
-                        <Link to={`/article/${activitesInfo.id}`}>
-                            <h2>{activitesInfo.title}</h2>
+                        <Link to={`/article/${activitiesInfo.id}`}>
+                            <h2>{activitiesInfo.title}</h2>
                         </ Link>
-                        <span className={style.dateAdded}><strong>Date Added:</strong> {activitesInfo.dateCreated}</span>
+                        <span className={style.dateAdded}><strong>Date Added:</strong> {activitiesInfo.dateCreated}</span>
                     </div>
-                    <p>{activitesInfo.description}</p>
+                    <p>{activitiesInfo.description}</p>
                 </div>
                 <div className={style.bottomContentContainer}>
                     {user&& <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(event) => visitedHandler(event)} className={style.pin} />}

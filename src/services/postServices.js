@@ -10,6 +10,7 @@ function getPlaces(limit, latestDoc = {}) {
         .get()
         .then((fetchedPlaces) => {
             const collection = returnFetchedDataInArray(fetchedPlaces);
+
             return {
                 collection,
                 latestDoc: fetchedPlaces.docs[fetchedPlaces.docs.length - 1]
@@ -33,18 +34,6 @@ function getOne(id) {
         })
 }
 
-function getProfileActivity(id) {
-    return DB.collection("test")
-        .where("visited", "array-contains", id)
-        .get()
-        .then((profileActivity) => {
-            const collection = returnFetchedDataInArray(profileActivity);
-
-            return collection;
-        })
-        .catch(err => console.log(err))
-}
-
 function postComment(article) {
     let { id } = article;
 
@@ -62,6 +51,19 @@ function postComment(article) {
         })
 }
 
+function getProfileVisitedPlaces(userId) {
+    return DB.collection("test")
+        .where("visited", "array-contains", userId)
+        .get()
+        .then((profileActivity) => {
+            console.log(profileActivity.docs);
+            const collection = returnFetchedDataInArray(profileActivity);
+
+            return collection;
+        })
+        .catch(err => console.log(err))
+}
+
 function getProfileComments(userId) {
     let newCollection = [];
 
@@ -77,6 +79,7 @@ function getProfileComments(userId) {
             })
 
             return newCollection;
+
         })
         .catch(err => console.log(err))
 }
@@ -120,7 +123,7 @@ function returnFetchedDataInArray(fetchedData) {
 const postServices = {
     getPlaces,
     getOne,
-    getProfileActivity,
+    getProfileVisitedPlaces,
     postComment,
     getProfileComments,
     checkIfPlaceExists,

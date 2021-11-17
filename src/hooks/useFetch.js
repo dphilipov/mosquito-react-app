@@ -16,7 +16,7 @@ function useFetch(limit, startAfter) {
 
         try {
             const fetchedData = await postServices.getPlaces(limit, startAfter);
-
+            
             if (fetchedData.latestDoc) {
                 setLatestDoc(fetchedData.latestDoc);
                 setData(prevState => [...prevState, ...fetchedData.collection]);

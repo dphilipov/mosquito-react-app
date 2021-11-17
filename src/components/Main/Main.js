@@ -44,23 +44,6 @@ const Main = () => {
         setUpdateParent(prevState => !prevState);
     }
 
-    // componentDidUpdate() {
-    //     if (this.state.updateParent) {
-    //         postServices.getInitial(this.state.articles.length)
-    //             .then(data => {
-    //                 if (data !== undefined) {
-    //                     this.setState(prevState => ({
-    //                         articles: [...data.collection],
-    //                     }));
-    //                 }
-
-    //             })
-    //             .catch(err => console.log(err))
-
-    //         this.setState({ updateParent: false })
-    //     }
-    // }
-
     return (
 
         <div className={style.main}>
@@ -71,7 +54,7 @@ const Main = () => {
             {articles?.map(article => (
                 <Article
                     key={article.id}
-                    articleData={article}
+                    activitiesInfo={article}
                     updateParent={updateParentHandler}
                 />
             ))}

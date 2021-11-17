@@ -51,21 +51,7 @@ const App = () => {
 	}
 
 	useEffect(() => {
-		if (Boolean(authServices.getUserData())) {
-			const updatedUser = authServices.getUserData();
-			setUser({
-				email: updatedUser.email,
-				uid: updatedUser.uid,
-				isLogged: true
-			});
-
-		} else {
-			setUser({
-				email: 'Guest',
-				uid: '',
-				isLogged: false,
-			});
-		}
+		userCheck();
 	}, [])
 
 
@@ -84,7 +70,7 @@ const App = () => {
 
 					<Route path="/create" component={Create} />
 
-					<Route path="/profile/:profileName" render={(props) => <Profile action={userCheck} />} />
+					<Route path="/profile/:profileName" component={Profile} />
 
 					<Route path="/article/:id" exact component={Details} />
 

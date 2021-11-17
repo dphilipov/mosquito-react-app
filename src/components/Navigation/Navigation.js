@@ -39,7 +39,8 @@ function Navigation({ user, onLogout }) {
                 }
             </nav>
 
-            <span className={style.demoCredentials}>Demo credentials:
+            <span className={style.demoCredentials}>
+                Demo credentials:
                 <br />
                 username:test@test.bg
                 <br />

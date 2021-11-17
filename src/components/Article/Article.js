@@ -1,10 +1,12 @@
 // React, Hooks
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+// Context
+import AuthContext from '../../context/authContext';
 
 // Services
 import postServices from '../../services/postServices';
-import authServices from '../../services/authServices';
 
 // CSS
 import style from './Article.module.css'
@@ -19,49 +21,29 @@ import firebase from '../../config/firebase.js';
 const DB = firebase.firestore();
 
 const Article = ({ activitiesInfo, updateParent }) => {
+    const user = useContext(AuthContext)
+
     const [visited, setVisited] = useState(activitiesInfo.visited);
 
-    let user = undefined;
+    const visitedHandler = (e) => {
+        e.preventDefault();
 
-    if (authServices.getUserData()) {
-        user = authServices.getUserData().uid;
-    }
+        const userId = user.info.uid;
+        const action = visited.includes(userId)
+        ? {visited: firebase.firestore.FieldValue.arrayRemove(userId)}
+        : {visited: firebase.firestore.FieldValue.arrayUnion(userId)};
 
-    const visitedHandler = (event) => {
-        event.preventDefault();
-
-        const userId = JSON.parse(localStorage.getItem('user')).uid;
-
-        if (visited.includes(userId)) {
-            DB.collection(`test`)
-                .doc(activitiesInfo.id)
-                .update({
-                    visited: firebase.firestore.FieldValue.arrayRemove(userId)
-                })
-                .then((res) => {
-                    postServices.getOne(activitiesInfo.id)
-                        .then(res => {
-                            setVisited(res.visited);
-                            updateParent()
-                        })
-                })
-                .catch(err => console.log(err))
-        } else {
-            DB.collection(`test`)
-                .doc(activitiesInfo.id)
-                .update({
-                    visited: firebase.firestore.FieldValue.arrayUnion(userId)
-                })
-                .then((res) => {
-                    postServices.getOne(activitiesInfo.id)
-                        .then(res => {
-                            setVisited(res.visited);
-                            updateParent()
-                        })
-                })
-                .catch(err => console.log(err))
-        }
-
+        DB.collection(`test`)
+            .doc(activitiesInfo.id)
+            .update(action)
+            .then((res) => {
+                postServices.getOne(activitiesInfo.id)
+                    .then(res => {
+                        setVisited(res.visited);
+                        updateParent()
+                    })
+            })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -71,6 +53,7 @@ const Article = ({ activitiesInfo, updateParent }) => {
                     <img src={activitiesInfo.imgUrl} className={style.thumbnail} alt="" />
                 </ Link>
             </div>
+
             <div className={style.poiContent}>
                 <div>
                     <div className={style.topContentContainer}>
@@ -81,8 +64,9 @@ const Article = ({ activitiesInfo, updateParent }) => {
                     </div>
                     <p>{activitiesInfo.description}</p>
                 </div>
+
                 <div className={style.bottomContentContainer}>
-                    {user&& <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(event) => visitedHandler(event)} className={style.pin} />}
+                    {user && <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(e) => visitedHandler(e)} className={style.pin} />}
                     <span className={style.visitedBy}>
                         {`Visited by ${visited.length} ${visited.length === 1 ? "person" : "people"}`}
                     </span>

@@ -38,6 +38,8 @@ function Navigation({ user, onLogout }) {
                     </>
                 }
             </nav>
+            
+            <span className={style.demoCredentials}>Demo credentials: test@test.bg</span>
 
             <span className={style.welcomeMessage}>
                 Welcome,
@@ -49,6 +51,7 @@ function Navigation({ user, onLogout }) {
                 }
                 !
             </span>
+
         </div>
     )
 }

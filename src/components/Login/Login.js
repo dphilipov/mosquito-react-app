@@ -1,6 +1,5 @@
 // React, Hooks
 import { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 
 // Context
 import AuthContext from '../../context/authContext';
@@ -15,6 +14,7 @@ import authServices from '../../services/authServices';
 // CSS
 import style from './Login.module.css';
 
+// Other
 import firebase from '../../config/firebase.js';
 
 const Login = ({ history }) => {
@@ -109,7 +109,9 @@ const Login = ({ history }) => {
                     onClick={submitHandler}
                     className={style.submitBtn}
                     type="submit"
-                >Login</button>
+                >
+                    Login
+                </button>
             </form>
         </>
     )

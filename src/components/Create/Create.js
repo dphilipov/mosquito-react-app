@@ -1,11 +1,10 @@
 // React, Hooks
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
 // Services, Helpers
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
-// import notificationServices from '../../services/notificationServices';
 import { dtFormat } from '../../helpers/dateFormat';
 
 // Components

@@ -1,13 +1,13 @@
 // React, Hooks
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 // Context
-import { UserConsumer } from '../userContext';
+import AuthContext from '../../context/authContext';
 
-// Services
+// Servicesm Helpers
 import postServices from '../../services/postServices';
-import authServices from '../../services/authServices';
+import { dtFormat } from '../../helpers/dateFormat';
 
 // Components
 import Comment from '../Comment/Comment';
@@ -17,7 +17,6 @@ import Notification from '../Notification/Notification';
 import style from './Details.module.css';
 
 // Other
-import { dtFormat } from '../../helpers/dateFormat';
 import firebase from '../../config/firebase.js';
 
 // FontAwesome
@@ -28,6 +27,8 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 const DB = firebase.firestore();
 
 const Details = ({ match, history }) => {
+    const user = useContext(AuthContext)
+
     const [articleData, setArticleData] = useState({
         title: '',
         imgUrl: '',
@@ -44,12 +45,6 @@ const Details = ({ match, history }) => {
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
 
-    let user = undefined;
-
-    if (authServices.getUserData()) {
-        user = authServices.getUserData().uid;
-    }
-
     const articleId = match.params.id;
 
     useEffect(() => {
@@ -61,18 +56,18 @@ const Details = ({ match, history }) => {
             .catch(err => console.log(err));
     }, [articleId]);
 
-    const commentHandler = async (e, userEmail) => {
+    const commentHandler = async (e) => {
         e.preventDefault();
 
         setNotificationType('');
         setNotificationMessage('');
 
-        let postDate = dtFormat.format(new Date());
-        let commentData = {
+        const postDate = dtFormat.format(new Date());
+        const commentData = {
             comment: input,
             date: postDate,
-            user: userEmail,
-            userId: authServices.getUserData().uid
+            user: user.info.email,
+            userId: user.info.uid
         }
 
         if (input === ``) {
@@ -88,7 +83,8 @@ const Details = ({ match, history }) => {
         DB.collection(`test`)
             .doc(articleId)
             .update({
-                comments: firebase.firestore.FieldValue.arrayUnion(commentData)
+                comments: firebase.firestore.FieldValue.arrayUnion(commentData),
+                commentsUserIds: firebase.firestore.FieldValue.arrayUnion(commentData.userId)
             })
             .then((res) => {
                 setInput('');
@@ -101,21 +97,6 @@ const Details = ({ match, history }) => {
             })
             .catch(err => console.log(err))
 
-        DB.collection(`test`)
-            .doc(articleId)
-            .update({
-                commentsUserIds: firebase.firestore.FieldValue.arrayUnion(authServices.getUserData().uid)
-            })
-            .then((res) => {
-                setInput('');
-
-                postServices.getOne(articleId)
-                    .then(res => {
-                        setArticleData(res)
-                    })
-                    .catch(err => console.log(err));
-            })
-            .catch(err => console.log(err))
     }
 
     const deleteHandler = () => {
@@ -144,7 +125,7 @@ const Details = ({ match, history }) => {
                 <div className={style.pointOfInterestDetailsContent} >
                     <p>{articleData.description}</p>
 
-                    {articleData.creator === user
+                    {articleData.creator === user.info.uid
                         ?
                         <div className={style.buttons}>
                             <Link to={{
@@ -184,33 +165,22 @@ const Details = ({ match, history }) => {
                 : ''
             }
 
-            {user
+            {user.isLogged
                 && <form className={style.commentForm}>
                     <textarea
                         type="text"
                         name="comment"
                         placeholder="Write your comment..."
                         value={input}
-                        onChange={(event) => setInput(event.target.value)}
+                        onChange={(e) => setInput(e.target.value)}
                     ></textarea>
 
-                    <UserConsumer>
-                        {
-                            (userCheck) => {
-                                return (
-                                    <input
-                                        type="submit"
-                                        name="Submit"
-                                        value="SUBMIT COMMENT"
-                                        onClick={(event) => commentHandler(event, userCheck.email)}
-                                    />
-                                )
-                            }
-
-                        }
-
-                    </UserConsumer>
-
+                    <input
+                        type="submit"
+                        name="Submit"
+                        value="SUBMIT COMMENT"
+                        onClick={(e) => commentHandler(e)}
+                    />
                 </form>
             }
 

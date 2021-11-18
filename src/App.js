@@ -2,9 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// Context
-import { UserProvider } from './components/userContext';
-
 // Services
 import authServices from './services/authServices';
 

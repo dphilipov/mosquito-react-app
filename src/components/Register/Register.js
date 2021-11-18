@@ -1,128 +1,123 @@
-import firebase from '../../config/firebase.js';
+// React, Hooks
+import { useContext, useState } from 'react';
+
+// CSS
 import style from './Register.module.css';
-import { Component } from 'react';
-import Notification from '../Notification/Notification';
-import notificationServices from '../../services/notificationServices';
 
-const auth = firebase.auth();
+// Other
+import firebase from '../../config/firebase.js';
+// import Notification from '../Notification/Notification';
 
-class Register extends Component {
-    constructor(props) {
-        super(props)
+const Register = ({ history }) => {
 
-        this.state = {
-            username: '',
-            password: '',
-            rePassword: '',
-            notification: {
-                type: '',
-                message: ''
-            }
-        }
+    const [registerCredentials, setRegisterCredentials] = useState({
+        username: '',
+        password: '',
+        rePassword: '',
+    });
+    const [notification, setNotification] = useState({
+        type: '',
+        message: ''
+    });
 
+    const inputHandler = (e) => {
+        setRegisterCredentials(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
     }
 
-    inputHandler = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value,
-        })
-    }
+    const submitHandler = (e) => {
+        e.preventDefault();
 
-    submitHandler = async (event) => {
-        event.preventDefault();
-
-        await this.setState({
-            notification: {
-                type: '',
-                message: ''
-            }
-        });
-
-        let { username, password, rePassword } = this.state;
+        let { username, password, rePassword } = registerCredentials;
 
         if (password !== rePassword) {
             let type = "bad";
             let message = "Passwords must match!"
-            notificationServices.notificationsHandler.call(this, type, message)
-
-        } else {
-            auth.createUserWithEmailAndPassword(username, password)
-                .then((userCredentials) => {
-
-                    let type = "good";
-                    let message = "Registration successful!"
-
-                    notificationServices.notificationsHandler.call(this, type, message)
-
-                    setTimeout(() => {
-                        this.props.history.push('/login');
-
-                    }, 2000)
-
-                })
-                .catch((error) => {
-                    let type = "bad";
-                    let message = error.message;
-
-                    notificationServices.notificationsHandler.call(this, type, message)
-                });
+            // notificationServices.notificationsHandler.call(this, type, message)
+            return;
         }
 
 
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(username, password)
+            .then((userCredentials) => {
+                setRegisterCredentials({
+                    username: '',
+                    password: '',
+                    rePassword: '',
+                });
 
+                // let type = "good";
+                // let message = "Registration successful!"
+
+                // notificationServices.notificationsHandler.call(this, type, message)
+            })
+            .then(res => {
+                history.push("/login")
+            })
+            .catch((error) => {
+                // let type = "bad";
+                // let message = error.message;
+
+                // notificationServices.notificationsHandler.call(this, type, message)
+            });
     }
 
-    render() {
+    return (
+        <>
+            {/* {this.state.notification.type !== ''
+                ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
+                : ''
+            } */}
 
-        let { username, password, rePassword } = this.state;
+            <h3>Registration Info</h3>
 
-        return (
-            <>
-                {this.state.notification.type !== ''
-                    ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
-                    : ''
-                }
+            <form className={style.registerForm}>
 
-                <h3>Registration Info</h3>
+                <label htmlFor="username">Username:</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter your email adress"
+                    value={registerCredentials.username}
+                    onChange={inputHandler}
+                />
 
-                <form className={style.registerForm}>
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    value={registerCredentials.password}
+                    onChange={inputHandler}
+                />
 
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Enter your email adress"
-                        value={username}
-                        onChange={this.inputHandler}
-                    />
+                <label htmlFor="rePassword">Repeat Passoword:</label>
+                <input
+                    type="password"
+                    name="rePassword"
+                    id="rePassword"
+                    placeholder="Enter your password again"
+                    value={registerCredentials.rePassword}
+                    onChange={inputHandler}
+                />
 
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={this.inputHandler}
-                    />
+                <button
+                    onClick={submitHandler}
+                    className={style.submitBtn}
+                    type="submit"
+                >
+                    Register
+                </button>
+            </form>
 
-                    <label htmlFor="rePassword">Repeat Passoword:</label>
-                    <input
-                        type="password"
-                        name="rePassword"
-                        id="rePassword"
-                        placeholder="Enter your password again"
-                        value={rePassword}
-                        onChange={this.inputHandler}
-                    />
-
-                    <input onClick={(event) => this.submitHandler(event)} type="submit" name="Register" value="Register" />
-                </form>
-
-            </>
-        )
-    }
+        </>
+    )
 
 }
 

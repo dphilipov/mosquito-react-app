@@ -67,6 +67,7 @@ const Login = ({ history }) => {
                     onClick={handleFormSubmit}
                     className={style.submitBtn}
                     type="submit"
+                    disabled={isSubmitting}
                 >
                     Login
                 </button>

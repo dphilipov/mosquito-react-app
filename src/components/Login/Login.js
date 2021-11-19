@@ -1,15 +1,11 @@
 // React, Hooks
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAuthForm from '../../hooks/useAuthForm';
-
-// Context
-import AuthContext from '../../context/authContext';
 
 // Components
 import Notification from '../Notification/Notification';
 
 // Services
-import authServices from '../../services/authServices';
 import validate from '../../services/validationServices';
 // import notificationServices from '../../services/notificationServices';
 
@@ -17,8 +13,6 @@ import validate from '../../services/validationServices';
 import style from './Login.module.css';
 
 const Login = ({ history }) => {
-    const user = useContext(AuthContext);
-
     const {
         formValue,
         handleInputChange,
@@ -26,7 +20,7 @@ const Login = ({ history }) => {
         isSubmitting,
         formErrors,
         isSuccess
-    } = useAuthForm(validate);
+    } = useAuthForm(validate, 'login');
 
     const [notification, setNotification] = useState({
         type: '',

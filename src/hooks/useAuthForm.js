@@ -4,10 +4,11 @@ import { useState } from 'react';
 // Services & Helpers
 import authServices from '../services/authServices';
 
-function useAuthForm(validate) {
+function useAuthForm(validate, operation) {
     const initialFormState = {
         username: '',
-        password: ''
+        password: '',
+        rePassword: ''
     }
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -37,13 +38,24 @@ function useAuthForm(validate) {
         }
 
         try {
-            const response = await authServices.login(formValue);
+            let response = undefined;
+            switch (operation) {
+                case 'login':
+                    response = await authServices.login(formValue);
 
-            if (response.user) {
-                authServices.saveUserData(response);
-                setIsSuccess(true);
+                    if (response.user) {
+                        authServices.saveUserData(response);
+                        setIsSuccess(true);
+                    }
+                    break;
+
+                case 'register':
+                    response = await authServices.login(formValue);
+                    break;
+
+                default:
+                    break;
             }
-
         } catch (err) {
             setFormErrors(err.message);
         } finally {

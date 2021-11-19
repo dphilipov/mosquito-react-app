@@ -1,70 +1,33 @@
 // React, Hooks
-import { useContext, useState } from 'react';
+import { useState, useEffect } from 'react';
+import useAuthForm from '../../hooks/useAuthForm';
+
+// Services
+import validate from '../../services/validationServices';
 
 // CSS
 import style from './Register.module.css';
 
-// Other
-import firebase from '../../config/firebase.js';
 // import Notification from '../Notification/Notification';
 
 const Register = ({ history }) => {
+    const {
+        formValue,
+        handleInputChange,
+        handleFormSubmit,
+        isSubmitting,
+        formErrors,
+        isSuccess
+    } = useAuthForm(validate, 'register');
 
-    const [registerCredentials, setRegisterCredentials] = useState({
-        username: '',
-        password: '',
-        rePassword: '',
-    });
     const [notification, setNotification] = useState({
         type: '',
         message: ''
     });
 
-    const inputHandler = (e) => {
-        setRegisterCredentials(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }))
-    }
-
-    const submitHandler = (e) => {
-        e.preventDefault();
-
-        let { username, password, rePassword } = registerCredentials;
-
-        if (password !== rePassword) {
-            let type = "bad";
-            let message = "Passwords must match!"
-            // notificationServices.notificationsHandler.call(this, type, message)
-            return;
-        }
-
-
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(username, password)
-            .then((userCredentials) => {
-                setRegisterCredentials({
-                    username: '',
-                    password: '',
-                    rePassword: '',
-                });
-
-                // let type = "good";
-                // let message = "Registration successful!"
-
-                // notificationServices.notificationsHandler.call(this, type, message)
-            })
-            .then(res => {
-                history.push("/login")
-            })
-            .catch((error) => {
-                // let type = "bad";
-                // let message = error.message;
-
-                // notificationServices.notificationsHandler.call(this, type, message)
-            });
-    }
+    useEffect(() => {
+        if (isSuccess) history.push('/login');
+    }, [isSuccess])
 
     return (
         <>
@@ -83,8 +46,8 @@ const Register = ({ history }) => {
                     name="username"
                     id="username"
                     placeholder="Enter your email adress"
-                    value={registerCredentials.username}
-                    onChange={inputHandler}
+                    value={formValue.username}
+                    onChange={handleInputChange}
                 />
 
                 <label htmlFor="password">Password:</label>
@@ -93,8 +56,8 @@ const Register = ({ history }) => {
                     name="password"
                     id="password"
                     placeholder="Enter your password"
-                    value={registerCredentials.password}
-                    onChange={inputHandler}
+                    value={formValue.password}
+                    onChange={handleInputChange}
                 />
 
                 <label htmlFor="rePassword">Repeat Passoword:</label>
@@ -103,14 +66,15 @@ const Register = ({ history }) => {
                     name="rePassword"
                     id="rePassword"
                     placeholder="Enter your password again"
-                    value={registerCredentials.rePassword}
-                    onChange={inputHandler}
+                    value={formValue.rePassword}
+                    onChange={handleInputChange}
                 />
 
                 <button
-                    onClick={submitHandler}
+                    onClick={handleFormSubmit}
                     className={style.submitBtn}
                     type="submit"
+                    disabled={isSubmitting}
                 >
                     Register
                 </button>

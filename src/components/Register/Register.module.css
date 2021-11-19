@@ -39,7 +39,9 @@
     filter: drop-shadow(0px 3px 0px #9B3148);
 }
 
-.registerForm input[type="submit"]:hover {
-    filter: drop-shadow(0px 3px 0px #9B3148);
+.submitBtn:disabled {
+    background-color: #CCC;
+    filter: none;
+    cursor: default;
 }
 

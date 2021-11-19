@@ -42,19 +42,19 @@ function useAuthForm(validate, operation) {
             switch (operation) {
                 case 'login':
                     response = await authServices.login(formValue);
-
-                    if (response.user) {
-                        authServices.saveUserData(response);
-                        setIsSuccess(true);
-                    }
+                    authServices.saveUserData(response);
                     break;
 
                 case 'register':
-                    response = await authServices.login(formValue);
+                    response = await authServices.register(formValue);
                     break;
 
                 default:
                     break;
+            }
+
+            if (response.user) {
+                setIsSuccess(true);
             }
         } catch (err) {
             setFormErrors(err.message);

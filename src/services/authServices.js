@@ -17,6 +17,14 @@ function login(userCredentials) {
         .signInWithEmailAndPassword(username, password)
 }
 
+function register(userCredentials) {
+    const { username, password } = userCredentials;
+
+    return firebase
+        .auth()
+        .createUserWithEmailAndPassword(username, password)
+}
+
 function saveUserData(data) {
     let { user: { email, uid } } = data;
     localStorage.setItem(`user`, JSON.stringify({ email, uid }));
@@ -29,6 +37,7 @@ function clearUserData() {
 const authServices = {
     getUserData,
     login,
+    register,
     saveUserData,
     clearUserData
 }

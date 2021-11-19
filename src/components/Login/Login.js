@@ -1,5 +1,6 @@
 // React, Hooks
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import useAuthForm from '../../hooks/useAuthForm';
 
 // Context
 import AuthContext from '../../context/authContext';
@@ -9,69 +10,32 @@ import Notification from '../Notification/Notification';
 
 // Services
 import authServices from '../../services/authServices';
+import validate from '../../services/validationServices';
 // import notificationServices from '../../services/notificationServices';
 
 // CSS
 import style from './Login.module.css';
 
-// Other
-import firebase from '../../config/firebase.js';
-
 const Login = ({ history }) => {
     const user = useContext(AuthContext);
 
-    const [loginCredentials, setLoginCredentials] = useState({
-        username: '',
-        password: ''
-    });
+    const {
+        formValue,
+        handleInputChange,
+        handleFormSubmit,
+        isSubmitting,
+        formErrors,
+        isSuccess
+    } = useAuthForm(validate);
+
     const [notification, setNotification] = useState({
         type: '',
         message: ''
     });
 
-    const inputHandler = (e) => {
-        setLoginCredentials(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }))
-    }
-
-    const submitHandler = async (e) => {
-        e.preventDefault();
-
-        const { username, password } = loginCredentials;
-
-        setNotification({
-            notification: {
-                type: '',
-                message: ''
-            }
-        });
-
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(username, password)
-            .then((userCredentials) => {
-                authServices.saveUserData(userCredentials);
-
-                const type = "good";
-                const message = "Login successful!"
-
-                // notificationServices.notificationsHandler.call(this, type, message)
-            })
-            .then(res => {
-                user.checkIfLogged();
-                history.push("/")
-            })
-            .catch((error) => {
-                let type = "bad";
-                let message = error.message;
-
-                // notificationServices.notificationsHandler.call(this, type, message)
-
-            });
-
-    }
+    useEffect(() => {
+        if (isSuccess) history.push('/');
+    }, [isSuccess])
 
     return (
 
@@ -91,8 +55,8 @@ const Login = ({ history }) => {
                     name="username"
                     id="username"
                     placeholder="Enter your email adress"
-                    value={loginCredentials.username}
-                    onChange={inputHandler}
+                    value={formValue.username}
+                    onChange={handleInputChange}
                 />
 
                 <label htmlFor="password">Password:</label>
@@ -101,12 +65,12 @@ const Login = ({ history }) => {
                     name="password"
                     id="password"
                     placeholder="Enter your password"
-                    value={loginCredentials.password}
-                    onChange={inputHandler}
+                    value={formValue.password}
+                    onChange={handleInputChange}
                 />
 
                 <button
-                    onClick={submitHandler}
+                    onClick={handleFormSubmit}
                     className={style.submitBtn}
                     type="submit"
                 >

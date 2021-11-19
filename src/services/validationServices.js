@@ -14,7 +14,7 @@ function validate(input) {
     if (!input.password.trim()) {
         errors.password = "Password can't be empty!"; // If password field in empty
     } else if (input.password.length < 6 || input.password.length > 32) {
-        errors.rePassword = "Password must be between 6 and 32 characters long!"; // If password is too short or too long
+        errors.password = "Password must be between 6 and 32 characters long!"; // If password is too short or too long
     }
 
     // REPEAT PASSOWORD VALIDATIONS

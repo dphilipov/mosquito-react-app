@@ -38,7 +38,7 @@ function createArticle(placeToCreate) {
     return DB.collection(`test`)
         .add(placeToCreate)
         .then((res) => {
-            return res.id;
+            return res;
         })
         .catch((err) => {
             console.log(err);

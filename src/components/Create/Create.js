@@ -1,5 +1,5 @@
 // React, Hooks
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import useCRUDForm from '../../hooks/useCRUDForm';
 
@@ -26,6 +26,10 @@ const Create = ({ history }) => {
         type: '',
         message: ''
     });
+
+    useEffect(() => {
+        if (isSuccess) history.push('/');
+    }, [isSuccess])
 
     return (
         <>

@@ -1,10 +1,13 @@
 // React, Hooks
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom'
+import useCRUDForm from '../../hooks/useCRUDForm';
 
 // Services, Helpers
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
+import validate from '../../services/validationServices';
+
 
 // Components
 import Notification from '../Notification/Notification';
@@ -18,6 +21,15 @@ import firebase from '../../config/firebase.js';
 const DB = firebase.firestore();
 
 const Create = ({ history }) => {
+    const {
+        formValue,
+        handleInputChange,
+        handleFormSubmit,
+        isSubmitting,
+        formErrors,
+        isSuccess
+    } = useCRUDForm(validate);
+
     const [placeInfo, setPlaceInfo] = useState({
         title: '',
         imgUrl: '',
@@ -35,36 +47,6 @@ const Create = ({ history }) => {
         type: '',
         message: ''
     });
-
-    const inputHandler = (e) => {
-        if (e.target.name === 'visited') {
-            if (e.target.checked === true) {
-                let userId = authServices.getUserData().uid;
-                let newVisited = placeInfo.visited;
-                newVisited.push(userId);
-
-                setPlaceInfo(prevState => ({
-                    ...prevState,
-                    [e.target.name]: newVisited,
-                }))
-
-                return;
-            }
-
-            setPlaceInfo(prevState => ({
-                ...prevState,
-                [e.target.name]: [],
-            }))
-
-            return;
-        }
-
-        setPlaceInfo(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }))
-
-    }
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -198,43 +180,43 @@ const Create = ({ history }) => {
                 <input
                     type="text"
                     name="title"
-                    value={placeInfo.title}
+                    value={formValue.title}
                     placeholder="Title of the place"
-                    onChange={inputHandler} />
+                    onChange={handleInputChange} />
 
                 <label htmlFor="imgUrl">Image Photo:*</label>
                 <input
                     type="text"
                     name="imgUrl"
-                    value={placeInfo.imgUrl}
+                    value={formValue.imgUrl}
                     placeholder="Enter URL here"
-                    onChange={inputHandler} />
+                    onChange={handleInputChange} />
 
                 <label htmlFor="lat">Latitude:*</label>
                 <input
                     type="text"
                     name="lat"
-                    value={placeInfo.lat}
+                    value={formValue.lat}
                     placeholder="Enter place latitude (e.g. 42.144920)"
-                    onChange={inputHandler} />
+                    onChange={handleInputChange} />
 
                 <label htmlFor="lng">Longitude:*</label>
                 <input
                     type="text"
                     name="lng"
-                    value={placeInfo.lng}
+                    value={formValue.lng}
                     placeholder="Enter place longitude (e.g. 24.750320)"
-                    onChange={inputHandler} />
+                    onChange={handleInputChange} />
 
                 <label htmlFor="description">Description:*</label>
                 <textarea
                     type="text"
                     name="description"
-                    value={placeInfo.description}
+                    value={formValue.description}
                     minLength="50"
                     maxLength="500"
                     placeholder="Enter a description (min. 50 characters)"
-                    onChange={inputHandler}
+                    onChange={handleInputChange}
                 >
                 </textarea>
 
@@ -243,13 +225,13 @@ const Create = ({ history }) => {
                     id="visited"
                     name="visited"
                     value="Visited"
-                    onChange={inputHandler}
+                    onChange={handleInputChange}
                 />
                 <label htmlFor="visited">Visited</label>
 
                 <p className={style.mandatory}>* are mandatory</p>
                 <input
-                    onClick={submitHandler}
+                    onClick={handleFormSubmit}
                     type="submit"
                     name="Create"
                     value="Create"

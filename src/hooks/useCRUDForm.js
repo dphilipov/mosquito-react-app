@@ -2,83 +2,111 @@
 import { useState } from 'react';
 
 // Services & Helpers
-import fetchServices from '../services/fetchServices';
-import getCurrentDate from '../helpers/parseDate';
+import authServices from '../services/authServices';
+import postServices from '../services/postServices';
+
+// Other
+import firebase from '../config/firebase';
 
 function useCRUDForm(validate) {
     const initialFormState = {
-        firstName: '',
-        lastName: '',
-        departureAirportId: 1,
-        arrivalAirportId: 1,
-        departureDate: getCurrentDate(),
-        returnDate: '',
-    }
-
-    const initialAiportNames = {
-        departureAirport: 'SOF, Sofia Airport',
-        arrivalAirport: 'SOF, Sofia Airport'
+        title: '',
+        imgUrl: '',
+        description: '',
+        creator: authServices.getUserData().uid,
+        visited: [],
+        comments: [],
+        lat: '',
+        lng: '',
+        timestamp: 0
     }
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [formErrors, setFormErrors] = useState(null);
     const [formValue, setFormValue] = useState(initialFormState);
-    const [airportsNames, setAirportsNames] = useState({
-        departureAirport: 'SOF, Sofia Airport',
-        arrivalAirport: 'SOF, Sofia Airport'
-    });
 
 
     const handleInputChange = (e) => {
         const { name, id, value } = e.target;
 
-        if (e.target.nodeName === 'SELECT') {
-            const selectedIndex = e.target.options.selectedIndex;
-            const inputId = Number(e.target.options[selectedIndex].getAttribute('data-id'));
+        if (e.target.name === 'visited') {
+            if (e.target.checked === true) {
+                let userId = authServices.getUserData().uid;
+                let newVisited = formValue.visited;
+                newVisited.push(userId);
+
+                setFormValue(prevState => ({
+                    ...prevState,
+                    [e.target.name]: newVisited,
+                }))
+
+                return;
+            }
 
             setFormValue(prevState => ({
                 ...prevState,
-                [name]: inputId
+                [e.target.name]: [],
             }))
-
-            setAirportsNames(prevState => ({
-                ...prevState,
-                [id]: value
-            }));
 
             return;
         }
 
         setFormValue(prevState => ({
             ...prevState,
-            [name]: value
+            [e.target.name]: e.target.value,
         }))
-
     }
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        if (validate(formValue)) {
-            setFormErrors(validate(formValue));
-            setIsSubmitting(false);
-            return;
+        const placeToCreate = {
+            ...formValue,
+            lat: Number(formValue.lat),
+            lng: Number(formValue.lng),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }
 
-        try {
-            const response = await fetchServices.createBooking(formValue);
-            const fetchedData = await response.json();
+        // if (validate(formValue)) {
+        //     setFormErrors(validate(formValue));
+        //     setIsSubmitting(false);
+        //     return;
+        // }
 
-            if (response.ok) {
-                setIsSuccess(true);
-            } else {
-                Promise.reject(fetchedData);
+        //     .then(res => {
+        //         if (res) {
+        //             setNotification({
+        //                 type: "bad",
+        //                 messagetype: "This place already exists"
+        //             })
+
+        //             return;
+        //         }
+
+
+        //     })
+
+        try {
+            const checkResult = await postServices.checkIfPlaceExists(formValue.title);
+
+            if (checkResult) {
+                // setNotification({
+                //     type: "bad",
+                //     messagetype: "This place already exists"
+                // })
+
+                return;
             }
 
+            const response = await postServices.createArticle(placeToCreate);
+
+            if (response.id) {
+                setIsSuccess(true);
+            }
         } catch (err) {
-            console.log(err);
+            setFormErrors(err.message);
         } finally {
             resetForm();
         }
@@ -88,15 +116,11 @@ function useCRUDForm(validate) {
         setFormErrors(null);
         setIsSubmitting(false);
         setIsSuccess(false);
-
         setFormValue(initialFormState);
-
-        setAirportsNames(initialAiportNames);
     }
 
     return {
         formValue,
-        airportsNames,
         handleInputChange,
         handleFormSubmit,
         isSubmitting,

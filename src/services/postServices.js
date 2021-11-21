@@ -34,6 +34,17 @@ function getOne(id) {
         })
 }
 
+function createArticle(placeToCreate) {
+    return DB.collection(`test`)
+        .add(placeToCreate)
+        .then((res) => {
+            return res.id;
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
 function postComment(article) {
     let { id } = article;
 
@@ -85,17 +96,11 @@ function getProfileComments(userId) {
 }
 
 function checkIfPlaceExists(title) {
-    let exists = false;
-
     return DB.collection("test")
         .where("title", "==", title)
         .get()
         .then((res) => {
-            res.forEach((doc) => {
-                exists = true;
-            })
-
-            return exists;
+            return !res.empty; // Place exists if res.empty is false and doesn't exists if it's true
         })
         .catch(err => console.log(err))
 }
@@ -123,6 +128,7 @@ function returnFetchedDataInArray(fetchedData) {
 const postServices = {
     getPlaces,
     getOne,
+    createArticle,
     getProfileVisitedPlaces,
     postComment,
     getProfileComments,

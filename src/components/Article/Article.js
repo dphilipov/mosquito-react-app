@@ -22,16 +22,23 @@ const DB = firebase.firestore();
 
 const Article = ({ activitiesInfo, updateParent }) => {
     const user = useContext(AuthContext)
-
+    const dateCreated = activitiesInfo.timestamp.toDate().toLocaleDateString('bg-BG', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    })
     const [visited, setVisited] = useState(activitiesInfo.visited);
 
-    const visitedHandler = (e) => {
+    const toggleVisitedStatusHandler = (e) => {
         e.preventDefault();
 
         const userId = user.info.uid;
         const action = visited.includes(userId)
-        ? {visited: firebase.firestore.FieldValue.arrayRemove(userId)}
-        : {visited: firebase.firestore.FieldValue.arrayUnion(userId)};
+            ? { visited: firebase.firestore.FieldValue.arrayRemove(userId) }
+            : { visited: firebase.firestore.FieldValue.arrayUnion(userId) };
 
         DB.collection(`test`)
             .doc(activitiesInfo.id)
@@ -60,13 +67,13 @@ const Article = ({ activitiesInfo, updateParent }) => {
                         <Link to={`/article/${activitiesInfo.id}`}>
                             <h2>{activitiesInfo.title}</h2>
                         </ Link>
-                        <span className={style.dateAdded}><strong>Date Added:</strong> {activitiesInfo.dateCreated}</span>
+                        <span className={style.dateAdded}><strong>Date Added:</strong> {dateCreated}</span>
                     </div>
                     <p>{activitiesInfo.description}</p>
                 </div>
 
                 <div className={style.bottomContentContainer}>
-                    {user && <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(e) => visitedHandler(e)} className={style.pin} />}
+                    {user && <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(e) => toggleVisitedStatusHandler(e)} className={style.pin} />}
                     <span className={style.visitedBy}>
                         {`Visited by ${visited.length} ${visited.length === 1 ? "person" : "people"}`}
                     </span>

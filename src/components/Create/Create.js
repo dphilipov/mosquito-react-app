@@ -1,11 +1,10 @@
 // React, Hooks
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
 // Services, Helpers
 import postServices from '../../services/postServices';
 import authServices from '../../services/authServices';
-import { dtFormat } from '../../helpers/dateFormat';
 
 // Components
 import Notification from '../Notification/Notification';
@@ -72,7 +71,6 @@ const Create = ({ history }) => {
 
         setPlaceInfo(prevState => ({
             ...prevState,
-            dateCreated: dtFormat.format(new Date()),
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }))
 

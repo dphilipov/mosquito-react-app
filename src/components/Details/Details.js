@@ -7,7 +7,6 @@ import AuthContext from '../../context/authContext';
 
 // Servicesm Helpers
 import postServices from '../../services/postServices';
-import { dtFormat } from '../../helpers/dateFormat';
 
 // Components
 import Comment from '../Comment/Comment';
@@ -62,7 +61,14 @@ const Details = ({ match, history }) => {
         setNotificationType('');
         setNotificationMessage('');
 
-        const postDate = dtFormat.format(new Date());
+        const postDate = new Date().toLocaleDateString('bg-BG', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        });
         const commentData = {
             comment: input,
             date: postDate,

@@ -31,8 +31,8 @@ function useAuthForm(validate, operation) {
 
         setIsSubmitting(true);
 
-        if (validate(formValue)) {
-            setFormErrors(validate(formValue));
+        if (validate.Auth(formValue)) {
+            setFormErrors(validate.Auth(formValue));
             setIsSubmitting(false);
             return;
         }

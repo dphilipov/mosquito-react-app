@@ -69,24 +69,11 @@ function useCRUDForm(validate) {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }
 
-        // if (validate(formValue)) {
-        //     setFormErrors(validate(formValue));
-        //     setIsSubmitting(false);
-        //     return;
-        // }
-
-        //     .then(res => {
-        //         if (res) {
-        //             setNotification({
-        //                 type: "bad",
-        //                 messagetype: "This place already exists"
-        //             })
-
-        //             return;
-        //         }
-
-
-        //     })
+        if (validate.CRUD(formValue)) {
+            setFormErrors(validate.CRUD(formValue));
+            setIsSubmitting(false);
+            return;
+        }
 
         try {
             const checkResult = await postServices.checkIfPlaceExists(formValue.title);

@@ -4,21 +4,13 @@ import { Link } from 'react-router-dom'
 import useCRUDForm from '../../hooks/useCRUDForm';
 
 // Services, Helpers
-import postServices from '../../services/postServices';
-import authServices from '../../services/authServices';
 import validate from '../../services/validationServices';
-
 
 // Components
 import Notification from '../Notification/Notification';
 
 // CSS
 import style from './Create.module.css';
-
-// Other
-import firebase from '../../config/firebase.js';
-
-const DB = firebase.firestore();
 
 const Create = ({ history }) => {
     const {
@@ -30,136 +22,10 @@ const Create = ({ history }) => {
         isSuccess
     } = useCRUDForm(validate);
 
-    const [placeInfo, setPlaceInfo] = useState({
-        title: '',
-        imgUrl: '',
-        description: '',
-        dateCreated: '',
-        creator: authServices.getUserData().uid,
-        visited: [],
-        comments: [],
-        lat: null,
-        lng: null,
-        timestamp: 0
-    })
-
     const [notification, setNotification] = useState({
         type: '',
         message: ''
     });
-
-    const submitHandler = (e) => {
-        e.preventDefault();
-
-        setPlaceInfo(prevState => ({
-            ...prevState,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        }))
-
-
-        const placeToCreate = {
-            ...placeInfo,
-            lat: Number(placeInfo.lat),
-            lng: Number(placeInfo.lng)
-        }
-
-
-        if (placeToCreate.title === ``) {
-            setNotification({
-                type: "bad",
-                messagetype: "Title can't be empty"
-            })
-
-            // notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        if (placeToCreate.imgUrl === ``) {
-            setNotification({
-                type: "bad",
-                messagetype: "Image URL can't be empty"
-            })
-
-            // notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        if (placeToCreate.lat === `` || isNaN(Number(placeToCreate.lat))) {
-            setNotification({
-                type: "bad",
-                messagetype: "Latitude can't be empty and must be a number"
-            })
-
-            // notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        if (placeToCreate.lng === `` || isNaN(Number(placeToCreate.lng))) {
-            setNotification({
-                type: "bad",
-                messagetype: "Longitude can't be empty and must be a number"
-            })
-
-            // notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        if (placeToCreate.description === ``) {
-            setNotification({
-                type: "bad",
-                messagetype: "Description can't be empty"
-            })
-
-            // notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        if (placeToCreate.description.length < 50) {
-            setNotification({
-                type: "bad",
-                messagetype: "Description must be at least 50 characters"
-            })
-
-            // notificationServices.notificationsHandler.call(this, type, message)
-
-            return
-        }
-
-        postServices.checkIfPlaceExists(placeInfo.title)
-            .then(res => {
-                if (res) {
-                    setNotification({
-                        type: "bad",
-                        messagetype: "This place already exists"
-                    })
-
-                    return;
-                }
-
-                DB.collection(`test`)
-                    .add(placeToCreate)
-                    .then((res) => {
-
-                        let type = "good";
-                        let message = "Place created successfully!"
-
-                        // notificationServices.notificationsHandler.call(this, type, message)
-
-                        setTimeout(() => {
-                            history.push('/');
-                        }, 2000)
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-            })
-
-    }
 
     return (
         <>
@@ -230,12 +96,14 @@ const Create = ({ history }) => {
                 <label htmlFor="visited">Visited</label>
 
                 <p className={style.mandatory}>* are mandatory</p>
-                <input
+                <button
                     onClick={handleFormSubmit}
+                    className={style.submitBtn}
                     type="submit"
-                    name="Create"
-                    value="Create"
-                />
+                    disabled={isSubmitting}
+                >
+                    Create
+                </button>
             </form>
         </>
     )

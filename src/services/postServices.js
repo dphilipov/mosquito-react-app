@@ -79,7 +79,6 @@ function getProfileVisitedPlaces(userId) {
         .where("visited", "array-contains", userId)
         .get()
         .then((profileActivity) => {
-            console.log(profileActivity.docs);
             const collection = returnFetchedDataInArray(profileActivity);
 
             return collection;
@@ -91,7 +90,7 @@ function getProfileComments(userId) {
     let newCollection = [];
 
     return DB.collection("test")
-        .orderBy("dateCreated", "desc")
+        .orderBy("timestamp", "desc")
         .where("commentsUserIds", "array-contains", userId)
         .get()
         .then((data) => {
@@ -133,7 +132,6 @@ function returnFetchedDataInArray(fetchedData) {
 
         collection.push({ id, ...placeData });
     })
-
     return collection;
 }
 

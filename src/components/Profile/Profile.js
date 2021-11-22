@@ -49,9 +49,7 @@ const Profile = ({ history }) => {
     const showProfileActivitiesHandler = () => {
         setIsLoading(true);
 
-        const currentUser = authServices.getUserData('user')
-
-        postServices.getProfileVisitedPlaces(currentUser.uid)
+        postServices.getProfileVisitedPlaces(user.info.uid)
             .then(activitiesInfo => {
                 setArticles(activitiesInfo)
                 setComments([])
@@ -64,9 +62,7 @@ const Profile = ({ history }) => {
     const showProfileCommentsHandler = () => {
         setIsLoading(true);
 
-        const currentUser = authServices.getUserData('user')
-
-        postServices.getProfileComments(currentUser.uid)
+        postServices.getProfileComments(user.info.uid)
             .then(commentsData => {
                 setArticles([]);
                 setComments(commentsData)

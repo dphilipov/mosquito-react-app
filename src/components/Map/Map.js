@@ -1,18 +1,20 @@
 // import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { MapContainer, TileLayer, Marker, Tooltip } from 'react-leaflet'
-import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react';
 import style from './Map.module.css';
+
+// Context
+import AuthContext from '../../context/authContext';
+
 import postServices from '../../services/postServices';
-import authServices from '../../services/authServices';
 import L from 'leaflet';
 import icon from './map-pin.png';
 
 
-const Map = () => {
-    const [markers, setMarkers] = useState([]);
+const Map = ({ history }) => {
+    const user = useContext(AuthContext)
 
-    let history = useHistory();
+    const [markers, setMarkers] = useState([]);
 
     const center = {
         lat: 42.765833,
@@ -25,16 +27,14 @@ const Map = () => {
     });
 
     useEffect(() => {
-
-        let user = authServices.getUserData('user')
-
-        postServices.getProfileActivity(user.uid)
+        if (!user.info.uid) return;
+        
+        postServices.getProfileVisitedPlaces(user.info.uid)
             .then(activitiesData => {
                 setMarkers(activitiesData);
             })
             .catch(err => console.log(err))
-
-    }, [])
+    }, [user.info.uid])
 
     return (
         <MapContainer

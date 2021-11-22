@@ -45,6 +45,18 @@ function createArticle(placeToCreate) {
         })
 }
 
+function editArticle(articleInfo) {
+    return DB.collection(`test`)
+        .doc(articleInfo.id)
+        .set(articleInfo)
+        .then(() => {
+            return 'success'
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
 function postComment(article) {
     let { id } = article;
 
@@ -129,6 +141,7 @@ const postServices = {
     getPlaces,
     getOne,
     createArticle,
+    editArticle,
     getProfileVisitedPlaces,
     postComment,
     getProfileComments,

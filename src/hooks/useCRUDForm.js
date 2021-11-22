@@ -1,5 +1,5 @@
 // React, Hooks
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 // Services & Helpers
 import authServices from '../services/authServices';
@@ -28,8 +28,6 @@ function useCRUDForm(validate) {
 
 
     const handleInputChange = (e) => {
-        const { name, id, value } = e.target;
-
         if (e.target.name === 'visited') {
             if (e.target.checked === true) {
                 let userId = authServices.getUserData().uid;
@@ -88,7 +86,7 @@ function useCRUDForm(validate) {
             }
 
             const response = await postServices.createArticle(placeToCreate);
-            
+
             if (response.id) {
                 setIsSuccess(true);
             }
@@ -98,6 +96,45 @@ function useCRUDForm(validate) {
             resetForm();
         }
     }
+
+    const handleEditFormSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        const placeToEdit = {
+            ...formValue,
+            lat: Number(formValue.lat),
+            lng: Number(formValue.lng),
+        }
+
+        if (validate.CRUD(formValue)) {
+            setFormErrors(validate.CRUD(formValue));
+            setIsSubmitting(false);
+            return;
+        }
+
+        try {
+            const response = await postServices.editArticle(placeToEdit);
+
+            if (response === 'success') {
+                setIsSuccess(true);
+            }
+        } catch (err) {
+            setFormErrors(err.message);
+        } finally {
+            resetForm();
+        }
+    }
+
+    const setInitialValuesOnEdit = useCallback(async (articleId) => {
+        try {
+            const response = await postServices.getOne(articleId);
+
+            setFormValue(response)
+        } catch (err) {
+            setFormErrors(err.message);
+        }
+    }, [])
 
     const resetForm = () => {
         setFormErrors(null);
@@ -110,6 +147,8 @@ function useCRUDForm(validate) {
         formValue,
         handleInputChange,
         handleFormSubmit,
+        handleEditFormSubmit,
+        setInitialValuesOnEdit,
         isSubmitting,
         formErrors,
         isSuccess

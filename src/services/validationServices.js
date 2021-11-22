@@ -1,6 +1,5 @@
 function Auth(input) {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     let errors = {};
 
     // USERNAME VALIDATIONS
@@ -41,14 +40,14 @@ function CRUD(input) {
     }
 
     // LATITUDE VALIDATIONS
-    if (!input.lat.trim()) {
+    if (!input.lat.toString().trim()) {
         errors.lat = "Latitude can't be empty!"; // If latitude field is empty
     } else if (isNaN(Number(input.lat))) {
         errors.lat = "Latitude must be a number!"; // If latitude in NaN
     }
 
     // LONGITUDE VALIDATIONS
-    if (!input.lng.trim()) {
+    if (!input.lng.toString().trim()) {
         errors.lng = "Longitude can't be empty!"; // If longitude field is empty
     } else if (isNaN(Number(input.lng))) {
         errors.lng = "Longitude must be a number!"; // If longitude in NaN

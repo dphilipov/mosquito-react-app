@@ -1,5 +1,5 @@
 // React, Hooks
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import useAuthForm from '../../hooks/useAuthForm';
 
 // Services
@@ -20,7 +20,7 @@ const Register = ({ history }) => {
 
     useEffect(() => {
         if (isSuccess) history.push('/login');
-    }, [isSuccess])
+    }, [isSuccess, history])
 
     return (
         <>

@@ -29,7 +29,6 @@ const Main = () => {
         latestDoc,
         isEnd,
         isLoading,
-        error
     } = useFetch(5, startAfter);
 
     useEffect(() => {

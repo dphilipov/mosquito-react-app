@@ -20,7 +20,7 @@ const Login = ({ history }) => {
 
     useEffect(() => {
         if (isSuccess) history.push('/');
-    }, [isSuccess])
+    }, [isSuccess, history])
 
     return (
 

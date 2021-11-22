@@ -73,7 +73,7 @@ const Article = ({ activitiesInfo, updateParent }) => {
                 </div>
 
                 <div className={style.bottomContentContainer}>
-                    {user && <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(e) => toggleVisitedStatusHandler(e)} className={style.pin} />}
+                    {user.isLogged && <FontAwesomeIcon icon={faMapMarkerAlt} onClick={(e) => toggleVisitedStatusHandler(e)} className={style.pin} />}
                     <span className={style.visitedBy}>
                         {`Visited by ${visited.length} ${visited.length === 1 ? "person" : "people"}`}
                     </span>

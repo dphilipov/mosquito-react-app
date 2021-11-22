@@ -22,36 +22,6 @@ import Footer from './components/Footer/Footer';
 import './App.module.css';
 
 const App = () => {
-	const [user, setUser] = useState({
-		email: 'Guest',
-		uid: '',
-		isLogged: false,
-	})
-
-
-	const userCheck = () => {
-		if (Boolean(authServices.getUserData())) {
-			const updatedUser = authServices.getUserData();
-			setUser({
-				email: updatedUser.email,
-				uid: updatedUser.uid,
-				isLogged: true
-			});
-
-		} else {
-			setUser({
-				email: 'Guest',
-				uid: '',
-				isLogged: false,
-			});
-		}
-	}
-
-	useEffect(() => {
-		userCheck();
-	}, [])
-
-
 	return (
 			<>
 				<Header />

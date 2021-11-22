@@ -22,7 +22,7 @@ const Edit = ({ match, history }) => {
 
     useEffect(() => {
         if (isSuccess) history.push(`/article/${match.params.id}`);
-    }, [isSuccess, history])
+    }, [isSuccess, history, match])
 
     useEffect(() => {
         setInitialValuesOnEdit(match.params.id);

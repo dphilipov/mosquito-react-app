@@ -1,16 +1,12 @@
 // React, Hooks
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useCRUDForm from '../../hooks/useCRUDForm';
-
-// Components
-import Notification from '../Notification/Notification';
 
 // CSS
 import style from './Edit.module.css';
 
 // Services
-import notificationServices from '../../services/notificationServices';
 import validate from '../../services/validationServices';
 
 const Edit = ({ match, history }) => {
@@ -24,11 +20,6 @@ const Edit = ({ match, history }) => {
         isSuccess
     } = useCRUDForm(validate);
 
-    const [notification, setNotification] = useState({
-        type: '',
-        message: ''
-    });
-
     useEffect(() => {
         if (isSuccess) history.push(`/article/${match.params.id}`);
     }, [isSuccess, history])
@@ -40,11 +31,6 @@ const Edit = ({ match, history }) => {
     return (
 
         <>
-            {/* {notification.type !== ''
-                ? <Notification type={notification.type} message={notification.message} />
-                : ''
-            } */}
-
             <h3 className={style.editHeading}>Edit this place</h3>
             <p className={style.hint}>
                 You can use a website like <Link to={{ pathname: "https://www.latlong.net/" }} target="_blank" rel="noreferrer">https://www.latlong.net/</Link> for the coordinates
@@ -53,6 +39,8 @@ const Edit = ({ match, history }) => {
             <form className={style.createForm}>
 
                 <label htmlFor="title">Title:</label>
+                {formErrors?.title && <p className={style.error}>{formErrors.title}</p>}
+
                 <input
                     type="text"
                     name="title"
@@ -61,6 +49,8 @@ const Edit = ({ match, history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="imgUrl">Image Photo:</label>
+                {formErrors?.imgUrl && <p className={style.error}>{formErrors.imgUrl}</p>}
+
                 <input
                     type="text"
                     name="imgUrl"
@@ -69,6 +59,8 @@ const Edit = ({ match, history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="lat">Latitude:*</label>
+                {formErrors?.lat && <p className={style.error}>{formErrors.lat}</p>}
+
                 <input
                     type="number"
                     name="lat"
@@ -77,6 +69,8 @@ const Edit = ({ match, history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="lng">Longitude:*</label>
+                {formErrors?.lng && <p className={style.error}>{formErrors.lng}</p>}
+
                 <input
                     type="number"
                     name="lng"
@@ -85,6 +79,8 @@ const Edit = ({ match, history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="description">Description:</label>
+                {formErrors?.description && <p className={style.error}>{formErrors.description}</p>}
+
                 <textarea
                     type="text"
                     name="description"

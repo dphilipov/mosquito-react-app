@@ -1,13 +1,9 @@
 // React, Hooks
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import useAuthForm from '../../hooks/useAuthForm';
-
-// Components
-import Notification from '../Notification/Notification';
 
 // Services
 import validate from '../../services/validationServices';
-// import notificationServices from '../../services/notificationServices';
 
 // CSS
 import style from './Login.module.css';
@@ -22,11 +18,6 @@ const Login = ({ history }) => {
         isSuccess
     } = useAuthForm(validate, 'login');
 
-    const [notification, setNotification] = useState({
-        type: '',
-        message: ''
-    });
-
     useEffect(() => {
         if (isSuccess) history.push('/');
     }, [isSuccess])
@@ -34,16 +25,13 @@ const Login = ({ history }) => {
     return (
 
         <>
-            {/* {notification.type !== ''
-                ? <Notification type={notification.type} message={notification.message} />
-                : ''
-            } */}
-
             <h3>Member Login</h3>
 
             <form className={style.loginForm}>
 
                 <label htmlFor="username">Username:</label>
+                {formErrors?.username && <p className={style.error}>{formErrors.username}</p>}
+
                 <input
                     type="text"
                     name="username"
@@ -54,6 +42,8 @@ const Login = ({ history }) => {
                 />
 
                 <label htmlFor="password">Password:</label>
+                {formErrors?.password && <p className={style.error}>{formErrors.password}</p>}
+
                 <input
                     type="password"
                     name="password"

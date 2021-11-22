@@ -6,9 +6,6 @@ import useCRUDForm from '../../hooks/useCRUDForm';
 // Services, Helpers
 import validate from '../../services/validationServices';
 
-// Components
-import Notification from '../Notification/Notification';
-
 // CSS
 import style from './Create.module.css';
 
@@ -16,16 +13,11 @@ const Create = ({ history }) => {
     const {
         formValue,
         handleInputChange,
-        handleFormSubmit,
+        handleCreateFormSubmit,
         isSubmitting,
         formErrors,
         isSuccess
     } = useCRUDForm(validate);
-
-    const [notification, setNotification] = useState({
-        type: '',
-        message: ''
-    });
 
     useEffect(() => {
         if (isSuccess) history.push('/');
@@ -33,12 +25,6 @@ const Create = ({ history }) => {
 
     return (
         <>
-
-            {/* {this.state.notification.type !== ''
-                    ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
-                    : ''
-                } */}
-
             <h3 className={style.createHeading}>Create a new place!</h3>
             <p className={style.hint}>
                 You use a website like <Link to={{ pathname: "https://www.latlong.net" }} target="_blank">https://www.latlong.net</Link> for the coordinates
@@ -47,6 +33,8 @@ const Create = ({ history }) => {
             <form className={style.createForm}>
 
                 <label htmlFor="title">Title:*</label>
+                {formErrors?.title && <p className={style.error}>{formErrors.title}</p>}
+
                 <input
                     type="text"
                     name="title"
@@ -55,6 +43,8 @@ const Create = ({ history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="imgUrl">Image Photo:*</label>
+                {formErrors?.imgUrl && <p className={style.error}>{formErrors.imgUrl}</p>}
+
                 <input
                     type="text"
                     name="imgUrl"
@@ -63,6 +53,8 @@ const Create = ({ history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="lat">Latitude:*</label>
+                {formErrors?.lat && <p className={style.error}>{formErrors.lat}</p>}
+
                 <input
                     type="text"
                     name="lat"
@@ -71,6 +63,8 @@ const Create = ({ history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="lng">Longitude:*</label>
+                {formErrors?.lng && <p className={style.error}>{formErrors.lng}</p>}
+
                 <input
                     type="text"
                     name="lng"
@@ -79,6 +73,8 @@ const Create = ({ history }) => {
                     onChange={handleInputChange} />
 
                 <label htmlFor="description">Description:*</label>
+                {formErrors?.description && <p className={style.error}>{formErrors.description}</p>}
+
                 <textarea
                     type="text"
                     name="description"
@@ -101,7 +97,7 @@ const Create = ({ history }) => {
 
                 <p className={style.mandatory}>* are mandatory</p>
                 <button
-                    onClick={handleFormSubmit}
+                    onClick={handleCreateFormSubmit}
                     className={style.submitBtn}
                     type="submit"
                     disabled={isSubmitting}

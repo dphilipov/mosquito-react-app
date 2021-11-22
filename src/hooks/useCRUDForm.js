@@ -56,7 +56,7 @@ function useCRUDForm(validate) {
         }))
     }
 
-    const handleFormSubmit = async (e) => {
+    const handleCreateFormSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
@@ -146,7 +146,7 @@ function useCRUDForm(validate) {
     return {
         formValue,
         handleInputChange,
-        handleFormSubmit,
+        handleCreateFormSubmit,
         handleEditFormSubmit,
         setInitialValuesOnEdit,
         isSubmitting,

@@ -10,7 +10,6 @@ import postServices from '../../services/postServices';
 
 // Components
 import Comment from '../Comment/Comment';
-import Notification from '../Notification/Notification';
 
 // CSS
 import style from './Details.module.css';

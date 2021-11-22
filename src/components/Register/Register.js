@@ -8,8 +8,6 @@ import validate from '../../services/validationServices';
 // CSS
 import style from './Register.module.css';
 
-// import Notification from '../Notification/Notification';
-
 const Register = ({ history }) => {
     const {
         formValue,
@@ -20,27 +18,19 @@ const Register = ({ history }) => {
         isSuccess
     } = useAuthForm(validate, 'register');
 
-    const [notification, setNotification] = useState({
-        type: '',
-        message: ''
-    });
-
     useEffect(() => {
         if (isSuccess) history.push('/login');
     }, [isSuccess])
 
     return (
         <>
-            {/* {this.state.notification.type !== ''
-                ? <Notification type={this.state.notification.type} message={this.state.notification.message} />
-                : ''
-            } */}
-
             <h3>Registration Info</h3>
 
             <form className={style.registerForm}>
 
                 <label htmlFor="username">Username:</label>
+                {formErrors?.username && <p className={style.error}>{formErrors.username}</p>}
+
                 <input
                     type="text"
                     name="username"
@@ -51,6 +41,8 @@ const Register = ({ history }) => {
                 />
 
                 <label htmlFor="password">Password:</label>
+                {formErrors?.password && <p className={style.error}>{formErrors.password}</p>}
+
                 <input
                     type="password"
                     name="password"
@@ -60,7 +52,9 @@ const Register = ({ history }) => {
                     onChange={handleInputChange}
                 />
 
-                <label htmlFor="rePassword">Repeat Passoword:</label>
+                <label htmlFor="rePassword">Repeat Password:</label>
+                {formErrors?.noMatch && <p className={style.error}>{formErrors.noMatch}</p>}
+
                 <input
                     type="password"
                     name="rePassword"

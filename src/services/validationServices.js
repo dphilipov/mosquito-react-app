@@ -10,9 +10,7 @@ function Auth(input) {
     }
 
     // PASSOWORD VALIDATIONS
-    if (!input.password.trim()) {
-        errors.password = "Password can't be empty!"; // If password field is empty
-    } else if (input.password.length < 6 || input.password.length > 32) {
+    if (input.password.trim().length < 6 || input.password.trim().length > 32) {
         errors.password = "Password must be between 6 and 32 characters long!"; // If password is too short or too long
     }
 
@@ -31,7 +29,7 @@ function CRUD(input) {
 
     // TITLE VALIDATIONS
     if (!input.title.trim()) {
-        errors.username = "Title can't be empty!"; // If title field is empty
+        errors.title = "Title can't be empty!"; // If title field is empty
     }
 
     // IMAGE URL VALIDATIONS

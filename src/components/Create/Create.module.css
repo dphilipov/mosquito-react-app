@@ -84,3 +84,12 @@
 .hint a {
     color: #D9483C;
 }
+
+.error {
+    float: right;
+    color: #CE1E13;
+    margin-top: 5px;
+    margin-right: 16px;
+    font-size: 12px;
+    line-height: 1;
+}

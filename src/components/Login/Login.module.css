@@ -14,7 +14,7 @@ h3 {
 
 .loginForm label{
     color: #314a36;
-    display: block;
+    display: inline;
     font-size: 18px;
 }
 
@@ -71,4 +71,13 @@ h3 {
 :-moz-placeholder { /* Firefox 18- */
     font-style: italic;
     font-size: 14px;
+}
+
+.error {
+    float: right;
+    color: #CE1E13;
+    margin-top: 5px;
+    margin-right: 16px;
+    font-size: 12px;
+    line-height: 1;
 }

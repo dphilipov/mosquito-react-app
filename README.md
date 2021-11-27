@@ -65,11 +65,9 @@ Mosquito allows you to find and add information about natural landmarks, to shar
 * Client-side **Routing** via **React Router**
 * Integration of **Open Street Maps**
 
-The website **intentionally** uses a mix of class and functional components for practice purposes, the **Context API**, **Controlled Forms** and does styling via **CSS modules**.
+The website uses functional components, the **Context API**, **Controlled Forms** and does styling via **CSS modules**.
 
-Architecturally, components are split into folders, containing the relevant logic, styling and assets. Services related to **Authentication**, **Fetching data** and **Notifications** are kept separate and imported when necessary.
-
-![Structure Screen Shot][sctructure-screenshot]
+Architecturally, components are split into folders, containing the relevant logic & styling. **Custom hooks** are used for forms & CRUD operations, while services related to **Authentication**, **Fetching data** and **Validation** are kept separate and imported when necessary.
 
 ## Built With
 
@@ -107,7 +105,7 @@ The project is built using:
 
 ### [View the Live Demo](https://www.mosquitoapp.net)
 
-**Register** a new account & **Login**. This allows you to **Create** new landmarks, to **Comment** on all existing ones and to **Tag/Untag** on the ones you have visited. Furthermore, you can **Edit** & **Delete** the landmarks you have created. Going to **Map** loads a map with all of your created landmarks. In your **Profile** page you can view your latest activity and **Delete** your account if needed.
+**Register** a new account or **Login** with the demo credentials. This allows you to **Create** new landmarks, to **Comment** on all existing ones and to **Tag/Untag** on the ones you have visited. Furthermore, you can **Edit** & **Delete** the landmarks you have created. Going to **Map** loads a map with all of your created landmarks. In your **Profile** page you can view your latest activity and **Delete** your account if needed.
 
 
 <!-- CONTACT -->

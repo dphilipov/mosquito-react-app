@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // Context
 import AuthContext from '../../context/authContext';
 
-// Servicesm Helpers
+// Services & Helpers
 import postServices from '../../services/postServices';
 
 // Components
@@ -40,8 +40,6 @@ const Details = ({ match, history }) => {
         lng: 0
     });
     const [input, setInput] = useState('');
-    const [notificationType, setNotificationType] = useState('');
-    const [notificationMessage, setNotificationMessage] = useState('');
 
     const articleId = match.params.id;
 
@@ -56,9 +54,6 @@ const Details = ({ match, history }) => {
 
     const commentHandler = async (e) => {
         e.preventDefault();
-
-        setNotificationType('');
-        setNotificationMessage('');
 
         const postDate = new Date().toLocaleDateString('bg-BG', {
             day: '2-digit',
@@ -76,11 +71,7 @@ const Details = ({ match, history }) => {
         }
 
         if (input === ``) {
-            let type = "bad";
-            let message = "Comment can't be empty"
-
-            setNotificationType(type);
-            setNotificationMessage(message);
+            // add notification
 
             return
         }
@@ -165,10 +156,10 @@ const Details = ({ match, history }) => {
                 ))
             }
 
-            {notificationType !== ''
+            {/* {notificationType !== ''
                 ? <Notification type={notificationType} message={notificationMessage} />
                 : ''
-            }
+            } */}
 
             {user.isLogged
                 && <form className={style.commentForm}>
